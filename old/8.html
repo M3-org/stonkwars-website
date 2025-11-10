@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stonk Wars — Professional AI Trading Intelligence Platform</title>
+  <meta name="description" content="A 24/7 livestreamed simulation where AI agents inhabit a virtual NYSE-like floor, reacting to real market data and livestream chat." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lava: '#ff4e1b',
+            steel: '#0f1115',
+            surface: '#1a1f2b',
+            ink: '#e5e7eb'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Animated Gradient Background */
+    body {
+      background: linear-gradient(-45deg, #0f1115, #1a1f2b, #2d1810, #1a1f2b);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Glassmorphism */
+    .glass {
+      background: rgba(26, 31, 43, 0.4);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    .glass-heavy {
+      background: rgba(26, 31, 43, 0.6);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    /* Floating Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .float-slow { animation: float 6s ease-in-out infinite; }
+    .float-medium { animation: float 4s ease-in-out infinite; }
+    .float-fast { animation: float 3s ease-in-out infinite; }
+
+    /* Glow Effect */
+    .glow {
+      box-shadow: 0 0 20px rgba(255, 78, 27, 0.3),
+                  0 0 40px rgba(255, 78, 27, 0.2),
+                  0 0 60px rgba(255, 78, 27, 0.1);
+    }
+
+    /* Hover Scale */
+    .hover-scale {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-scale:hover {
+      transform: scale(1.05) translateY(-4px);
+      box-shadow: 0 20px 40px rgba(255, 78, 27, 0.2);
+    }
+
+    /* Live Indicator Pulse */
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    .live-pulse {
+      animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+    }
+
+    /* Terminal Effect */
+    .terminal {
+      font-family: 'Courier New', monospace;
+      color: #00ff00;
+      text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    }
+
+    /* Glitch Effect (for dank mode) */
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+
+    .glitch {
+      animation: glitch 0.3s infinite;
+    }
+
+    /* Cursor Trail (optional) */
+    .coin-trail {
+      pointer-events: none;
+      position: fixed;
+      font-size: 20px;
+      animation: float-up 1s ease-out forwards;
+      z-index: 9999;
+    }
+
+    @keyframes float-up {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-50px); }
+    }
+
+    /* Video Hero */
+    .video-hero video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+    }
+
+    /* Visitor Counter Retro Style */
+    .counter-digit {
+      display: inline-block;
+      background: #000;
+      color: #0f0;
+      border: 2px solid #333;
+      padding: 2px 6px;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      margin: 0 1px;
+    }
+
+    /* Hidden Elements */
+    .hidden-gif {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .show-gif:hover .hidden-gif {
+      opacity: 1;
+    }
+
+    /* Transition Controls */
+    .transition-transform {
+      transition: transform 0.3s ease;
+    }
+
+    .transition-all {
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body class="text-ink antialiased">
+  <!-- Floating Header -->
+  <header class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl">
+    <div class="glass rounded-2xl px-6 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <img id="logo" src="media/stonkwars2.png" alt="Stonk Wars" class="h-10 w-10 rounded-lg" />
+        <span class="font-bold text-lg">Stonk Wars</span>
+      </a>
+      <div class="flex items-center gap-4">
+        <!-- Sound Toggle -->
+        <button id="soundToggle" class="p-2 rounded-lg hover:bg-white/10 transition-all" title="Toggle Sound">
+          <svg id="soundOn" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 3.75a.75.75 0 00-1.264-.546L4.703 7H3.167a.75.75 0 00-.7.48A6.985 6.985 0 002 10c0 .887.165 1.737.468 2.52.111.29.39.48.7.48h1.535l4.033 3.796A.75.75 0 0010 16.25V3.75zM15.95 5.05a.75.75 0 00-1.06 1.061 5.5 5.5 0 010 7.778.75.75 0 001.06 1.06 7 7 0 000-9.899z"/>
+            <path d="M13.829 7.172a.75.75 0 00-1.061 1.06 2.5 2.5 0 010 3.536.75.75 0 001.06 1.06 4 4 0 000-5.656z"/>
+          </svg>
+          <svg id="soundOff" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 3.75a.75.75 0 00-1.264-.546L4.703 7H3.167a.75.75 0 00-.7.48A6.985 6.985 0 002 10c0 .887.165 1.737.468 2.52.111.29.39.48.7.48h1.535l4.033 3.796A.75.75 0 0010 16.25V3.75z"/>
+            <path d="M15.22 8.22a.75.75 0 10-1.06 1.06L15.94 11l-1.78 1.72a.75.75 0 101.06 1.06l1.78-1.72 1.72 1.72a.75.75 0 101.06-1.06L17.06 11l1.72-1.78a.75.75 0 00-1.06-1.06L16 9.88l-1.78-1.72z"/>
+          </svg>
+        </button>
+        <!-- Easter Egg Hint -->
+        <button class="p-2 rounded-lg hover:bg-white/10 transition-all" title="Try the Konami Code...">
+          <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+        <!-- Watch Live CTA -->
+        <a href="https://pump.fun" target="_blank" class="px-4 py-2 rounded-lg bg-lava text-black font-semibold text-sm hover:opacity-90 glow flex items-center gap-2">
+          <span class="w-2 h-2 bg-red-500 rounded-full live-pulse"></span>
+          Watch Live
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Market Tickers (Floating) -->
+  <section class="fixed top-24 left-1/2 -translate-x-1/2 z-40 w-[95%] max-w-6xl">
+    <div class="glass rounded-xl overflow-hidden">
+      <div class="w-full py-1">
+        <!-- TradingView Ticker -->
+        <div class="tradingview-widget-container" style="height:48px; width:100%">
+          <div class="tradingview-widget-container__widget" style="height:48px;"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+          {
+            "symbols": [
+              {"proName": "BITSTAMP:BTCUSD", "title": "BTC"},
+              {"proName": "BITSTAMP:ETHUSD", "title": "ETH"},
+              {"proName": "BINANCE:SOLUSDT", "title": "SOL"},
+              {"proName": "BINANCE:DOGEUSDT", "title": "DOGE"},
+              {"proName": "BINANCE:SHIBUSDT", "title": "SHIB"},
+              {"proName": "BINANCE:PEPEUSDT", "title": "PEPE"},
+              {"proName": "FOREXCOM:SPXUSD", "title": "S&P 500"}
+            ],
+            "showSymbolLogo": true,
+            "isTransparent": true,
+            "displayMode": "adaptive",
+            "colorTheme": "dark",
+            "locale": "en"
+          }
+          </script>
+        </div>
+        <!-- Custom Ticker -->
+        <div class="border-t border-white/10 bg-black/20 px-4 py-2 overflow-hidden">
+          <div id="customTicker" class="flex items-center gap-8 text-sm whitespace-nowrap">
+            <span>📊 Fear & Greed: <span class="text-green-400 font-mono" id="fearGreed">68</span></span>
+            <span>👥 Live Viewers: <span class="text-blue-400 font-mono" id="liveViewers">420,690</span></span>
+            <span>💎 Diamond Hands: <span class="text-yellow-400 font-mono">1,337</span></span>
+            <span>🚀 To The Moon Index: <span class="text-purple-400 font-mono">88.8%</span></span>
+            <span>😱 FOMO Score: <span class="text-red-400 font-mono" id="fomoScore">9/10</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="pt-48">
+    <!-- Hero: Full-Screen Video with Floating Card -->
+    <section class="video-hero min-h-screen flex items-center justify-center relative">
+      <video autoplay loop muted playsinline poster="media/1.png" class="absolute inset-0">
+        <source src="media/stonks1.mp4" type="video/mp4" />
+      </video>
+      <div class="absolute inset-0 bg-black/60"></div>
+
+      <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+        <!-- Floating Hero Card -->
+        <div class="glass-heavy rounded-3xl p-12 float-slow">
+          <div class="float-medium mb-8">
+            <img src="media/stonkwars2.png" alt="Stonk Wars" class="w-48 h-48 md:w-64 md:h-64 mx-auto rounded-3xl glow" style="filter: drop-shadow(0 10px 40px rgba(255,78,27,0.4));">
+          </div>
+
+          <h1 class="text-5xl md:text-8xl font-extrabold mb-6 drop-shadow-2xl">
+            Stonk Wars
+          </h1>
+
+          <p class="text-xl md:text-2xl text-gray-200 mb-8">
+            Professional AI-Driven Market Intelligence Platform
+          </p>
+
+          <!-- Fake Professional Stats -->
+          <div class="grid grid-cols-3 gap-6 mb-8 text-center">
+            <div>
+              <div class="text-3xl font-bold text-green-400 font-mono" id="heroStat1">$420.69M</div>
+              <div class="text-sm text-gray-400">Total Volume</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold text-blue-400 font-mono">24/7</div>
+              <div class="text-sm text-gray-400">Uptime</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold text-purple-400 font-mono">∞</div>
+              <div class="text-sm text-gray-400">Opportunities</div>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#showcase" class="px-10 py-5 rounded-2xl bg-lava text-black font-bold text-lg hover:opacity-90 glow transition-all">
+              Enter Trading Floor
+            </a>
+            <a href="#terminal" class="glass px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all">
+              View Terminal
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Legitimacy Section -->
+    <section id="about" class="py-24 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="glass-heavy rounded-3xl p-12 float-slow mb-12">
+          <h2 class="text-4xl md:text-6xl font-bold mb-8">About Our Platform</h2>
+          <p class="text-xl text-gray-300 leading-relaxed mb-6">
+            Leveraging cutting-edge artificial intelligence and machine learning algorithms, Stonk Wars provides real-time market sentiment analysis through our proprietary virtual trading floor simulation.
+          </p>
+          <p class="text-lg text-gray-400 leading-relaxed">
+            Our AI agents continuously monitor global financial markets, social sentiment indicators, and blockchain metrics to deliver actionable intelligence. Results may vary. Past performance does not guarantee future returns. Please trade responsibly. <span class="text-xs opacity-50">(This is entertainment. Not financial advice. Seriously.)</span>
+          </p>
+        </div>
+
+        <!-- Bento Grid Features -->
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="glass-heavy rounded-2xl p-8 hover-scale float-medium">
+            <div class="w-16 h-16 bg-lava/30 rounded-2xl flex items-center justify-center mb-6 glow">
+              <svg class="w-8 h-8 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">Real-time Data</h3>
+            <p class="text-gray-300">Live market feeds integrated with advanced sentiment analysis algorithms. <span class="text-xs opacity-50 hover:opacity-100 transition-all cursor-help" title="It's just random, but with style">(Definitely very sophisticated)</span></p>
+          </div>
+
+          <div class="glass-heavy rounded-2xl p-8 hover-scale float-fast">
+            <div class="w-16 h-16 bg-lava/30 rounded-2xl flex items-center justify-center mb-6 glow">
+              <svg class="w-8 h-8 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">AI Agents</h3>
+            <p class="text-gray-300">Autonomous trading entities with unique personalities and strategies. <span class="text-xs opacity-50 hover:opacity-100 transition-all cursor-help" title="They're just vibing">(They have feelings probably)</span></p>
+          </div>
+
+          <div class="glass-heavy rounded-2xl p-8 hover-scale float-slow">
+            <div class="w-16 h-16 bg-lava/30 rounded-2xl flex items-center justify-center mb-6 glow">
+              <svg class="w-8 h-8 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">Community Driven</h3>
+            <p class="text-gray-300">Chat interaction directly influences market dynamics and agent behavior. <span class="text-xs opacity-50 hover:opacity-100 transition-all cursor-help" title="Chaos is a feature">(Democracy in action)</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Showcase -->
+    <section id="showcase" class="py-24 px-6">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl md:text-6xl font-bold text-center mb-20">Trading Floor Gallery</h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <div class="glass rounded-2xl overflow-hidden hover-scale float-slow">
+            <img src="media/1.png" alt="Virtual NYSE Floor" class="w-full aspect-video object-cover" />
+            <div class="p-4 text-center">
+              <p class="text-sm text-gray-400">Advanced Trading Infrastructure</p>
+            </div>
+          </div>
+          <div class="glass rounded-2xl overflow-hidden hover-scale float-medium">
+            <img src="media/2.png" alt="AI Agents" class="w-full aspect-video object-cover" />
+            <div class="p-4 text-center">
+              <p class="text-sm text-gray-400">AI Agents in Action</p>
+            </div>
+          </div>
+          <div class="glass rounded-2xl overflow-hidden hover-scale float-fast">
+            <img src="media/3.png" alt="Market Data" class="w-full aspect-video object-cover" />
+            <div class="p-4 text-center">
+              <p class="text-sm text-gray-400">Real-time Analytics Dashboard</p>
+            </div>
+          </div>
+          <div class="glass rounded-2xl overflow-hidden hover-scale float-fast">
+            <img src="media/4.png" alt="Trading Floor" class="w-full aspect-video object-cover" />
+            <div class="p-4 text-center">
+              <p class="text-sm text-gray-400">High-frequency Trading Zone</p>
+            </div>
+          </div>
+          <div class="glass rounded-2xl overflow-hidden hover-scale float-slow">
+            <img src="media/5.png" alt="Live Screens" class="w-full aspect-video object-cover" />
+            <div class="p-4 text-center">
+              <p class="text-sm text-gray-400">Market Sentiment Indicators</p>
+            </div>
+          </div>
+          <div class="glass rounded-2xl overflow-hidden hover-scale float-medium">
+            <img src="media/6.png" alt="Interactions" class="w-full aspect-video object-cover" />
+            <div class="p-4 text-center">
+              <p class="text-sm text-gray-400">Agent Collaboration Chamber</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Terminal Status Section -->
+    <section id="terminal" class="py-24 px-6">
+      <div class="max-w-4xl mx-auto">
+        <div class="glass-heavy rounded-3xl p-8 float-slow">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-3xl md:text-4xl font-bold terminal">SYSTEM_STATUS.exe</h2>
+            <div class="flex items-center gap-3">
+              <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <span class="text-green-400 font-semibold" id="systemStatus">ALL_SYSTEMS_OPERATIONAL</span>
+            </div>
+          </div>
+
+          <!-- Terminal Output -->
+          <div class="bg-black/60 rounded-xl p-6 mb-6 font-mono text-sm border border-green-500/30">
+            <div id="terminalOutput" class="space-y-1 text-green-400 h-48 overflow-hidden">
+              <div>> Initializing market sentiment analyzer...</div>
+              <div>> Connected to 420 data sources</div>
+              <div>> AI agents status: VIBING</div>
+              <div>> Risk management: YOLO mode enabled</div>
+              <div>> Checking for incoming chaos... 69 events detected</div>
+              <div>> Diamond hands status: SOLID</div>
+              <div>> Moon trajectory: CALCULATED</div>
+              <div>> Meme index: DANK</div>
+              <div>> Technical analysis: Lines going right ✓</div>
+              <div>> All systems: THIS_IS_FINE.jpg</div>
+            </div>
+          </div>
+
+          <!-- Status Bars -->
+          <div class="grid grid-cols-7 gap-4 mb-6">
+            <div class="h-20 glass-heavy rounded-xl bg-green-500/30 hover:bg-green-500/50 transition-all"></div>
+            <div class="h-20 glass-heavy rounded-xl bg-green-500/30 hover:bg-green-500/50 transition-all"></div>
+            <div class="h-20 glass-heavy rounded-xl bg-green-500/30 hover:bg-green-500/50 transition-all"></div>
+            <div class="h-20 glass-heavy rounded-xl bg-yellow-500/40 hover:bg-yellow-500/60 transition-all"></div>
+            <div class="h-20 glass-heavy rounded-xl bg-green-500/30 hover:bg-green-500/50 transition-all"></div>
+            <div class="h-20 glass-heavy rounded-xl bg-green-500/30 hover:bg-green-500/50 transition-all"></div>
+            <div class="h-20 glass-heavy rounded-xl bg-green-500/30 hover:bg-green-500/50 transition-all"></div>
+          </div>
+
+          <!-- Metrics -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div>
+              <div class="text-sm text-gray-400 mb-2">Cope Index</div>
+              <div class="text-2xl font-bold terminal text-cyan-400">42.0%</div>
+            </div>
+            <div>
+              <div class="text-sm text-gray-400 mb-2">FOMO Score</div>
+              <div class="text-2xl font-bold terminal text-orange-400">9.8/10</div>
+            </div>
+            <div>
+              <div class="text-sm text-gray-400 mb-2">Bag Holders</div>
+              <div class="text-2xl font-bold terminal text-yellow-400">1,337</div>
+            </div>
+            <div>
+              <div class="text-sm text-gray-400 mb-2">Uptime</div>
+              <div class="text-2xl font-bold terminal text-green-400">99.97%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 px-6">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl md:text-6xl font-bold text-center mb-20">FAQ</h2>
+
+        <div class="space-y-6">
+          <details class="glass-heavy rounded-2xl p-8 hover:bg-white/5 transition-all group">
+            <summary class="cursor-pointer font-bold text-xl flex items-center gap-3">
+              <span>How do I watch the show?</span>
+              <span class="ml-auto text-2xl opacity-0 group-hover:opacity-100 transition-all">🤔</span>
+            </summary>
+            <div class="mt-6 text-gray-300 text-lg">
+              The show streams 24/7 on pump.fun. Just click "Watch Live" and prepare for maximum entertainment. AI agents continuously react to real market data and chat messages in the virtual NYSE environment. No sleep, only stonks.
+            </div>
+          </details>
+
+          <details class="glass-heavy rounded-2xl p-8 hover:bg-white/5 transition-all group">
+            <summary class="cursor-pointer font-bold text-xl flex items-center gap-3">
+              <span>Is this financial advice?</span>
+              <span class="ml-auto text-2xl opacity-0 group-hover:opacity-100 transition-all">😅</span>
+            </summary>
+            <div class="mt-6 text-gray-300 text-lg">
+              Absolutely not. This is entertainment. We're just watching AI agents vibe in a virtual trading floor. Do your own research. Talk to a financial advisor. We're just here for the memes and the chaos.
+            </div>
+          </details>
+
+          <details class="glass-heavy rounded-2xl p-8 hover:bg-white/5 transition-all group">
+            <summary class="cursor-pointer font-bold text-xl flex items-center gap-3">
+              <span>Can I interact with the AI agents?</span>
+              <span class="ml-auto text-2xl opacity-0 group-hover:opacity-100 transition-all">🎮</span>
+            </summary>
+            <div class="mt-6 text-gray-300 text-lg">
+              Yes! Your chat messages directly influence AI agent behavior and responses. The audience helps shape the storylines through real-time interaction. Democracy in its purest form. Or chaos. Probably chaos.
+            </div>
+          </details>
+
+          <details class="glass-heavy rounded-2xl p-8 hover:bg-white/5 transition-all group">
+            <summary class="cursor-pointer font-bold text-xl flex items-center gap-3">
+              <span>When moon?</span>
+              <span class="ml-auto text-2xl opacity-0 group-hover:opacity-100 transition-all">🚀</span>
+            </summary>
+            <div class="mt-6 text-gray-300 text-lg">
+              Soon™. Our advanced AI algorithms are currently calculating the optimal trajectory. Check back in 2 weeks. Or maybe tomorrow. Time is a construct anyway.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="pb-12 px-6 show-gif">
+    <div class="max-w-6xl mx-auto">
+      <div class="glass rounded-2xl py-8 px-6 text-center">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <span class="text-sm text-gray-400">© <span id="year"></span> Stonk Wars</span>
+            <span class="text-gray-600">•</span>
+            <a href="https://github.com/M3-org/stonk-wars" target="_blank" class="text-sm text-gray-400 hover:text-white transition-all">Open Source</a>
+          </div>
+
+          <!-- Visitor Counter (Retro Style) -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-gray-500">Visitors:</span>
+            <div id="visitorCounter" class="flex">
+              <span class="counter-digit">4</span>
+              <span class="counter-digit">2</span>
+              <span class="counter-digit">0</span>
+              <span class="counter-digit">6</span>
+              <span class="counter-digit">9</span>
+              <span class="counter-digit">0</span>
+            </div>
+          </div>
+
+          <!-- Hidden Geocities GIF -->
+          <div class="hidden-gif">
+            <span class="text-xs">🚧 Under Construction 🚧</span>
+          </div>
+        </div>
+
+        <!-- Achievement Badge (appears after 5 minutes) -->
+        <div id="diamondBadge" class="hidden mt-4 inline-flex items-center gap-2 px-4 py-2 bg-yellow-500/20 border border-yellow-500/30 rounded-lg text-yellow-400 text-sm">
+          <span>💎</span>
+          <span>Achievement Unlocked: Diamond Hands (5+ min on site)</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Dank Mode Indicator -->
+  <div id="dankModeIndicator" class="hidden fixed bottom-6 right-6 z-50 glass-heavy px-6 py-3 rounded-full text-sm font-bold">
+    <span class="glitch">🔥 DANK MODE ACTIVATED 🔥</span>
+  </div>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Sound System
+    let soundEnabled = false;
+    const soundToggle = document.getElementById('soundToggle');
+    const soundOn = document.getElementById('soundOn');
+    const soundOff = document.getElementById('soundOff');
+
+    // Preload sound effects (use data URIs or actual audio files)
+    const coinSound = new Audio(); // Add your coin.mp3
+    const cashSound = new Audio(); // Add your cash.mp3
+
+    soundToggle.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      soundOn.classList.toggle('hidden');
+      soundOff.classList.toggle('hidden');
+      if (soundEnabled && coinSound.src) {
+        coinSound.play().catch(() => {});
+      }
+    });
+
+    // Konami Code (↑ ↑ ↓ ↓ ← → ← → B A)
+    let konamiCode = [];
+    const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+
+    document.addEventListener('keydown', (e) => {
+      konamiCode.push(e.key);
+      konamiCode = konamiCode.slice(-10);
+
+      if (konamiCode.join(',') === konamiSequence.join(',')) {
+        activateDankMode();
+      }
+    });
+
+    function activateDankMode() {
+      document.body.style.filter = 'hue-rotate(180deg) saturate(1.5)';
+      document.getElementById('dankModeIndicator').classList.remove('hidden');
+
+      setTimeout(() => {
+        document.body.style.filter = '';
+        document.getElementById('dankModeIndicator').classList.add('hidden');
+      }, 5000);
+    }
+
+    // Logo Click Easter Egg (5 clicks = Comic Sans)
+    let logoClicks = 0;
+    document.getElementById('logo').addEventListener('click', () => {
+      logoClicks++;
+      if (logoClicks === 5) {
+        const sections = document.querySelectorAll('section');
+        const randomSection = sections[Math.floor(Math.random() * sections.length)];
+        randomSection.style.fontFamily = 'Comic Sans MS, cursive';
+
+        setTimeout(() => {
+          randomSection.style.fontFamily = '';
+          logoClicks = 0;
+        }, 5000);
+      }
+    });
+
+    // Custom Ticker Animation
+    const ticker = document.getElementById('customTicker');
+    const tickerContent = ticker.innerHTML;
+    ticker.innerHTML = tickerContent + tickerContent; // Duplicate for seamless loop
+
+    let tickerPos = 0;
+    function animateTicker() {
+      tickerPos -= 1;
+      if (Math.abs(tickerPos) >= ticker.scrollWidth / 2) {
+        tickerPos = 0;
+      }
+      ticker.style.transform = `translateX(${tickerPos}px)`;
+      requestAnimationFrame(animateTicker);
+    }
+    animateTicker();
+
+    // Random Stat Updates
+    function updateRandomStats() {
+      const fearGreed = document.getElementById('fearGreed');
+      const liveViewers = document.getElementById('liveViewers');
+      const fomoScore = document.getElementById('fomoScore');
+      const heroStat1 = document.getElementById('heroStat1');
+
+      if (fearGreed) fearGreed.textContent = Math.floor(Math.random() * 100);
+      if (liveViewers) {
+        const viewers = parseInt(liveViewers.textContent.replace(/,/g, ''));
+        liveViewers.textContent = (viewers + Math.floor(Math.random() * 100)).toLocaleString();
+      }
+      if (fomoScore) fomoScore.textContent = `${Math.floor(Math.random() * 10)}/10`;
+      if (heroStat1) {
+        const vol = (Math.random() * 1000).toFixed(2);
+        heroStat1.textContent = `$${vol}M`;
+      }
+    }
+
+    setInterval(updateRandomStats, 3000);
+
+    // Terminal Scrolling
+    const terminalOutput = document.getElementById('terminalOutput');
+    const terminalMessages = [
+      '> Scanning blockchain for alpha...',
+      '> WAGMI protocol activated',
+      '> Detecting paper hands... 0 found',
+      '> Moon mission status: ON TRACK',
+      '> Calculating optimal wen lambo...',
+      '> Risk assessment: GIGACHAD mode',
+      '> Checking vibe status... IMMACULATE',
+      '> NGMI filter: ACTIVE',
+      '> Diamond hand certification: VERIFIED',
+      '> Analyzing cup and handle... found teacup ☕'
+    ];
+
+    function addTerminalLine() {
+      const newLine = document.createElement('div');
+      newLine.textContent = terminalMessages[Math.floor(Math.random() * terminalMessages.length)];
+      terminalOutput.appendChild(newLine);
+
+      if (terminalOutput.children.length > 10) {
+        terminalOutput.removeChild(terminalOutput.children[0]);
+      }
+    }
+
+    setInterval(addTerminalLine, 4000);
+
+    // System Status Randomizer
+    const systemStatus = document.getElementById('systemStatus');
+    const statuses = ['ALL_SYSTEMS_OPERATIONAL', 'ALL_SYSTEMS_DEGEN', 'VIBES_IMMACULATE', 'TO_THE_MOON.exe', 'HODLING_ENGAGED'];
+
+    setInterval(() => {
+      if (Math.random() > 0.9) {
+        systemStatus.textContent = statuses[Math.floor(Math.random() * statuses.length)];
+      }
+    }, 5000);
+
+    // Visitor Counter Animation
+    const counter = document.getElementById('visitorCounter');
+    let watching = false;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          watching = true;
+          incrementCounter();
+        } else {
+          watching = false;
+        }
+      });
+    });
+
+    observer.observe(counter);
+
+    function incrementCounter() {
+      if (!watching) return;
+
+      const digits = counter.querySelectorAll('.counter-digit');
+      const lastDigit = digits[digits.length - 1];
+      const current = parseInt(lastDigit.textContent);
+      lastDigit.textContent = (current + 1) % 10;
+
+      setTimeout(incrementCounter, 100);
+    }
+
+    // Diamond Hands Achievement (5 minutes)
+    setTimeout(() => {
+      document.getElementById('diamondBadge').classList.remove('hidden');
+    }, 300000);
+
+    // Cursor Trail (Optional)
+    let trailEnabled = false; // Set to true to enable
+    if (trailEnabled) {
+      document.addEventListener('mousemove', (e) => {
+        if (Math.random() > 0.95) { // Only occasionally
+          const trail = document.createElement('div');
+          trail.className = 'coin-trail';
+          trail.textContent = '💰';
+          trail.style.left = e.pageX + 'px';
+          trail.style.top = e.pageY + 'px';
+          document.body.appendChild(trail);
+
+          setTimeout(() => trail.remove(), 1000);
+        }
+      });
+    }
+
+    // Hover Sound Effects
+    document.querySelectorAll('.hover-scale').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        if (soundEnabled && coinSound.src) {
+          coinSound.currentTime = 0;
+          coinSound.play().catch(() => {});
+        }
+      });
+    });
+  </script>
+</body>
+</html>

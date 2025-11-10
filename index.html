@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stonk Wars — 24/7 AI Stock Market Show</title>
+  <meta name="description" content="A 24/7 livestreamed simulation where AI agents inhabit a virtual NYSE-like floor, reacting to real market data and livestream chat." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lava: '#ff4e1b',
+            steel: '#0f1115',
+            surface: '#1a1f2b',
+            ink: '#e5e7eb'
+          },
+          boxShadow: {
+            soft: '0 6px 24px rgba(0,0,0,.25)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Floating Animation from 6.html */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .float-slow {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .float-medium {
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .float-fast {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* Glow Effect from 6.html */
+    .glow {
+      box-shadow: 0 0 20px rgba(255, 78, 27, 0.3),
+                  0 0 40px rgba(255, 78, 27, 0.2),
+                  0 0 60px rgba(255, 78, 27, 0.1);
+    }
+
+    /* Lightbox styles */
+    #lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    #lightbox.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #lightbox img, #lightbox video {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+    }
+
+    #lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      font-size: 40px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    #lightbox-close:hover {
+      color: #ff4e1b;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 48px;
+      color: white;
+      cursor: pointer;
+      padding: 20px;
+      user-select: none;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .lightbox-nav:hover {
+      color: #ff4e1b;
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    #lightbox-prev {
+      left: 20px;
+    }
+
+    #lightbox-next {
+      right: 20px;
+    }
+
+    .lightbox-counter {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 18px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px 20px;
+      border-radius: 8px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body class="bg-steel text-ink antialiased">
+  <header class="sticky top-0 z-50 border-b border-white/10 bg-black/40 backdrop-blur">
+    <div class="max-w-7xl mx-auto h-16 px-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <span class="font-bold text-2xl tracking-tight" style="color: #f0bf39; text-shadow: 0 0 8px rgba(240, 191, 57, 0.5);">STONK WARS</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm text-gray-300">
+        <a href="#faq" class="hover:text-white">FAQ</a>
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/20 border border-green-500/40">
+          <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+          <span class="text-green-400 font-semibold text-xs">LIVE</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- TradingView Ticker -->
+  <section id="tradingview-ticker" class="bg-black/60 backdrop-blur border-b border-white/10">
+    <div class="w-full px-0 py-2">
+      <div class="tradingview-widget-container" style="height:48px; width:100%">
+        <div class="tradingview-widget-container__widget" style="height:48px;"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+        {
+          "symbols": [
+            {"proName": "FOREXCOM:SPXUSD", "title": "S&P 500"},
+            {"proName": "FX_IDC:EURUSD", "title": "EUR/USD"},
+            {"proName": "BITSTAMP:BTCUSD", "title": "BTC"},
+            {"proName": "BITSTAMP:ETHUSD", "title": "ETH"},
+            {"proName": "NASDAQ:NVDA", "title": "NVDA"}
+          ],
+          "showSymbolLogo": true,
+          "isTransparent": true,
+          "displayMode": "adaptive",
+          "colorTheme": "dark",
+          "locale": "en"
+        }
+        </script>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="max-w-7xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
+      <div class="flex gap-6 items-center">
+        <img src="media/stonkwars2.png" alt="Stonk Wars" class="w-32 h-32 md:w-48 md:h-48 flex-shrink-0 rounded-xl shadow-xl float-slow" style="filter: drop-shadow(0 4px 16px rgba(255,78,27,0.4));">
+        <div>
+          <h1 class="text-3xl md:text-5xl font-extrabold mb-4">24/7 AI Stock Market Show</h1>
+          <p class="text-gray-300 mb-6">AI agents react to real market data and livestream chat in a virtual NYSE floor, creating derpy entertainment and meme token speculation.</p>
+          <div class="flex gap-3">
+            <a href="#demo" class="px-5 py-3 rounded bg-lava text-black font-semibold hover:opacity-90">Watch Now</a>
+            <div class="flex items-center gap-2 px-5 py-3 rounded bg-green-500/20 border border-green-500/40">
+              <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
+              <span class="text-green-400 font-semibold">LIVE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="relative">
+        <div class="aspect-video rounded-xl overflow-hidden border border-white/10 shadow-soft bg-black/40 cursor-pointer hover:scale-105 transition-transform group" onclick="openVideoLightbox('media/stonks2.mp4')">
+          <video src="media/stonks2.mp4" class="w-full h-full object-cover" muted loop autoplay playsinline poster="media/1.png"></video>
+          <div class="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-colors pointer-events-none">
+            <svg class="w-16 h-16 text-white opacity-0 group-hover:opacity-80 transition-opacity" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section with Video Background -->
+    <section id="features" class="relative py-16 overflow-hidden">
+      <!-- Background video -->
+      <video class="absolute inset-0 w-full h-full object-cover" src="media/stonks1.mp4" autoplay loop muted playsinline poster="media/1.png"></video>
+      <div class="absolute inset-0 bg-black/70"></div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">Key Features</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+        <!-- Feature 1 -->
+        <div class="bg-surface/70 border border-white/10 rounded-xl p-5 hover:scale-105 float-slow flex items-start gap-4">
+          <div class="w-12 h-12 bg-lava/30 rounded-xl flex items-center justify-center flex-shrink-0 glow">
+            <svg class="w-6 h-6 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-2">Real-time Market Data</h3>
+            <p class="text-gray-300 text-sm">AI agents react to live crypto and stock movements.</p>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-surface/70 border border-white/10 rounded-xl p-5 hover:scale-105 float-medium flex items-start gap-4">
+          <div class="w-12 h-12 bg-lava/30 rounded-xl flex items-center justify-center flex-shrink-0 glow">
+            <svg class="w-6 h-6 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-2">Chat Interaction</h3>
+            <p class="text-gray-300 text-sm">Livestream chat creates dynamic, community-driven storylines.</p>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-surface/70 border border-white/10 rounded-xl p-5 hover:scale-105 float-fast flex items-start gap-4">
+          <div class="w-12 h-12 bg-lava/30 rounded-xl flex items-center justify-center flex-shrink-0 glow">
+            <svg class="w-6 h-6 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-2">AI Characters</h3>
+            <p class="text-gray-300 text-sm">Unique personalities from crypto Twitter and internet culture.</p>
+          </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="bg-surface/70 border border-white/10 rounded-xl p-5 hover:scale-105 float-slow flex items-start gap-4">
+          <div class="w-12 h-12 bg-lava/30 rounded-xl flex items-center justify-center flex-shrink-0 glow">
+            <svg class="w-6 h-6 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-2">Token Dynamics <span class="text-xs text-gray-400">(FUTURE)</span></h3>
+            <p class="text-gray-300 text-sm">Price movements influence character survival and storylines.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+
+    <!-- Image Gallery with Lightbox -->
+    <section id="gallery" class="max-w-7xl mx-auto px-6 py-16">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">Gallery</h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="rounded-xl overflow-hidden border border-white/10 shadow-soft cursor-pointer hover:scale-105 transition-transform float-slow" onclick="openLightbox(0)">
+          <img src="media/1.png" alt="Virtual NYSE Floor" class="w-full aspect-video object-cover" />
+        </div>
+        <div class="rounded-xl overflow-hidden border border-white/10 shadow-soft cursor-pointer hover:scale-105 transition-transform float-medium" onclick="openLightbox(1)">
+          <img src="media/2.png" alt="AI Agents" class="w-full aspect-video object-cover" />
+        </div>
+        <div class="rounded-xl overflow-hidden border border-white/10 shadow-soft cursor-pointer hover:scale-105 transition-transform float-fast" onclick="openLightbox(2)">
+          <img src="media/3.png" alt="Market Data" class="w-full aspect-video object-cover" />
+        </div>
+        <div class="rounded-xl overflow-hidden border border-white/10 shadow-soft cursor-pointer hover:scale-105 transition-transform float-fast" onclick="openLightbox(3)">
+          <img src="media/4.png" alt="Trading Floor" class="w-full aspect-video object-cover" />
+        </div>
+        <div class="rounded-xl overflow-hidden border border-white/10 shadow-soft cursor-pointer hover:scale-105 transition-transform float-slow" onclick="openLightbox(4)">
+          <img src="media/5.png" alt="Live Screens" class="w-full aspect-video object-cover" />
+        </div>
+        <div class="rounded-xl overflow-hidden border border-white/10 shadow-soft cursor-pointer hover:scale-105 transition-transform float-medium" onclick="openLightbox(5)">
+          <img src="media/6.png" alt="Interactions" class="w-full aspect-video object-cover" />
+        </div>
+      </div>
+    </section>
+
+    <section id="status" class="max-w-7xl mx-auto px-6 py-6">
+      <h2 class="text-xl md:text-2xl font-bold mb-3">Status & Uptime</h2>
+      <div class="glass border border-white/10 rounded-xl p-5 shadow-soft text-center">
+        <h3 class="text-lg font-semibold mb-3">All Systems Operational</h3>
+        <div class="grid grid-cols-7 gap-1 h-4 mb-2">
+          <div class="bg-green-500/70 rounded"></div>
+          <div class="bg-green-500/70 rounded"></div>
+          <div class="bg-green-500/70 rounded"></div>
+          <div class="bg-yellow-500/80 rounded"></div>
+          <div class="bg-green-500/70 rounded"></div>
+          <div class="bg-green-500/70 rounded"></div>
+          <div class="bg-green-500/70 rounded"></div>
+        </div>
+        <p class="text-sm text-gray-300">Uptime: 99.97% (past 7 days)</p>
+      </div>
+    </section>
+
+    <section id="faq" class="max-w-5xl mx-auto px-6 pb-16">
+      <h2 class="text-xl md:text-2xl font-bold mb-4">FAQ</h2>
+      <div class="divide-y divide-white/10">
+        <details class="py-3">
+          <summary class="cursor-pointer font-medium">How do I watch the show?</summary>
+          <div class="mt-2 text-gray-300 text-sm">The show streams 24/7 on pump.fun. AI agents continuously react to real market data and chat messages.</div>
+        </details>
+        <details class="py-3">
+          <summary class="cursor-pointer font-medium">What makes this unique?</summary>
+          <div class="mt-2 text-gray-300 text-sm">Characters and live data are continuously integrated into the virtual NYSE set. Token price movements influence storylines, and chat interaction feeds into AI banter.</div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- Polymarket Ticker at Bottom -->
+  <section id="polymarket-ticker" class="bg-black/60 backdrop-blur border-t border-white/10">
+    <div class="w-full" style="height:60px;">
+      <iframe src="https://ticker.polymarket.com/embed?category=Crypto&theme=dark&speed=1&showPrices=false" width="100%" height="60" frameborder="0" scrolling="no" style="border:none;overflow:hidden;"></iframe>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/10 py-6 text-center text-sm text-gray-400">
+    © <span id="year"></span> Stonk Wars • 24/7 AI Stock Market Show
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox">
+    <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <span id="lightbox-prev" class="lightbox-nav" onclick="navigateLightbox(-1)" style="display: none;">‹</span>
+    <span id="lightbox-next" class="lightbox-nav" onclick="navigateLightbox(1)" style="display: none;">›</span>
+    <div class="lightbox-counter" id="lightbox-counter" style="display: none;"></div>
+    <img id="lightbox-img" src="" alt="Lightbox Image" style="display: none;" />
+    <video id="lightbox-video" src="" controls style="display: none;"></video>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Gallery images array
+    const galleryImages = [
+      { src: 'media/1.png', alt: 'Virtual NYSE Floor' },
+      { src: 'media/2.png', alt: 'AI Agents' },
+      { src: 'media/3.png', alt: 'Market Data' },
+      { src: 'media/4.png', alt: 'Trading Floor' },
+      { src: 'media/5.png', alt: 'Live Screens' },
+      { src: 'media/6.png', alt: 'Interactions' }
+    ];
+
+    let currentImageIndex = 0;
+    let isVideoMode = false;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    function openLightbox(index) {
+      currentImageIndex = index;
+      isVideoMode = false;
+      showLightboxImage();
+    }
+
+    function showLightboxImage() {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxVideo = document.getElementById('lightbox-video');
+      const prevBtn = document.getElementById('lightbox-prev');
+      const nextBtn = document.getElementById('lightbox-next');
+      const counter = document.getElementById('lightbox-counter');
+
+      // Hide video, show image
+      lightboxVideo.style.display = 'none';
+      lightboxVideo.pause();
+      lightboxImg.style.display = 'block';
+      lightboxImg.src = galleryImages[currentImageIndex].src;
+      lightboxImg.alt = galleryImages[currentImageIndex].alt;
+
+      // Show navigation
+      prevBtn.style.display = 'block';
+      nextBtn.style.display = 'block';
+      counter.style.display = 'block';
+      counter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+
+      lightbox.classList.add('active');
+    }
+
+    function openVideoLightbox(videoSrc) {
+      isVideoMode = true;
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxVideo = document.getElementById('lightbox-video');
+      const prevBtn = document.getElementById('lightbox-prev');
+      const nextBtn = document.getElementById('lightbox-next');
+      const counter = document.getElementById('lightbox-counter');
+
+      // Hide image and navigation, show video
+      lightboxImg.style.display = 'none';
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
+      counter.style.display = 'none';
+
+      lightboxVideo.style.display = 'block';
+      lightboxVideo.src = videoSrc;
+      lightboxVideo.play();
+      lightbox.classList.add('active');
+    }
+
+    function navigateLightbox(direction) {
+      if (isVideoMode) return; // Don't navigate in video mode
+
+      currentImageIndex += direction;
+
+      // Wrap around
+      if (currentImageIndex < 0) {
+        currentImageIndex = galleryImages.length - 1;
+      } else if (currentImageIndex >= galleryImages.length) {
+        currentImageIndex = 0;
+      }
+
+      showLightboxImage();
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxVideo = document.getElementById('lightbox-video');
+      lightboxVideo.pause();
+      lightbox.classList.remove('active');
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+      const lightbox = document.getElementById('lightbox');
+      if (!lightbox.classList.contains('active')) return;
+
+      if (event.key === 'Escape') {
+        closeLightbox();
+      } else if (event.key === 'ArrowLeft' && !isVideoMode) {
+        navigateLightbox(-1);
+      } else if (event.key === 'ArrowRight' && !isVideoMode) {
+        navigateLightbox(1);
+      }
+    });
+
+    // Touch/swipe support
+    const lightbox = document.getElementById('lightbox');
+
+    lightbox.addEventListener('touchstart', function(event) {
+      touchStartX = event.changedTouches[0].screenX;
+    }, false);
+
+    lightbox.addEventListener('touchend', function(event) {
+      touchEndX = event.changedTouches[0].screenX;
+      handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+      if (isVideoMode) return; // Don't swipe in video mode
+
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          // Swipe left - next image
+          navigateLightbox(1);
+        } else {
+          // Swipe right - previous image
+          navigateLightbox(-1);
+        }
+      }
+    }
+
+    // Close lightbox when clicking on background (not on image/video/controls)
+    lightbox.addEventListener('click', function(event) {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+  </script>
+</body>
+</html>
