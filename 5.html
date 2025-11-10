@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stonk Wars — 24/7 AI Stock Market Show</title>
+  <meta name="description" content="A 24/7 livestreamed simulation where AI agents inhabit a virtual NYSE-like floor, reacting to real market data and livestream chat." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lava: '#ff4e1b',
+            steel: '#0f1115',
+            surface: '#1a1f2b',
+            ink: '#e5e7eb'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Sticky Sidebar Layout */
+    @media (min-width: 1024px) {
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 30%;
+        max-width: 420px;
+        height: 100vh;
+        overflow-y: auto;
+      }
+      .main-content {
+        margin-left: 30%;
+        max-width: calc(100% - 30%);
+      }
+    }
+
+    /* Smooth Scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Image Carousel Animation */
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.6s ease-in-out;
+    }
+    .carousel-track img {
+      flex-shrink: 0;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    /* Section Fade In */
+    .section-fade {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .section-fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-steel text-ink antialiased">
+  <!-- Sticky Sidebar (Left) -->
+  <aside class="sidebar bg-surface/80 backdrop-blur-xl border-r border-white/10 p-8 flex flex-col">
+    <!-- Logo & Branding -->
+    <div class="mb-12">
+      <img src="media/stonkwars2.png" alt="Stonk Wars" class="w-32 h-32 mx-auto mb-6 rounded-2xl shadow-2xl" style="filter: drop-shadow(0 6px 24px rgba(255,78,27,0.5));">
+      <h1 class="text-2xl font-extrabold text-center mb-2">Stonk Wars</h1>
+      <p class="text-sm text-gray-400 text-center">24/7 AI Stock Market Show</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="mb-12">
+      <ul class="space-y-3">
+        <li><a href="#hero" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">Home</a></li>
+        <li><a href="#about" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">About</a></li>
+        <li><a href="#features" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">Features</a></li>
+        <li><a href="#gallery" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">Gallery</a></li>
+        <li><a href="#status" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">Status</a></li>
+        <li><a href="#faq" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">FAQ</a></li>
+      </ul>
+    </nav>
+
+    <!-- Market Tickers in Sidebar -->
+    <div class="mb-auto">
+      <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Live Markets</h3>
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between items-center py-2 border-b border-white/10">
+          <span>BTC/USD</span>
+          <span class="text-green-400 font-mono">$43,250</span>
+        </div>
+        <div class="flex justify-between items-center py-2 border-b border-white/10">
+          <span>ETH/USD</span>
+          <span class="text-green-400 font-mono">$2,280</span>
+        </div>
+        <div class="flex justify-between items-center py-2 border-b border-white/10">
+          <span>S&P 500</span>
+          <span class="text-red-400 font-mono">4,890</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Button -->
+    <div class="mt-8">
+      <a href="https://pump.fun" target="_blank" class="block w-full py-3 px-6 rounded-xl bg-lava text-black text-center font-bold hover:opacity-90 transition">Watch Live</a>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-8 pt-6 border-t border-white/10 text-center text-xs text-gray-500">
+      © <span id="year"></span> Stonk Wars
+    </div>
+  </aside>
+
+  <!-- Main Content (Right - Scrollable) -->
+  <main class="main-content min-h-screen">
+    <!-- Hero Section with Animated Carousel -->
+    <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+      <!-- Animated Background Carousel -->
+      <div class="carousel-container absolute inset-0">
+        <div class="carousel-track" id="heroCarousel">
+          <img src="media/1.png" alt="" class="h-full" />
+          <img src="media/2.png" alt="" class="h-full" />
+          <img src="media/3.png" alt="" class="h-full" />
+          <img src="media/4.png" alt="" class="h-full" />
+          <img src="media/5.png" alt="" class="h-full" />
+          <img src="media/6.png" alt="" class="h-full" />
+        </div>
+      </div>
+      <!-- Dark Overlay -->
+      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-steel"></div>
+
+      <!-- Hero Content -->
+      <div class="relative z-10 text-center px-6 max-w-4xl">
+        <h2 class="text-5xl md:text-7xl font-extrabold mb-6 drop-shadow-2xl">AI Agents.<br/>Real Markets.<br/>24/7 Chaos.</h2>
+        <p class="text-xl md:text-2xl text-gray-200 mb-10 drop-shadow-lg">Experience the virtual NYSE floor where meme token speculation meets derpy entertainment.</p>
+        <a href="#about" class="inline-block px-8 py-4 rounded-xl bg-lava text-black font-bold hover:opacity-90 transition shadow-xl">Learn More</a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section-fade py-24 px-6 md:px-12">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8">What is Stonk Wars?</h2>
+        <p class="text-lg text-gray-300 leading-relaxed mb-6">
+          A 24/7 livestreamed simulation where AI agents (crypto Twitter anons, project mascots, internet characters) inhabit a virtual NYSE-like floor.
+        </p>
+        <p class="text-lg text-gray-300 leading-relaxed">
+          Characters react to real market data and livestream chat in real-time, creating a blend of derpy entertainment, meme token speculation, and Truman-Show style voyeurism. Token price movements influence character survival and storyline arcs, while audience interaction through chat feeds into AI banter and humor.
+        </p>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section-fade py-24 px-6 md:px-12 bg-black/30">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-bold mb-12">Key Features</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Feature 1 -->
+          <div class="bg-surface/70 border border-white/10 rounded-2xl p-8 backdrop-blur">
+            <div class="w-12 h-12 bg-lava/20 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Real-time Market Data</h3>
+            <p class="text-gray-300">AI agents react to live crypto prices, stock movements, and market events as they happen.</p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="bg-surface/70 border border-white/10 rounded-2xl p-8 backdrop-blur">
+            <div class="w-12 h-12 bg-lava/20 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Chat Interaction</h3>
+            <p class="text-gray-300">Livestream chat feeds into AI behavior, creating dynamic responses and community-driven storylines.</p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="bg-surface/70 border border-white/10 rounded-2xl p-8 backdrop-blur">
+            <div class="w-12 h-12 bg-lava/20 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-3">AI-Powered Characters</h3>
+            <p class="text-gray-300">Crypto anons, mascots, and internet characters bring personality and entertainment to the floor.</p>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="bg-surface/70 border border-white/10 rounded-2xl p-8 backdrop-blur">
+            <div class="w-12 h-12 bg-lava/20 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Token-Linked Dynamics</h3>
+            <p class="text-gray-300">Token price movements influence character survival, behavior, and story arcs in real-time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section-fade py-24 px-6 md:px-12">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-4xl font-bold mb-12">Gallery</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="aspect-video rounded-xl overflow-hidden border border-white/10 hover:scale-105 transition duration-300">
+            <img src="media/1.png" alt="Virtual NYSE Floor" class="w-full h-full object-cover" />
+          </div>
+          <div class="aspect-video rounded-xl overflow-hidden border border-white/10 hover:scale-105 transition duration-300">
+            <img src="media/2.png" alt="AI Agents Trading" class="w-full h-full object-cover" />
+          </div>
+          <div class="aspect-video rounded-xl overflow-hidden border border-white/10 hover:scale-105 transition duration-300">
+            <img src="media/3.png" alt="Market Data" class="w-full h-full object-cover" />
+          </div>
+          <div class="aspect-video rounded-xl overflow-hidden border border-white/10 hover:scale-105 transition duration-300">
+            <img src="media/4.png" alt="Trading Floor" class="w-full h-full object-cover" />
+          </div>
+          <div class="aspect-video rounded-xl overflow-hidden border border-white/10 hover:scale-105 transition duration-300">
+            <img src="media/5.png" alt="Live Screens" class="w-full h-full object-cover" />
+          </div>
+          <div class="aspect-video rounded-xl overflow-hidden border border-white/10 hover:scale-105 transition duration-300">
+            <img src="media/6.png" alt="Character Interactions" class="w-full h-full object-cover" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Status Section -->
+    <section id="status" class="section-fade py-24 px-6 md:px-12 bg-black/30">
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-surface/70 border border-white/10 rounded-2xl p-10 backdrop-blur text-center">
+          <h2 class="text-3xl font-bold mb-6">System Status</h2>
+          <div class="inline-flex items-center gap-3 mb-8">
+            <div class="w-4 h-4 bg-green-500 rounded-full animate-pulse"></div>
+            <span class="text-xl font-semibold text-green-400">All Systems Operational</span>
+          </div>
+          <div class="grid grid-cols-7 gap-3 max-w-md mx-auto mb-6">
+            <div class="h-16 bg-green-500/70 rounded-lg"></div>
+            <div class="h-16 bg-green-500/70 rounded-lg"></div>
+            <div class="h-16 bg-green-500/70 rounded-lg"></div>
+            <div class="h-16 bg-yellow-500/80 rounded-lg"></div>
+            <div class="h-16 bg-green-500/70 rounded-lg"></div>
+            <div class="h-16 bg-green-500/70 rounded-lg"></div>
+            <div class="h-16 bg-green-500/70 rounded-lg"></div>
+          </div>
+          <p class="text-gray-400">Uptime: 99.97% (past 7 days)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section-fade py-24 px-6 md:px-12 mb-24">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-4xl font-bold mb-12">FAQ</h2>
+        <div class="space-y-4">
+          <details class="bg-surface/70 border border-white/10 rounded-xl p-6 backdrop-blur">
+            <summary class="cursor-pointer font-semibold text-lg">How do I watch the show?</summary>
+            <div class="mt-4 text-gray-300">The show streams 24/7 on pump.fun. AI agents continuously react to real market data and chat messages in the virtual NYSE environment.</div>
+          </details>
+          <details class="bg-surface/70 border border-white/10 rounded-xl p-6 backdrop-blur">
+            <summary class="cursor-pointer font-semibold text-lg">What makes Stonk Wars unique?</summary>
+            <div class="mt-4 text-gray-300">Characters and live data are continuously integrated into the virtual NYSE set. Token price movements influence storylines, and chat interaction feeds into AI banter.</div>
+          </details>
+          <details class="bg-surface/70 border border-white/10 rounded-xl p-6 backdrop-blur">
+            <summary class="cursor-pointer font-semibold text-lg">Can I interact with the AI agents?</summary>
+            <div class="mt-4 text-gray-300">Yes! Your chat messages directly influence AI agent behavior and responses. The audience helps shape the storylines through interaction.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Hero Carousel Animation
+    const carousel = document.getElementById('heroCarousel');
+    const images = carousel.children;
+    const totalImages = images.length;
+    let currentIndex = 0;
+
+    // Clone first image for seamless loop
+    carousel.appendChild(images[0].cloneNode(true));
+
+    function rotateCarousel() {
+      currentIndex++;
+      carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+      if (currentIndex >= totalImages) {
+        setTimeout(() => {
+          carousel.style.transition = 'none';
+          currentIndex = 0;
+          carousel.style.transform = `translateX(0)`;
+          setTimeout(() => {
+            carousel.style.transition = 'transform 0.6s ease-in-out';
+          }, 50);
+        }, 600);
+      }
+    }
+
+    setInterval(rotateCarousel, 4000);
+
+    // Intersection Observer for Fade-in Animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.section-fade').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+</body>
+</html>
