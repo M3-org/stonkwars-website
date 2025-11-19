@@ -1,0 +1,149 @@
+STONK WARS - WAITLIST OPTIONS COMPARISON
+=========================================
+
+OPTION 1: SIMPLE FORM
+Badge: Easiest UX
+Description: Users paste their Solana wallet address into a form
+
+PROS:
+• Zero friction - no wallet connect needed
+• Free for users (no gas fees)
+• Works on any device/browser
+• Fast implementation
+
+CONS:
+• No ownership verification
+• Can be spammed with fake addresses
+• Requires backend to store addresses
+• No proof of interest/commitment
+
+---
+
+OPTION 2: SEND DUST SOL
+Badge: Skin in Game
+Description: Users send 0.001-0.01 SOL to a designated address to join
+
+PROS:
+• Proves ownership automatically
+• Shows real commitment (skin in game)
+• Can refund SOL later if desired
+• No centralized backend needed
+• Fully on-chain verification
+
+CONS:
+• Costs users money (even if small)
+• Requires monitoring blockchain
+• Higher friction than free options
+• May deter casual interest
+
+---
+
+OPTION 3: SOCIAL + COUNTDOWN
+Badge: Build Hype
+Description: Countdown timer + social links, deferred waitlist signup
+
+PROS:
+• Builds community first
+• No technical implementation needed yet
+• Creates anticipation with countdown
+• Drives social following
+• Flexible - add waitlist later
+
+CONS:
+• Doesn't capture addresses
+• Requires active social management
+• No direct user list to notify
+• Countdown needs real date
+
+---
+
+OPTION 4: WALLET CONNECT
+Badge: Web3 Standard
+Description: Traditional Web3 approach - connect wallet and sign message
+
+PROS:
+• Proves wallet ownership
+• Industry standard UX
+• Free for users (no gas)
+• Secure cryptographic proof
+• Familiar to crypto users
+
+CONS:
+• More friction (wallet popup)
+• Requires wallet extension
+• More complex implementation
+• Mobile UX can be awkward
+
+---
+
+OPTION 5: SIMPLE COMING SOON
+Badge: Safe & Simple
+Description: No countdown stress, just "Coming Soon" + social links
+
+PROS:
+• Zero pressure - no deadline to hit
+• Builds community organically
+• Simple, clean messaging
+• Flexible launch timing
+• Drives social engagement
+
+CONS:
+• No urgency/FOMO created
+• Doesn't capture wallet addresses
+• Won't drive return traffic
+• Relies on social following
+
+---
+
+OPTION 6: SUBMIT YOUR IDEA
+Badge: Community Input
+Description: Form with Name + Wallet + Idea submission
+
+PROS:
+• Captures wallet + engagement
+• Builds community involvement
+• Can check holdings for perks
+• Generates content/insights
+• Rewards active participants
+
+CONS:
+• Requires manual review of ideas
+• More fields = more friction
+• Can get spammy submissions
+• Need clear moderation plan
+
+---
+
+OPTION 7: TOKEN-GATED TIERS (SURPRISE!)
+Badge: Surprise!
+Description: Special treatment based on wallet holdings (check what tokens they own)
+
+PROS:
+• Rewards existing community members
+• Creates status/exclusivity
+• Verifiable on-chain holdings
+• Incentivizes token holding
+• Can target specific communities
+
+CONS:
+• Complex backend logic needed
+• May exclude new users
+• Holdings can be gamed
+• Requires wallet connection
+
+=========================================
+
+RECOMMENDATION CONSIDERATIONS:
+
+Best for Simplicity: Option 5 (Coming Soon)
+Best for Engagement: Option 6 (Submit Idea)
+Best for Commitment: Option 2 (Send SOL)
+Best for Web3 Standard: Option 4 (Wallet Connect)
+Best for Exclusivity: Option 7 (Token Tiers)
+
+Can be combined:
+- Option 5 (Coming Soon) as main CTA
+- Option 6 (Submit Idea) for engaged users
+- Option 7 (Token Tiers) for special perks
+
+=========================================

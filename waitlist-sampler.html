@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stonk Wars — Waitlist Sampler</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lava: '#ff4e1b',
+            steel: '#0f1115',
+            surface: '#1a1f2b',
+            ink: '#e5e7eb'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glow {
+      box-shadow: 0 0 20px rgba(255, 78, 27, 0.3),
+                  0 0 40px rgba(255, 78, 27, 0.2);
+    }
+  </style>
+</head>
+<body class="bg-steel text-ink antialiased">
+  <div class="max-w-7xl mx-auto px-6 py-16">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-extrabold mb-4">Waitlist UX Sampler</h1>
+      <p class="text-gray-400">Compare 7 different waitlist approaches • Choose your favorite</p>
+    </div>
+
+    <div class="space-y-16">
+      <!-- OPTION 1: Simple Form (Paste Wallet) -->
+      <section class="bg-surface/50 border border-white/10 rounded-xl p-8">
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <h2 class="text-2xl font-bold text-lava mb-2">Option 1: Simple Form</h2>
+            <p class="text-gray-300">Users paste their Solana wallet address</p>
+          </div>
+          <span class="px-3 py-1 bg-green-500/20 border border-green-500/40 rounded-full text-green-400 text-xs font-semibold">Easiest UX</span>
+        </div>
+
+        <!-- Demo UI -->
+        <div class="bg-steel/50 border border-white/10 rounded-lg p-6 mb-6">
+          <h3 class="text-lg font-semibold mb-4 text-center">Join the Waitlist</h3>
+          <div class="max-w-md mx-auto space-y-4">
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">Solana Wallet Address</label>
+              <input
+                type="text"
+                placeholder="StoNKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                class="w-full px-4 py-3 bg-surface border border-white/10 rounded-lg text-ink placeholder-gray-500 focus:outline-none focus:border-lava"
+                id="wallet-input-1"
+              />
+            </div>
+            <button
+              onclick="simulateSubmit(1)"
+              class="w-full px-6 py-3 bg-lava text-black font-semibold rounded-lg hover:opacity-90 transition-opacity"
+            >
+              Join Waitlist
+            </button>
+            <div id="success-1" class="hidden text-center text-green-400 text-sm">✓ You're on the list!</div>
+          </div>
+        </div>
+
+        <!-- Pros/Cons -->
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-green-400 mb-2">✓ Pros</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• Zero friction - no wallet connect needed</li>
+              <li>• Free for users (no gas fees)</li>
+              <li>• Works on any device/browser</li>
+              <li>• Fast implementation</li>
+            </ul>
+          </div>
+          <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-red-400 mb-2">✗ Cons</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• No ownership verification</li>
+              <li>• Can be spammed with fake addresses</li>
+              <li>• Requires backend to store addresses</li>
+              <li>• No proof of interest/commitment</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- OPTION 2: Send Dust SOL -->
+      <section class="bg-surface/50 border border-white/10 rounded-xl p-8">
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <h2 class="text-2xl font-bold text-lava mb-2">Option 2: Send Dust SOL</h2>
+            <p class="text-gray-300">Users send 0.001-0.01 SOL to join</p>
+          </div>
+          <span class="px-3 py-1 bg-yellow-500/20 border border-yellow-500/40 rounded-full text-yellow-400 text-xs font-semibold">Skin in Game</span>
+        </div>
+
+        <!-- Demo UI -->
+        <div class="bg-steel/50 border border-white/10 rounded-lg p-6 mb-6">
+          <h3 class="text-lg font-semibold mb-4 text-center">Join the Waitlist</h3>
+          <div class="max-w-md mx-auto space-y-4">
+            <p class="text-sm text-gray-400 text-center">Send 0.001 SOL to this address to join:</p>
+            <div class="bg-surface border border-white/10 rounded-lg p-4 flex items-center justify-between group cursor-pointer hover:border-lava transition-colors" onclick="copyToClipboard('StoNKWaitList111111111111111111111111111', 2)">
+              <code class="text-sm text-lava font-mono break-all">StoNKWaitList111111111111111111111111111</code>
+              <button class="ml-4 px-3 py-1 bg-lava/20 text-lava rounded text-sm hover:bg-lava/30 flex-shrink-0">
+                Copy
+              </button>
+            </div>
+            <div id="copied-2" class="hidden text-center text-green-400 text-sm">✓ Address copied to clipboard!</div>
+            <p class="text-xs text-gray-500 text-center">Your wallet address will be automatically tracked on-chain</p>
+          </div>
+        </div>
+
+        <!-- Pros/Cons -->
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-green-400 mb-2">✓ Pros</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• Proves ownership automatically</li>
+              <li>• Shows real commitment (skin in game)</li>
+              <li>• Can refund SOL later if desired</li>
+              <li>• No centralized backend needed</li>
+              <li>• Fully on-chain verification</li>
+            </ul>
+          </div>
+          <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-red-400 mb-2">✗ Cons</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• Costs users money (even if small)</li>
+              <li>• Requires monitoring blockchain</li>
+              <li>• Higher friction than free options</li>
+              <li>• May deter casual interest</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- OPTION 3: Placeholder + Social CTAs -->
+      <section class="bg-surface/50 border border-white/10 rounded-xl p-8">
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <h2 class="text-2xl font-bold text-lava mb-2">Option 3: Social + Coming Soon</h2>
+            <p class="text-gray-300">Focus on community, defer waitlist</p>
+          </div>
+          <span class="px-3 py-1 bg-purple-500/20 border border-purple-500/40 rounded-full text-purple-400 text-xs font-semibold">Build Hype</span>
+        </div>
+
+        <!-- Demo UI -->
+        <div class="bg-steel/50 border border-white/10 rounded-lg p-8 mb-6">
+          <div class="text-center space-y-6">
+            <div>
+              <h3 class="text-2xl font-bold mb-2">Token Launch</h3>
+              <p class="text-lava text-4xl font-bold mb-4">Coming Soon</p>
+              <p class="text-gray-400 text-sm">Join our community to stay updated</p>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="flex justify-center gap-4 mb-6">
+              <div class="bg-surface border border-white/10 rounded-lg p-4 min-w-[80px]">
+                <div class="text-3xl font-bold text-lava">12</div>
+                <div class="text-xs text-gray-400">Days</div>
+              </div>
+              <div class="bg-surface border border-white/10 rounded-lg p-4 min-w-[80px]">
+                <div class="text-3xl font-bold text-lava">08</div>
+                <div class="text-xs text-gray-400">Hours</div>
+              </div>
+              <div class="bg-surface border border-white/10 rounded-lg p-4 min-w-[80px]">
+                <div class="text-3xl font-bold text-lava">45</div>
+                <div class="text-xs text-gray-400">Mins</div>
+              </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="space-y-3">
+              <p class="text-sm font-semibold text-gray-300">Follow for updates:</p>
+              <div class="flex justify-center gap-4">
+                <a href="#" class="flex items-center gap-2 px-4 py-2 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors group">
+                  <img src="media/twitter-logo.svg" alt="Twitter" class="w-5 h-5 opacity-70 group-hover:opacity-100" />
+                  <span class="text-sm">Twitter</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 px-4 py-2 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors group">
+                  <img src="media/telegram-logo.svg" alt="Telegram" class="w-5 h-5 opacity-70 group-hover:opacity-100" />
+                  <span class="text-sm">Telegram</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 px-4 py-2 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors group">
+                  <img src="media/discord-logo.svg" alt="Discord" class="w-5 h-5 opacity-70 group-hover:opacity-100" />
+                  <span class="text-sm">Discord</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="pt-4">
+              <button disabled class="px-6 py-3 bg-surface border border-white/10 text-gray-500 rounded-lg cursor-not-allowed">
+                Waitlist Opens Soon
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pros/Cons -->
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-green-400 mb-2">✓ Pros</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• Builds community first</li>
+              <li>• No technical implementation needed yet</li>
+              <li>• Creates anticipation with countdown</li>
+              <li>• Drives social following</li>
+              <li>• Flexible - add waitlist later</li>
+            </ul>
+          </div>
+          <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-red-400 mb-2">✗ Cons</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• Doesn't capture addresses</li>
+              <li>• Requires active social management</li>
+              <li>• No direct user list to notify</li>
+              <li>• Countdown needs real date</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- OPTION 4: Wallet Connect + Signature -->
+      <section class="bg-surface/50 border border-white/10 rounded-xl p-8">
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <h2 class="text-2xl font-bold text-lava mb-2">Option 4: Wallet Connect</h2>
+            <p class="text-gray-300">Traditional Web3 approach with signature</p>
+          </div>
+          <span class="px-3 py-1 bg-blue-500/20 border border-blue-500/40 rounded-full text-blue-400 text-xs font-semibold">Web3 Standard</span>
+        </div>
+
+        <!-- Demo UI -->
+        <div class="bg-steel/50 border border-white/10 rounded-lg p-6 mb-6">
+          <h3 class="text-lg font-semibold mb-4 text-center">Join the Waitlist</h3>
+          <div class="max-w-md mx-auto space-y-4">
+            <div class="text-center space-y-3">
+              <button
+                onclick="simulateWalletConnect(4)"
+                class="w-full px-6 py-3 bg-lava text-black font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                id="connect-btn-4"
+              >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                </svg>
+                Connect Wallet
+              </button>
+
+              <!-- Wallet Connected State (hidden by default) -->
+              <div id="connected-4" class="hidden space-y-3">
+                <div class="bg-surface border border-white/10 rounded-lg p-4">
+                  <p class="text-xs text-gray-400 mb-1">Connected Wallet</p>
+                  <p class="text-sm text-lava font-mono">StoNK...x1a2b</p>
+                </div>
+                <button
+                  onclick="simulateSign(4)"
+                  class="w-full px-6 py-3 bg-green-500/20 border border-green-500/40 text-green-400 font-semibold rounded-lg hover:bg-green-500/30 transition-colors"
+                  id="sign-btn-4"
+                >
+                  Sign Message to Join
+                </button>
+                <div id="signed-4" class="hidden text-center text-green-400 text-sm">✓ Signed! You're on the waitlist</div>
+              </div>
+
+              <p class="text-xs text-gray-500 text-center">Phantom, Solflare, and other Solana wallets supported</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pros/Cons -->
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-green-400 mb-2">✓ Pros</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• Proves wallet ownership</li>
+              <li>• Industry standard UX</li>
+              <li>• Free for users (no gas)</li>
+              <li>• Secure cryptographic proof</li>
+              <li>• Familiar to crypto users</li>
+            </ul>
+          </div>
+          <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-red-400 mb-2">✗ Cons</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• More friction (wallet popup)</li>
+              <li>• Requires wallet extension</li>
+              <li>• More complex implementation</li>
+              <li>• Mobile UX can be awkward</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- OPTION 5: Simple Coming Soon (No Countdown) -->
+      <section class="bg-surface/50 border border-white/10 rounded-xl p-8">
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <h2 class="text-2xl font-bold text-lava mb-2">Option 5: Simple Coming Soon</h2>
+            <p class="text-gray-300">No countdown stress, just social + hype</p>
+          </div>
+          <span class="px-3 py-1 bg-purple-500/20 border border-purple-500/40 rounded-full text-purple-400 text-xs font-semibold">Safe & Simple</span>
+        </div>
+
+        <!-- Demo UI -->
+        <div class="bg-steel/50 border border-white/10 rounded-lg p-8 mb-6">
+          <div class="text-center space-y-6">
+            <div>
+              <h3 class="text-3xl font-bold mb-2">Stonk Wars Token</h3>
+              <p class="text-lava text-5xl font-bold mb-4">Coming Soon</p>
+              <p class="text-gray-400">Join the community for updates</p>
+            </div>
+
+            <!-- Social Links -->
+            <div class="space-y-4 pt-4">
+              <p class="text-sm font-semibold text-gray-300">Stay connected:</p>
+              <div class="flex flex-col sm:flex-row justify-center gap-3">
+                <a href="#" class="flex items-center justify-center gap-2 px-6 py-3 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors group">
+                  <img src="media/twitter-logo.svg" alt="Twitter" class="w-5 h-5 opacity-70 group-hover:opacity-100" />
+                  <span class="text-sm font-semibold">Follow on Twitter</span>
+                </a>
+                <a href="#" class="flex items-center justify-center gap-2 px-6 py-3 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors group">
+                  <img src="media/telegram-logo.svg" alt="Telegram" class="w-5 h-5 opacity-70 group-hover:opacity-100" />
+                  <span class="text-sm font-semibold">Join Telegram</span>
+                </a>
+                <a href="#" class="flex items-center justify-center gap-2 px-6 py-3 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors group">
+                  <img src="media/discord-logo.svg" alt="Discord" class="w-5 h-5 opacity-70 group-hover:opacity-100" />
+                  <span class="text-sm font-semibold">Join Discord</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pros/Cons -->
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-green-400 mb-2">✓ Pros</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• Zero pressure - no deadline to hit</li>
+              <li>• Builds community organically</li>
+              <li>• Simple, clean messaging</li>
+              <li>• Flexible launch timing</li>
+              <li>• Drives social engagement</li>
+            </ul>
+          </div>
+          <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-red-400 mb-2">✗ Cons</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• No urgency/FOMO created</li>
+              <li>• Doesn't capture wallet addresses</li>
+              <li>• Won't drive return traffic</li>
+              <li>• Relies on social following</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- OPTION 6: Submit Your Idea -->
+      <section class="bg-surface/50 border border-white/10 rounded-xl p-8">
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <h2 class="text-2xl font-bold text-lava mb-2">Option 6: Submit Your Idea</h2>
+            <p class="text-gray-300">Capture ideas + wallets, reward contributors</p>
+          </div>
+          <span class="px-3 py-1 bg-cyan-500/20 border border-cyan-500/40 rounded-full text-cyan-400 text-xs font-semibold">Community Input</span>
+        </div>
+
+        <!-- Demo UI -->
+        <div class="bg-steel/50 border border-white/10 rounded-lg p-6 mb-6">
+          <h3 class="text-lg font-semibold mb-4 text-center">Share Your Ideas</h3>
+          <p class="text-sm text-gray-400 text-center mb-6">Help shape Stonk Wars. Best ideas get special treatment.</p>
+          <div class="max-w-md mx-auto space-y-4">
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">Name (or anon)</label>
+              <input
+                type="text"
+                placeholder="anon_degen"
+                class="w-full px-4 py-3 bg-surface border border-white/10 rounded-lg text-ink placeholder-gray-500 focus:outline-none focus:border-lava"
+                id="name-input-6"
+              />
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">Solana Wallet</label>
+              <input
+                type="text"
+                placeholder="StoNKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                class="w-full px-4 py-3 bg-surface border border-white/10 rounded-lg text-ink placeholder-gray-500 focus:outline-none focus:border-lava"
+                id="wallet-input-6"
+              />
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">Your Idea</label>
+              <textarea
+                placeholder="What AI character should we add? What features would make you watch? Share your thoughts..."
+                rows="4"
+                class="w-full px-4 py-3 bg-surface border border-white/10 rounded-lg text-ink placeholder-gray-500 focus:outline-none focus:border-lava resize-none"
+                id="idea-input-6"
+              ></textarea>
+            </div>
+            <button
+              onclick="simulateIdeaSubmit(6)"
+              class="w-full px-6 py-3 bg-lava text-black font-semibold rounded-lg hover:opacity-90 transition-opacity"
+            >
+              Submit Idea
+            </button>
+            <div id="success-6" class="hidden text-center text-green-400 text-sm">✓ Idea submitted! We'll check your wallet for special perks.</div>
+          </div>
+        </div>
+
+        <!-- Pros/Cons -->
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-green-400 mb-2">✓ Pros</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• Captures wallet + engagement</li>
+              <li>• Builds community involvement</li>
+              <li>• Can check holdings for perks</li>
+              <li>• Generates content/insights</li>
+              <li>• Rewards active participants</li>
+            </ul>
+          </div>
+          <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-red-400 mb-2">✗ Cons</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• Requires manual review of ideas</li>
+              <li>• More fields = more friction</li>
+              <li>• Can get spammy submissions</li>
+              <li>• Need clear moderation plan</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- OPTION 7: Token-Gated Tiers (SURPRISE!) -->
+      <section class="bg-surface/50 border border-lava/30 rounded-xl p-8">
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <h2 class="text-2xl font-bold text-lava mb-2">Option 7: Token-Gated Tiers 🎁</h2>
+            <p class="text-gray-300">Special treatment based on holdings</p>
+          </div>
+          <span class="px-3 py-1 bg-lava/30 border border-lava rounded-full text-lava text-xs font-semibold animate-pulse">Surprise!</span>
+        </div>
+
+        <!-- Demo UI -->
+        <div class="bg-steel/50 border border-white/10 rounded-lg p-6 mb-6">
+          <h3 class="text-lg font-semibold mb-4 text-center">Connect to See Your Tier</h3>
+          <div class="max-w-md mx-auto space-y-4">
+            <button
+              onclick="simulateTokenCheck(7)"
+              class="w-full px-6 py-3 bg-lava text-black font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+              id="connect-btn-7"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM9 9a1 1 0 112 0 1 1 0 01-2 0zm1 4a1 1 0 100-2 1 1 0 000 2z"></path>
+              </svg>
+              Check My Holdings
+            </button>
+
+            <!-- Tier Results (hidden by default) -->
+            <div id="tier-result-7" class="hidden space-y-4">
+              <div class="bg-gradient-to-r from-yellow-500/20 to-lava/20 border-2 border-lava rounded-lg p-6 text-center">
+                <div class="text-4xl mb-2">👑</div>
+                <h4 class="text-xl font-bold text-lava mb-2">VIP Tier</h4>
+                <p class="text-sm text-gray-300 mb-4">You hold SOL, BONK, and pump.fun tokens!</p>
+                <div class="space-y-2">
+                  <div class="bg-surface/50 rounded-lg p-3">
+                    <p class="text-xs text-gray-400">Early Access</p>
+                    <p class="text-sm font-semibold text-green-400">✓ Guaranteed</p>
+                  </div>
+                  <div class="bg-surface/50 rounded-lg p-3">
+                    <p class="text-xs text-gray-400">Token Allocation</p>
+                    <p class="text-sm font-semibold text-lava">2x Standard</p>
+                  </div>
+                  <div class="bg-surface/50 rounded-lg p-3">
+                    <p class="text-xs text-gray-400">Special Role</p>
+                    <p class="text-sm font-semibold text-purple-400">Founder OG</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-xs text-gray-500 text-center">
+                We checked your wallet holdings to determine your tier. Different tokens = different perks.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pros/Cons -->
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-green-400 mb-2">✓ Pros</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• Rewards existing community members</li>
+              <li>• Creates status/exclusivity</li>
+              <li>• Verifiable on-chain holdings</li>
+              <li>• Incentivizes token holding</li>
+              <li>• Can target specific communities</li>
+            </ul>
+          </div>
+          <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+            <h4 class="font-semibold text-red-400 mb-2">✗ Cons</h4>
+            <ul class="text-sm text-gray-300 space-y-1">
+              <li>• Complex backend logic needed</li>
+              <li>• May exclude new users</li>
+              <li>• Holdings can be gamed</li>
+              <li>• Requires wallet connection</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Selection Footer -->
+    <div class="mt-16 text-center">
+      <p class="text-gray-400 text-lg mb-4">Which approach feels best for Stonk Wars?</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <button onclick="selectOption(1)" class="px-6 py-2 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors">
+          Option 1: Simple Form
+        </button>
+        <button onclick="selectOption(2)" class="px-6 py-2 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors">
+          Option 2: Send SOL
+        </button>
+        <button onclick="selectOption(3)" class="px-6 py-2 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors">
+          Option 3: Social + Countdown
+        </button>
+        <button onclick="selectOption(4)" class="px-6 py-2 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors">
+          Option 4: Wallet Connect
+        </button>
+        <button onclick="selectOption(5)" class="px-6 py-2 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors">
+          Option 5: Coming Soon
+        </button>
+        <button onclick="selectOption(6)" class="px-6 py-2 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors">
+          Option 6: Submit Idea
+        </button>
+        <button onclick="selectOption(7)" class="px-6 py-2 bg-surface border border-lava/50 rounded-lg hover:border-lava transition-colors font-semibold text-lava">
+          Option 7: Token Tiers 🎁
+        </button>
+      </div>
+      <div id="selection" class="mt-4 text-lava font-semibold hidden"></div>
+    </div>
+  </div>
+
+  <script>
+    // Option 1: Simple form submit
+    function simulateSubmit(option) {
+      const input = document.getElementById('wallet-input-1');
+      const success = document.getElementById('success-1');
+
+      if (input.value.trim()) {
+        success.classList.remove('hidden');
+        setTimeout(() => success.classList.add('hidden'), 3000);
+      } else {
+        alert('Please enter a wallet address');
+      }
+    }
+
+    // Option 2: Copy to clipboard
+    function copyToClipboard(text, option) {
+      navigator.clipboard.writeText(text).then(() => {
+        const copied = document.getElementById('copied-' + option);
+        copied.classList.remove('hidden');
+        setTimeout(() => copied.classList.add('hidden'), 3000);
+      });
+    }
+
+    // Option 4: Wallet connect simulation
+    function simulateWalletConnect(option) {
+      const connectBtn = document.getElementById('connect-btn-4');
+      const connected = document.getElementById('connected-4');
+
+      connectBtn.innerHTML = '<svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Connecting...';
+
+      setTimeout(() => {
+        connectBtn.classList.add('hidden');
+        connected.classList.remove('hidden');
+      }, 1500);
+    }
+
+    // Option 4: Sign message simulation
+    function simulateSign(option) {
+      const signBtn = document.getElementById('sign-btn-4');
+      const signed = document.getElementById('signed-4');
+
+      signBtn.innerHTML = '<svg class="w-5 h-5 animate-spin inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Waiting for signature...';
+
+      setTimeout(() => {
+        signBtn.classList.add('hidden');
+        signed.classList.remove('hidden');
+      }, 2000);
+    }
+
+    // Option 6: Idea submission
+    function simulateIdeaSubmit(option) {
+      const name = document.getElementById('name-input-6').value;
+      const wallet = document.getElementById('wallet-input-6').value;
+      const idea = document.getElementById('idea-input-6').value;
+      const success = document.getElementById('success-6');
+
+      if (wallet.trim() && idea.trim()) {
+        success.classList.remove('hidden');
+        setTimeout(() => success.classList.add('hidden'), 5000);
+      } else {
+        alert('Please fill in your wallet address and idea');
+      }
+    }
+
+    // Option 7: Token-gated tiers check
+    function simulateTokenCheck(option) {
+      const connectBtn = document.getElementById('connect-btn-7');
+      const tierResult = document.getElementById('tier-result-7');
+
+      connectBtn.innerHTML = '<svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Checking holdings...';
+
+      setTimeout(() => {
+        connectBtn.classList.add('hidden');
+        tierResult.classList.remove('hidden');
+      }, 2000);
+    }
+
+    // Selection feedback
+    function selectOption(num) {
+      const selection = document.getElementById('selection');
+      selection.textContent = `You selected Option ${num}! This will be integrated into 4.html`;
+      selection.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
