@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>💀 STONK WARS: MAXIMUM DANK 💀</title>
+  <style>
+    * {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><text y="24" font-size="24">🚀</text></svg>'), auto !important;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow-x: hidden;
+      font-family: 'Impact', 'Comic Sans MS', cursive;
+      color: #00ff00;
+    }
+
+    /* FLASHING BACKGROUND */
+    @keyframes disco {
+      0% { background: #ff0000; }
+      14% { background: #ff7f00; }
+      28% { background: #ffff00; }
+      42% { background: #00ff00; }
+      57% { background: #0000ff; }
+      71% { background: #4b0082; }
+      85% { background: #9400d3; }
+      100% { background: #ff0000; }
+    }
+
+    body.disco-mode {
+      animation: disco 0.5s infinite;
+    }
+
+    /* SPINNING GIF CONTAINER */
+    .spinning-gif {
+      animation: spin-wobble 2s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin-wobble {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(90deg) scale(1.2); }
+      50% { transform: rotate(180deg) scale(0.8); }
+      75% { transform: rotate(270deg) scale(1.2); }
+    }
+
+    /* BOUNCING GIFS */
+    .bounce-gif {
+      animation: bounce-crazy 1s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes bounce-crazy {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-50px) rotate(10deg); }
+      50% { transform: translateY(0) rotate(0deg); }
+      75% { transform: translateY(-30px) rotate(-10deg); }
+    }
+
+    /* SHAKING GIF */
+    .shake-gif {
+      animation: violent-shake 0.1s infinite;
+      display: inline-block;
+    }
+
+    @keyframes violent-shake {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      10% { transform: translate(-5px, -5px) rotate(-5deg); }
+      20% { transform: translate(5px, 5px) rotate(5deg); }
+      30% { transform: translate(-5px, 5px) rotate(-5deg); }
+      40% { transform: translate(5px, -5px) rotate(5deg); }
+      50% { transform: translate(-5px, -5px) rotate(-5deg); }
+      60% { transform: translate(5px, 5px) rotate(5deg); }
+      70% { transform: translate(-5px, 5px) rotate(-5deg); }
+      80% { transform: translate(5px, -5px) rotate(5deg); }
+      90% { transform: translate(-5px, -5px) rotate(-5deg); }
+      100% { transform: translate(5px, 5px) rotate(5deg); }
+    }
+
+    /* RAINBOW TEXT */
+    @keyframes rainbow {
+      0% { color: #ff0000; text-shadow: 0 0 20px #ff0000; }
+      16% { color: #ff7f00; text-shadow: 0 0 20px #ff7f00; }
+      32% { color: #ffff00; text-shadow: 0 0 20px #ffff00; }
+      48% { color: #00ff00; text-shadow: 0 0 20px #00ff00; }
+      64% { color: #0000ff; text-shadow: 0 0 20px #0000ff; }
+      80% { color: #4b0082; text-shadow: 0 0 20px #4b0082; }
+      100% { color: #ff0000; text-shadow: 0 0 20px #ff0000; }
+    }
+
+    .rainbow { animation: rainbow 1s linear infinite; }
+
+    /* MARQUEE MADNESS */
+    .marquee-container {
+      overflow: hidden;
+      background: #000;
+      border: 5px solid #ff00ff;
+      padding: 10px 0;
+    }
+
+    .marquee-content {
+      display: flex;
+      animation: scroll 20s linear infinite;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* FLOATING MEMES */
+    .floating-meme {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      animation: float-meme 10s ease-in-out infinite;
+    }
+
+    @keyframes float-meme {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(100px, -100px) rotate(90deg); }
+      50% { transform: translate(0, -200px) rotate(180deg); }
+      75% { transform: translate(-100px, -100px) rotate(270deg); }
+    }
+
+    /* EXPLOSION EFFECT */
+    .explosion {
+      position: fixed;
+      font-size: 100px;
+      pointer-events: none;
+      animation: explode 1s ease-out forwards;
+      z-index: 10000;
+    }
+
+    @keyframes explode {
+      0% { transform: scale(0) rotate(0deg); opacity: 1; }
+      100% { transform: scale(3) rotate(360deg); opacity: 0; }
+    }
+
+    /* GLITCH EFFECT */
+    @keyframes glitch-anim {
+      0% {
+        clip-path: inset(40% 0 61% 0);
+        transform: translate(0, 0);
+      }
+      20% {
+        clip-path: inset(92% 0 1% 0);
+        transform: translate(-5px, 5px);
+      }
+      40% {
+        clip-path: inset(43% 0 1% 0);
+        transform: translate(5px, -5px);
+      }
+      60% {
+        clip-path: inset(25% 0 58% 0);
+        transform: translate(-5px, -5px);
+      }
+      80% {
+        clip-path: inset(54% 0 7% 0);
+        transform: translate(5px, 5px);
+      }
+      100% {
+        clip-path: inset(58% 0 43% 0);
+        transform: translate(0, 0);
+      }
+    }
+
+    .glitch {
+      animation: glitch-anim 0.3s infinite;
+    }
+
+    /* SPINNING */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin 2s linear infinite; }
+    .spin-reverse { animation: spin 2s linear infinite reverse; }
+
+    /* PULSING */
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); filter: brightness(1); }
+      50% { transform: scale(1.5); filter: brightness(2); }
+    }
+    .pulse { animation: pulse 1s ease-in-out infinite; }
+
+    /* GIF GRID */
+    .gif-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .gif-item {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border: 5px solid;
+      border-image: linear-gradient(45deg, red, blue, green, yellow) 1;
+      animation: border-spin 2s linear infinite;
+    }
+
+    @keyframes border-spin {
+      to { filter: hue-rotate(360deg); }
+    }
+
+    /* MEME TEXT */
+    .meme-text {
+      font-family: Impact, sans-serif;
+      font-size: 48px;
+      color: white;
+      text-shadow:
+        -2px -2px 0 #000,
+        2px -2px 0 #000,
+        -2px 2px 0 #000,
+        2px 2px 0 #000,
+        0 0 20px #000;
+      text-align: center;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    /* BUTTON STYLES */
+    .dank-button {
+      background: linear-gradient(45deg, #ff00ff, #00ffff);
+      border: 5px solid #ffff00;
+      color: #000;
+      font-size: 24px;
+      padding: 20px 40px;
+      font-weight: bold;
+      cursor: pointer;
+      animation: pulse 1s ease-in-out infinite;
+      text-shadow: 0 0 10px #fff;
+      box-shadow: 0 0 30px #ff00ff;
+    }
+
+    .dank-button:hover {
+      animation: shake-gif 0.1s infinite;
+    }
+
+    /* CORNERS DECORATION */
+    .corner-gif {
+      position: fixed;
+      width: 150px;
+      height: 150px;
+      z-index: 9998;
+    }
+
+    .corner-gif.top-left { top: 50px; left: 10px; }
+    .corner-gif.top-right { top: 50px; right: 10px; }
+    .corner-gif.bottom-left { bottom: 10px; left: 10px; }
+    .corner-gif.bottom-right { bottom: 10px; right: 10px; }
+
+    /* SCROLLING TEXT COLUMNS */
+    .text-column {
+      position: fixed;
+      width: 200px;
+      height: 100vh;
+      overflow: hidden;
+      font-size: 12px;
+      line-height: 1.2;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      z-index: 1;
+      opacity: 0.7;
+    }
+
+    .text-column.left { left: 0; top: 0; }
+    .text-column.right { right: 0; top: 0; }
+
+    .text-scroll {
+      animation: scroll-text 30s linear infinite;
+    }
+
+    @keyframes scroll-text {
+      from { transform: translateY(0); }
+      to { transform: translateY(-100%); }
+    }
+
+    /* MAIN CONTENT */
+    .content {
+      position: relative;
+      z-index: 10;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* BACKGROUND MEMES */
+    .bg-meme {
+      position: fixed;
+      opacity: 0.1;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* FLASH WARNING */
+    .flash-warning {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: red;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      z-index: 99999;
+      animation: flash 0.5s infinite;
+    }
+
+    @keyframes flash {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* MEME OVERLAY */
+    .meme-overlay {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10001;
+      display: none;
+      pointer-events: none;
+      font-size: 80px;
+      animation: zoom-in 0.5s ease-out;
+    }
+
+    @keyframes zoom-in {
+      from { transform: translate(-50%, -50%) scale(0); }
+      to { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .meme-overlay.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <!-- SEIZURE WARNING -->
+  <div class="flash-warning" id="warning">
+    ⚠️ WARNING: MAXIMUM DANK DETECTED - PREPARE YOUR EYEBALLS ⚠️
+  </div>
+
+  <!-- SCROLLING TEXT COLUMNS -->
+  <div class="text-column left">
+    <div class="text-scroll">
+      <pre>
+TO THE MOON
+DIAMOND HANDS
+NGMI NGMI NGMI
+WAGMI WAGMI WAGMI
+GM GM GM GM GM
+LFG LFG LFG LFG
+HODL HODL HODL
+PUMP IT PUMP IT
+DUMP IT DUMP IT
+BUY HIGH SELL LOW
+NOT FINANCIAL ADVICE
+DYOR DYOR DYOR
+NFA NFA NFA NFA
+REKT REKT REKT
+MOON SOON MOON SOON
+WEN LAMBO WEN LAMBO
+FUD FUD FUD FUD
+FOMO FOMO FOMO
+APE IN APE IN
+TO THE MOON
+DIAMOND HANDS
+NGMI NGMI NGMI
+WAGMI WAGMI WAGMI
+      </pre>
+    </div>
+  </div>
+
+  <div class="text-column right">
+    <div class="text-scroll" style="animation-direction: reverse;">
+      <pre>
+📈📈📈📈📈📈
+💎💎💎💎💎💎
+🚀🚀🚀🚀🚀🚀
+🌙🌙🌙🌙🌙🌙
+💰💰💰💰💰💰
+🤑🤑🤑🤑🤑🤑
+🔥🔥🔥🔥🔥🔥
+💸💸💸💸💸💸
+⚠️⚠️⚠️⚠️⚠️⚠️
+📉📉📉📉📉📉
+💀💀💀💀💀💀
+🎰🎰🎰🎰🎰🎰
+🎲🎲🎲🎲🎲🎲
+🃏🃏🃏🃏🃏🃏
+🔮🔮🔮🔮🔮🔮
+⛔⛔⛔⛔⛔⛔
+📈📈📈📈📈📈
+💎💎💎💎💎💎
+      </pre>
+    </div>
+  </div>
+
+  <!-- CORNER GIFS -->
+  <img src="https://web.archive.org/web/19990128234238im_/http://www.angelfire.com/va/GOLDY1/flame2.gif" class="corner-gif top-left spin" onerror="this.src='media/stonkwars2.png'" alt="fire">
+  <img src="https://web.archive.org/web/19991013061928im_/http://www.angelfire.com/nm/halowebs/fire.gif" class="corner-gif top-right spin-reverse" onerror="this.src='media/stonkwars2.png'" alt="fire">
+  <img src="https://web.archive.org/web/19991127133041im_/http://www.geocities.com/SunsetStrip/Disco/8078/skull.gif" class="corner-gif bottom-left bounce-gif" onerror="this.src='media/stonkwars2.png'" alt="skull">
+  <img src="https://web.archive.org/web/19991003144149im_/http://www.geocities.com/SiliconValley/Park/6112/construction.gif" class="corner-gif bottom-right shake-gif" onerror="this.src='media/stonkwars2.png'" alt="construction">
+
+  <!-- FLOATING MEMES -->
+  <div class="floating-meme" style="top: 20%; left: 10%; animation-delay: 0s;">
+    <img src="https://web.archive.org/web/19991006061837im_/http://www.angelfire.com/ny/JMONEY1/cool.gif" width="100" onerror="this.style.display='none'" alt="cool">
+  </div>
+  <div class="floating-meme" style="top: 60%; right: 10%; animation-delay: -3s;">
+    <img src="https://web.archive.org/web/19991104220826im_/http://www.geocities.com/Broadway/Alley/6802/money.gif" width="100" onerror="this.style.display='none'" alt="money">
+  </div>
+
+  <!-- MEME OVERLAY -->
+  <div class="meme-overlay rainbow" id="meme-overlay"></div>
+
+  <div class="content">
+    <!-- HEADER -->
+    <div style="text-align: center; margin: 60px 0 40px 0;">
+      <div style="display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap;">
+        <img src="media/stonkwars2.png" class="spinning-gif" width="150" height="150" alt="logo" style="filter: saturate(5) hue-rotate(90deg);">
+        <div>
+          <h1 class="meme-text rainbow" style="font-size: 80px; margin: 0;">
+            STONK WARS
+          </h1>
+          <div class="meme-text" style="font-size: 32px; color: #00ff00; margin-top: 10px;">
+            MAXIMUM DANK EDITION
+          </div>
+        </div>
+        <img src="media/stonkwars2.png" class="bounce-gif" width="150" height="150" alt="logo" style="filter: saturate(5) hue-rotate(270deg);">
+      </div>
+    </div>
+
+    <!-- MARQUEE OF MADNESS -->
+    <div class="marquee-container">
+      <div class="marquee-content">
+        <div style="display: flex; gap: 50px; white-space: nowrap;">
+          <span class="rainbow" style="font-size: 36px; font-weight: bold;">🚀 TO THE MOON 🚀</span>
+          <span class="rainbow" style="font-size: 36px; font-weight: bold;">💎 DIAMOND HANDS 💎</span>
+          <span class="rainbow" style="font-size: 36px; font-weight: bold;">📈 STONKS ONLY GO UP 📈</span>
+          <span class="rainbow" style="font-size: 36px; font-weight: bold;">🤑 WAGMI 🤑</span>
+          <span class="rainbow" style="font-size: 36px; font-weight: bold;">🔥 THIS IS FINE 🔥</span>
+          <span class="rainbow" style="font-size: 36px; font-weight: bold;">🚀 TO THE MOON 🚀</span>
+          <span class="rainbow" style="font-size: 36px; font-weight: bold;">💎 DIAMOND HANDS 💎</span>
+          <span class="rainbow" style="font-size: 36px; font-weight: bold;">📈 STONKS ONLY GO UP 📈</span>
+          <span class="rainbow" style="font-size: 36px; font-weight: bold;">🤑 WAGMI 🤑</span>
+          <span class="rainbow" style="font-size: 36px; font-weight: bold;">🔥 THIS IS FINE 🔥</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO SECTION WITH MEME TEXT -->
+    <div style="text-align: center; margin: 40px 0; position: relative;">
+      <div class="meme-text" style="margin-bottom: 20px;">
+        LIVE FOOTAGE OF YOUR PORTFOLIO
+      </div>
+      <div style="position: relative; display: inline-block;">
+        <video src="media/stonks2.mp4" autoplay loop muted playsinline style="max-width: 800px; width: 100%; border: 10px solid #ff00ff; filter: saturate(3);" class="glitch"></video>
+        <div style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%);" class="meme-text shake-gif">
+          WHEN THE DIP KEEPS DIPPING
+        </div>
+      </div>
+    </div>
+
+    <!-- GIF GALLERY -->
+    <div class="meme-text" style="margin: 40px 0 20px 0;">
+      GALLERY OF DEGENERACY
+    </div>
+    <div class="gif-grid">
+      <img src="https://web.archive.org/web/19991013182824im_/http://www.geocities.com/EnchantedForest/5564/fire.gif" class="gif-item spin" onerror="this.src='media/1.jpg'" alt="gif">
+      <img src="https://web.archive.org/web/19991006231139im_/http://geocities.com/TimesSquare/Dome/9230/rocket.gif" class="gif-item bounce-gif" onerror="this.src='media/2.jpg'" alt="gif">
+      <img src="https://web.archive.org/web/19991010085826im_/http://www.geocities.com/WallStreet/Exchange/7019/dollar.gif" class="gif-item shake-gif" onerror="this.src='media/3.jpg'" alt="gif">
+      <img src="https://web.archive.org/web/19991001180952im_/http://www.angelfire.com/wa/jnelson/money.gif" class="gif-item pulse" onerror="this.src='media/1.jpg'" alt="gif">
+      <img src="https://web.archive.org/web/19991103010149im_/http://www.geocities.com/TimesSquare/Alley/1240/banana.gif" class="gif-item spinning-gif" onerror="this.src='media/2.jpg'" alt="gif">
+      <img src="https://web.archive.org/web/19991013230036im_/http://www.geocities.com/SiliconValley/Pines/4367/explosion.gif" class="gif-item" onerror="this.src='media/3.jpg'" alt="gif">
+    </div>
+
+    <!-- CALL TO ACTION BUTTONS -->
+    <div style="text-align: center; margin: 60px 0;">
+      <div class="meme-text" style="margin-bottom: 30px;">
+        CHOOSE YOUR DESTINY
+      </div>
+      <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+        <button class="dank-button" onclick="activateDisco()">
+          🎉 DISCO MODE 🎉
+        </button>
+        <button class="dank-button" onclick="spamMemes()">
+          💀 SPAM MEMES 💀
+        </button>
+        <button class="dank-button" onclick="makeItRain()">
+          💰 MAKE IT RAIN 💰
+        </button>
+        <button class="dank-button" onclick="rugPull()">
+          🚨 RUG PULL 🚨
+        </button>
+      </div>
+    </div>
+
+    <!-- MEME SECTIONS -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 40px 0;">
+      <div style="background: #ff00ff; padding: 30px; border: 10px solid #00ff00; text-align: center;" class="shake-gif">
+        <img src="https://web.archive.org/web/19991007035704im_/http://www.geocities.com/WallStreet/District/8085/chart.gif" width="200" onerror="this.src='media/1.jpg'" alt="chart">
+        <div class="meme-text" style="font-size: 24px; margin-top: 15px; color: #000;">
+          TECHNICAL ANALYSIS
+        </div>
+        <div style="color: #fff; margin-top: 10px; font-size: 18px;">
+          (IT'S ALL FAKE)
+        </div>
+      </div>
+
+      <div style="background: #00ff00; padding: 30px; border: 10px solid #ff00ff; text-align: center;" class="bounce-gif">
+        <img src="media/2.jpg" width="200" style="filter: saturate(5) hue-rotate(180deg);" alt="chaos">
+        <div class="meme-text" style="font-size: 24px; margin-top: 15px; color: #000;">
+          YOUR PORTFOLIO
+        </div>
+        <div style="color: #000; margin-top: 10px; font-size: 18px; font-weight: bold;">
+          RIP BOZO
+        </div>
+      </div>
+
+      <div style="background: #ffff00; padding: 30px; border: 10px solid #ff0000; text-align: center;" class="spinning-gif">
+        <img src="media/3.jpg" width="200" style="filter: contrast(2) saturate(3);" alt="chaos">
+        <div class="meme-text" style="font-size: 24px; margin-top: 15px; color: #000;">
+          THE HODLERS
+        </div>
+        <div style="color: #000; margin-top: 10px; font-size: 18px; font-weight: bold;">
+          STILL WAITING
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTRACT ADDRESS -->
+    <div style="background: #000; border: 10px dashed #ff00ff; padding: 40px; text-align: center; margin: 40px 0;" class="pulse">
+      <div class="meme-text rainbow" style="margin-bottom: 20px;">
+        CONTRACT ADDRESS (TRUST ME BRO)
+      </div>
+      <div style="font-family: 'Courier New', monospace; font-size: 20px; color: #00ff00; word-break: break-all; margin: 20px 0;" id="ca-text" class="glitch">
+        StoNKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      </div>
+      <button class="dank-button" onclick="copyCA()" style="margin-top: 20px;">
+        COPY (DO IT)
+      </button>
+      <div style="margin-top: 20px; color: #ff0000; font-size: 18px; font-weight: bold;">
+        ⚠️ NFA DYOR NGMI WAGMI GM ⚠️
+      </div>
+    </div>
+
+    <!-- SOCIAL SECTION -->
+    <div style="text-align: center; margin: 60px 0;">
+      <div class="meme-text rainbow" style="margin-bottom: 30px; font-size: 64px;">
+        JOIN THE CIRCUS
+      </div>
+      <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+        <button class="dank-button" onclick="socialMeme('twitter')">
+          <span class="spin" style="display: inline-block;">🐦</span> TWITTER (X)
+        </button>
+        <button class="dank-button" onclick="socialMeme('telegram')">
+          <span class="bounce-gif" style="display: inline-block;">✈️</span> TELEGRAM
+        </button>
+        <button class="dank-button" onclick="socialMeme('discord')">
+          <span class="shake-gif" style="display: inline-block;">💬</span> DISCORD
+        </button>
+      </div>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div style="background: #ff0000; color: #ffff00; padding: 30px; border: 10px solid #000; text-align: center; margin: 40px 0;" class="shake-gif">
+      <div class="meme-text" style="font-size: 48px;">
+        DISCLAIMER
+      </div>
+      <div style="font-size: 24px; margin-top: 20px; font-weight: bold; line-height: 1.5;">
+        THIS IS NOT FINANCIAL ADVICE<br>
+        WE ARE NOT RESPONSIBLE FOR YOUR POOR DECISIONS<br>
+        IF YOU LOSE MONEY IT'S YOUR FAULT<br>
+        PROBABLY NOTHING<br>
+        DYOR NFA NGMI WAGMI LFG<br>
+        🚀🚀🚀
+      </div>
+    </div>
+
+    <!-- FOOTER CHAOS -->
+    <div class="marquee-container" style="margin-top: 60px;">
+      <div class="marquee-content" style="animation-direction: reverse;">
+        <div style="display: flex; gap: 50px;">
+          <span style="font-size: 24px;">💀 RIP YOUR PORTFOLIO 💀</span>
+          <span style="font-size: 24px;">🤡 YOU ARE HERE 🤡</span>
+          <span style="font-size: 24px;">📉 BUY HIGH SELL LOW 📉</span>
+          <span style="font-size: 24px;">🎰 GAMBLING ADDICTION 🎰</span>
+          <span style="font-size: 24px;">💸 MONEY PRINTER GO BRRR 💸</span>
+          <span style="font-size: 24px;">💀 RIP YOUR PORTFOLIO 💀</span>
+          <span style="font-size: 24px;">🤡 YOU ARE HERE 🤡</span>
+          <span style="font-size: 24px;">📉 BUY HIGH SELL LOW 📉</span>
+          <span style="font-size: 24px;">🎰 GAMBLING ADDICTION 🎰</span>
+          <span style="font-size: 24px;">💸 MONEY PRINTER GO BRRR 💸</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Hide warning after 3 seconds
+    setTimeout(() => {
+      document.getElementById('warning').style.display = 'none';
+    }, 3000);
+
+    // DISCO MODE
+    let discoActive = false;
+    function activateDisco() {
+      discoActive = !discoActive;
+      if (discoActive) {
+        document.body.classList.add('disco-mode');
+        showMemeOverlay('DISCO DISCO DISCO');
+      } else {
+        document.body.classList.remove('disco-mode');
+      }
+    }
+
+    // SPAM MEMES
+    function spamMemes() {
+      const memes = ['💎', '🚀', '🌙', '💰', '🤑', '📈', '📉', '🔥', '💸', '🎰'];
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const meme = document.createElement('div');
+          meme.className = 'explosion';
+          meme.textContent = memes[Math.floor(Math.random() * memes.length)];
+          meme.style.left = Math.random() * window.innerWidth + 'px';
+          meme.style.top = Math.random() * window.innerHeight + 'px';
+          document.body.appendChild(meme);
+          setTimeout(() => meme.remove(), 1000);
+        }, i * 50);
+      }
+      showMemeOverlay('MEME OVERLOAD');
+    }
+
+    // MAKE IT RAIN
+    function makeItRain() {
+      for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+          const money = document.createElement('div');
+          money.style.position = 'fixed';
+          money.style.left = Math.random() * window.innerWidth + 'px';
+          money.style.top = '-50px';
+          money.style.fontSize = '40px';
+          money.textContent = '💵';
+          money.style.zIndex = '9999';
+          money.style.animation = 'fall ' + (Math.random() * 3 + 2) + 's linear';
+          document.body.appendChild(money);
+          setTimeout(() => money.remove(), 5000);
+        }, i * 50);
+      }
+      showMemeOverlay('MAKE IT RAIN');
+    }
+
+    // Add fall animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fall {
+        to { transform: translateY(${window.innerHeight + 100}px) rotate(720deg); }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // RUG PULL
+    function rugPull() {
+      showMemeOverlay('YOU GOT RUGGED');
+      document.body.style.transform = 'rotate(180deg)';
+      setTimeout(() => {
+        document.body.style.transform = '';
+      }, 3000);
+    }
+
+    // SHOW MEME OVERLAY
+    function showMemeOverlay(text) {
+      const overlay = document.getElementById('meme-overlay');
+      overlay.textContent = text;
+      overlay.classList.add('show');
+      setTimeout(() => {
+        overlay.classList.remove('show');
+      }, 2000);
+    }
+
+    // COPY CA
+    function copyCA() {
+      const text = document.getElementById('ca-text').textContent;
+      navigator.clipboard.writeText(text);
+      showMemeOverlay('COPIED! NGMI');
+    }
+
+    // SOCIAL MEME
+    function socialMeme(platform) {
+      const messages = {
+        twitter: 'FOLLOW OR NGMI',
+        telegram: 'JOIN THE DEGEN CHAT',
+        discord: 'DISCORD CHADS ONLY'
+      };
+      showMemeOverlay(messages[platform]);
+    }
+
+    // RANDOM MEME POPUPS
+    const memeTexts = ['WAGMI', 'NGMI', 'GM', 'GN', 'LFG', 'HODL', 'REKT', 'MOON SOON', 'WEN LAMBO'];
+    setInterval(() => {
+      if (Math.random() > 0.7) {
+        showMemeOverlay(memeTexts[Math.floor(Math.random() * memeTexts.length)]);
+      }
+    }, 5000);
+
+    // RANDOM EXPLOSIONS
+    setInterval(() => {
+      if (Math.random() > 0.8) {
+        const explosion = document.createElement('div');
+        explosion.className = 'explosion';
+        explosion.textContent = '💥';
+        explosion.style.left = Math.random() * window.innerWidth + 'px';
+        explosion.style.top = Math.random() * window.innerHeight + 'px';
+        document.body.appendChild(explosion);
+        setTimeout(() => explosion.remove(), 1000);
+      }
+    }, 3000);
+
+    // TITLE ANIMATION
+    const titles = ['💀 STONK WARS', '🚀 TO THE MOON', '💎 DIAMOND HANDS', '📈 STONKS', '🔥 THIS IS FINE'];
+    let titleIndex = 0;
+    setInterval(() => {
+      document.title = titles[titleIndex];
+      titleIndex = (titleIndex + 1) % titles.length;
+    }, 1000);
+
+    // CONSOLE MEMES
+    console.log('%c💀 WELCOME TO HELL 💀', 'font-size: 40px; color: red; font-weight: bold;');
+    console.log('%c🚀 MAXIMUM DANK ACHIEVED 🚀', 'font-size: 30px; color: lime;');
+    console.log('%cIF YOU\'RE READING THIS YOU\'RE NGMI', 'font-size: 20px; color: cyan;');
+  </script>
+</body>
+</html>

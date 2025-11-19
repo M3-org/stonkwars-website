@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STONK WARS - CHAOS EDITION 🔥💀🔥</title>
+  <meta name="description" content="YOU SHOULDN'T BE HERE" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lava: '#ff4e1b',
+            steel: '#0f1115',
+            surface: '#1a1f2b',
+            ink: '#e5e7eb'
+          },
+          boxShadow: {
+            soft: '0 6px 24px rgba(0,0,0,.25)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Original animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .float-slow { animation: float 6s ease-in-out infinite; }
+    .float-medium { animation: float 4s ease-in-out infinite; }
+    .float-fast { animation: float 3s ease-in-out infinite; }
+
+    .glow {
+      box-shadow: 0 0 20px rgba(255, 78, 27, 0.3),
+                  0 0 40px rgba(255, 78, 27, 0.2),
+                  0 0 60px rgba(255, 78, 27, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .touch-target { min-height: 48px; }
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox.active { display: flex; }
+
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: white;
+      font-size: 35px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .lightbox-close:hover { color: #ff4e1b; }
+
+    /* CHAOS ANIMATIONS */
+    @keyframes spin-crazy {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(3600deg); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      10% { transform: translate(-10px, -10px) rotate(-5deg); }
+      20% { transform: translate(10px, 10px) rotate(5deg); }
+      30% { transform: translate(-10px, 10px) rotate(-5deg); }
+      40% { transform: translate(10px, -10px) rotate(5deg); }
+      50% { transform: translate(-10px, -10px) rotate(-5deg); }
+      60% { transform: translate(10px, 10px) rotate(5deg); }
+      70% { transform: translate(-10px, 10px) rotate(-5deg); }
+      80% { transform: translate(10px, -10px) rotate(5deg); }
+      90% { transform: translate(-10px, -10px) rotate(-5deg); }
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-5px, 5px); }
+      40% { transform: translate(-5px, -5px); }
+      60% { transform: translate(5px, 5px); }
+      80% { transform: translate(5px, -5px); }
+      100% { transform: translate(0); }
+    }
+
+    @keyframes rainbow {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    @keyframes grow-shrink {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.5); }
+    }
+
+    @keyframes drip {
+      0% { transform: translateY(0) scaleY(1); }
+      100% { transform: translateY(1000px) scaleY(2); }
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(0deg) translateX(0); }
+      25% { transform: rotate(10deg) translateX(10px); }
+      75% { transform: rotate(-10deg) translateX(-10px); }
+    }
+
+    .shake { animation: shake 0.5s infinite; }
+    .spin-crazy { animation: spin-crazy 5s linear infinite; }
+    .glitch { animation: glitch 0.3s infinite; }
+    .rainbow { animation: rainbow 2s linear infinite; }
+    .grow-shrink { animation: grow-shrink 1s infinite; }
+    .wobble { animation: wobble 0.5s infinite; }
+
+    /* Matrix rain */
+    #matrix-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.3;
+    }
+
+    /* Cursor trail */
+    .cursor-trail {
+      position: fixed;
+      pointer-events: none;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0);
+      animation: fade-out 1s forwards;
+      z-index: 99999;
+    }
+
+    @keyframes fade-out {
+      to {
+        opacity: 0;
+        transform: scale(2);
+      }
+    }
+
+    /* Upside down mode */
+    .upside-down {
+      transform: rotate(180deg);
+      transition: transform 1s;
+    }
+
+    /* Comic Sans mode */
+    .comic-sans * {
+      font-family: 'Comic Sans MS', cursive !important;
+    }
+
+    /* Screaming text */
+    .screaming {
+      font-size: 500% !important;
+      font-weight: 900 !important;
+      color: red !important;
+    }
+  </style>
+</head>
+<body class="bg-steel text-ink antialiased">
+  <!-- Matrix Rain Canvas -->
+  <canvas id="matrix-canvas"></canvas>
+
+  <!-- WARNING BANNER -->
+  <div class="fixed top-0 left-0 right-0 bg-red-600 text-white text-center py-2 z-50 shake font-bold">
+    ⚠️ WARNING: YOU HAVE ENTERED THE CHAOS ZONE ⚠️
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 border-b border-white/10 bg-black/40 backdrop-blur wobble" style="margin-top: 40px;">
+    <div class="max-w-7xl mx-auto h-16 px-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <span id="logo-text" class="text-xl md:text-2xl font-bold tracking-tight rainbow" style="color: #f0bf39; text-shadow: 0 0 8px rgba(240, 191, 57, 0.5);">STONK WARS</span>
+      </a>
+      <nav class="flex items-center gap-4 md:gap-6 text-sm text-gray-300">
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/20 border border-green-500/40 grow-shrink">
+          <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+          <span class="text-green-400 font-semibold text-xs">LIVE</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- TradingView Ticker (CHAOTIC) -->
+  <section id="tradingview-ticker" class="bg-black/60 backdrop-blur border-b border-white/10 glitch">
+    <div class="w-full px-0 py-2">
+      <div class="text-center text-lava font-bold animate-pulse">
+        📈 STONKS ONLY GO ??? 📉
+      </div>
+    </div>
+  </section>
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-16">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
+        <!-- Left: Text Content -->
+        <div class="order-2 md:order-1">
+          <div class="flex items-start gap-4 mb-6">
+            <img src="media/stonkwars2.png" alt="Stonk Wars" id="chaos-logo" class="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 flex-shrink-0 rounded-xl shadow-xl spin-crazy" style="filter: drop-shadow(0 4px 16px rgba(255,78,27,0.4));">
+            <div class="flex-1 min-w-0">
+              <h1 id="chaos-title" class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 md:mb-4 leading-tight glitch">24/7 AI CHAOS SIMULATOR</h1>
+            </div>
+          </div>
+
+          <p id="chaos-description" class="text-base sm:text-lg text-gray-300 mb-4 md:mb-6 leading-relaxed wobble">Nothing makes sense anymore. The AI agents have achieved sentience and are plotting against you. Run while you still can.</p>
+
+          <!-- Contract Address (RUNS AWAY) -->
+          <div class="mb-6">
+            <button
+              id="runaway-button"
+              class="text-xs sm:text-sm text-gray-400 hover:text-lava transition-colors cursor-pointer font-mono bg-surface/50 px-3 py-2 rounded border border-white/10 hover:border-lava/50 touch-target w-full sm:w-auto text-left sm:text-center relative"
+              title="Try to click me... I dare you"
+              style="transition: all 0.3s;"
+            >
+              <span class="block sm:inline">CA: </span>
+              <span id="contract-text" class="text-lava">
+                <span>😈CATCH ME IF YOU CAN😈</span>
+              </span>
+            </button>
+            <div id="copy-success" class="hidden text-xs text-green-400 mt-2">✓ You'll never catch me!</div>
+          </div>
+
+          <!-- CTAs (CHAOTIC) -->
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button id="chaos-watch" class="px-6 py-3 sm:py-3 rounded bg-lava text-black text-center font-semibold hover:opacity-90 transition-opacity touch-target cursor-pointer">
+              Don't Click This
+            </button>
+            <button id="chaos-live" class="flex items-center justify-center gap-2 px-6 py-3 sm:py-3 rounded bg-green-500/20 border border-green-500/40 touch-target cursor-pointer">
+              <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
+              <span class="text-green-400 font-semibold">CHAOS</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Video (GLITCHY) -->
+        <div class="order-1 md:order-2">
+          <div class="aspect-video rounded-xl overflow-hidden border border-white/10 shadow-soft bg-black/40 cursor-pointer hover:scale-[1.02] transition-transform glitch" onclick="triggerChaos()">
+            <video src="media/stonks2.mp4" class="w-full h-full object-cover rainbow" muted loop autoplay playsinline poster="media/1.jpg"></video>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section (FALLING APART) -->
+    <section id="features" class="relative py-8 sm:py-12 overflow-hidden">
+      <!-- Background video -->
+      <video class="absolute inset-0 w-full h-full object-cover rainbow" src="media/stonks1.mp4" autoplay loop muted playsinline poster="media/1.jpg"></video>
+      <div class="absolute inset-0 bg-black/70"></div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center wobble">Chaos Features</h2>
+
+        <!-- Features that will fall -->
+        <div id="features-grid" class="grid gap-4 sm:gap-6 md:grid-cols-2">
+          <!-- Feature 1 -->
+          <div class="chaos-feature bg-surface/70 border border-white/10 rounded-xl p-4 sm:p-5 hover:scale-[1.02] transition-transform flex items-start gap-3 sm:gap-4">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-lava/30 rounded-xl flex items-center justify-center flex-shrink-0 glow spin-crazy">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base sm:text-lg font-bold mb-1 sm:mb-2">Fake Market Data</h3>
+              <p class="text-gray-300 text-sm">Everything is made up. The numbers mean nothing.</p>
+            </div>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="chaos-feature bg-surface/70 border border-white/10 rounded-xl p-4 sm:p-5 hover:scale-[1.02] transition-transform flex items-start gap-3 sm:gap-4">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-lava/30 rounded-xl flex items-center justify-center flex-shrink-0 glow grow-shrink">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base sm:text-lg font-bold mb-1 sm:mb-2 flex items-center gap-2">
+                Screaming Chat
+                <img src="media/pump-logomark.svg" alt="pump.fun" class="w-3 h-3 sm:w-4 sm:h-4 inline-block shake" />
+              </h3>
+              <p class="text-gray-300 text-sm">AAAAAAHHHHHHHHH!!!</p>
+            </div>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="chaos-feature bg-surface/70 border border-white/10 rounded-xl p-4 sm:p-5 hover:scale-[1.02] transition-transform flex items-start gap-3 sm:gap-4">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-lava/30 rounded-xl flex items-center justify-center flex-shrink-0 glow wobble">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base sm:text-lg font-bold mb-1 sm:mb-2">AI Gone Rogue</h3>
+              <p class="text-gray-300 text-sm">The singularity has arrived. We're all doomed.</p>
+            </div>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="chaos-feature bg-surface/70 border border-white/10 rounded-xl p-4 sm:p-5 hover:scale-[1.02] transition-transform flex items-start gap-3 sm:gap-4">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-lava/30 rounded-xl flex items-center justify-center flex-shrink-0 glow rainbow">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6 text-lava" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base sm:text-lg font-bold mb-1 sm:mb-2">Cursed Vision</h3>
+              <p class="text-gray-300 text-sm">You can see things you shouldn't. Turn back.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Waitlist Area (EXTREMELY CHAOTIC) -->
+    <section id="waitlist" class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 id="waitlist-title" class="text-3xl sm:text-4xl font-bold mb-4 text-lava shake">Join The Chaos</h2>
+
+        <!-- Social Links (MOVING) -->
+        <div class="flex flex-wrap items-center justify-center gap-3 mb-6">
+          <button class="social-chaos flex items-center gap-2 px-4 py-2.5 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors group touch-target cursor-pointer">
+            <img src="media/twitter-logo.svg" alt="Twitter" class="w-4 h-4 opacity-70 group-hover:opacity-100 spin-crazy" />
+            <span class="font-semibold text-sm">Chaos</span>
+          </button>
+          <button class="social-chaos flex items-center gap-2 px-4 py-2.5 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors group touch-target cursor-pointer">
+            <img src="media/telegram-logo.svg" alt="Telegram" class="w-4 h-4 opacity-70 group-hover:opacity-100 rainbow" />
+            <span class="font-semibold text-sm">More Chaos</span>
+          </button>
+          <button class="social-chaos flex items-center gap-2 px-4 py-2.5 bg-surface border border-white/10 rounded-lg hover:border-lava transition-colors group touch-target cursor-pointer">
+            <img src="media/discord-logo.svg" alt="Discord" class="w-4 h-4 opacity-70 group-hover:opacity-100 wobble" />
+            <span class="font-semibold text-sm">CHAOS!!!</span>
+          </button>
+        </div>
+
+        <p class="text-sm text-gray-500 glitch">
+          [There is no escape]
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Polymarket Ticker (BROKEN) -->
+  <section id="polymarket-ticker" style="padding:0;margin:0;overflow:hidden;display:block;height:48px;position:relative;" class="shake">
+    <div class="text-center bg-red-600 text-white font-bold py-3">
+      🚨 MARKET CRASHED 🚨 EVERYONE PANIC 🚨
+    </div>
+  </section>
+
+  <!-- Footer (GLITCHY) -->
+  <footer id="chaos-footer" class="border-t border-white/10 py-3 text-center text-sm text-gray-400 glitch">
+    © <span id="year">????</span> Stonk Wars • CHAOS EDITION • <span id="random-text">💀</span>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-content spin-crazy" onclick="event.stopPropagation()">
+      <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+      <video id="lightbox-video" controls autoplay style="max-width: 100%; max-height: 90vh; border-radius: 12px;" class="rainbow">
+        <source src="" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+  <!-- Chaos Control Panel -->
+  <div style="position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); padding: 15px; border-radius: 10px; z-index: 10000; border: 2px solid #ff4e1b;">
+    <div style="color: #ff4e1b; font-weight: bold; margin-bottom: 10px;">🔥 CHAOS CONTROLS 🔥</div>
+    <button onclick="toggleUpsideDown()" style="display: block; width: 100%; margin: 5px 0; padding: 8px; background: #ff4e1b; color: black; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+      Flip World
+    </button>
+    <button onclick="toggleComicSans()" style="display: block; width: 100%; margin: 5px 0; padding: 8px; background: #ff4e1b; color: black; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+      Comic Sans Mode
+    </button>
+    <button onclick="makeEverythingScream()" style="display: block; width: 100%; margin: 5px 0; padding: 8px; background: red; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+      SCREAM!!!
+    </button>
+    <button onclick="dropFeatures()" style="display: block; width: 100%; margin: 5px 0; padding: 8px; background: #40e0d0; color: black; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+      Drop Everything
+    </button>
+  </div>
+
+  <script>
+    // Initialize chaos
+    let chaosLevel = 0;
+    let upsideDown = false;
+    let comicSans = false;
+    let screaming = false;
+
+    // Matrix rain effect
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const matrix = '01$₿ΘΣΩΔΛ';
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array.from({length: columns}).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#0F0';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = matrix[Math.floor(Math.random() * matrix.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 50);
+
+    // Cursor trail
+    document.addEventListener('mousemove', (e) => {
+      if (Math.random() > 0.8) return; // Don't create every time
+      const trail = document.createElement('div');
+      trail.className = 'cursor-trail';
+      trail.style.left = e.pageX + 'px';
+      trail.style.top = e.pageY + 'px';
+      document.body.appendChild(trail);
+      setTimeout(() => trail.remove(), 1000);
+    });
+
+    // Runaway button
+    const runawayBtn = document.getElementById('runaway-button');
+    runawayBtn.addEventListener('mouseenter', () => {
+      const x = Math.random() * (window.innerWidth - 200);
+      const y = Math.random() * (window.innerHeight - 100);
+      runawayBtn.style.position = 'fixed';
+      runawayBtn.style.left = x + 'px';
+      runawayBtn.style.top = y + 'px';
+      runawayBtn.style.zIndex = '10000';
+    });
+
+    // Social buttons that run away
+    document.querySelectorAll('.social-chaos').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.innerHTML = '<span class="font-semibold text-sm">NOPE 😈</span>';
+        btn.style.transform = `rotate(${Math.random() * 360}deg) scale(${Math.random() * 2})`;
+      });
+    });
+
+    // Chaos watch button
+    document.getElementById('chaos-watch').addEventListener('click', () => {
+      chaosLevel++;
+      const btn = document.getElementById('chaos-watch');
+      const messages = [
+        'I warned you...',
+        'Why would you click that?!',
+        'You asked for this...',
+        'MAXIMUM CHAOS ENGAGED',
+        'There is no going back now',
+        '🔥🔥🔥 EVERYTHING IS FINE 🔥🔥🔥'
+      ];
+      btn.textContent = messages[Math.min(chaosLevel - 1, messages.length - 1)];
+
+      if (chaosLevel >= 3) {
+        startMaxChaos();
+      }
+    });
+
+    // Chaos live button
+    document.getElementById('chaos-live').addEventListener('click', () => {
+      const el = document.getElementById('chaos-live');
+      el.innerHTML = '<span class="text-red-400 font-semibold">💀 DEAD 💀</span>';
+      setTimeout(() => {
+        el.innerHTML = '<span class="text-green-400 font-semibold">🧟 UNDEAD 🧟</span>';
+      }, 2000);
+    });
+
+    // Random year
+    setInterval(() => {
+      document.getElementById('year').textContent = Math.floor(Math.random() * 3000) + 1000;
+    }, 2000);
+
+    // Random text
+    const randomWords = ['💀', '🔥', '💩', '🚀', '💸', '📉', '📈', 'RIP', 'NGMI', 'WAGMI'];
+    setInterval(() => {
+      document.getElementById('random-text').textContent = randomWords[Math.floor(Math.random() * randomWords.length)];
+    }, 1000);
+
+    // Glitch text randomly
+    setInterval(() => {
+      const title = document.getElementById('chaos-title');
+      const original = '24/7 AI CHAOS SIMULATOR';
+      const glitched = original.split('').map(c =>
+        Math.random() > 0.7 ? String.fromCharCode(33 + Math.random() * 93) : c
+      ).join('');
+      title.textContent = glitched;
+      setTimeout(() => title.textContent = original, 100);
+    }, 3000);
+
+    // Control panel functions
+    function toggleUpsideDown() {
+      upsideDown = !upsideDown;
+      document.body.classList.toggle('upside-down');
+    }
+
+    function toggleComicSans() {
+      comicSans = !comicSans;
+      document.body.classList.toggle('comic-sans');
+    }
+
+    function makeEverythingScream() {
+      screaming = !screaming;
+      const elements = ['chaos-title', 'chaos-description', 'waitlist-title'];
+      elements.forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.toggle('screaming');
+        if (screaming) {
+          el.textContent = el.textContent.toUpperCase() + '!!!!!!';
+        }
+      });
+    }
+
+    function dropFeatures() {
+      const features = document.querySelectorAll('.chaos-feature');
+      features.forEach((feature, i) => {
+        setTimeout(() => {
+          feature.style.animation = 'drip 2s forwards';
+          setTimeout(() => {
+            feature.style.display = 'none';
+          }, 2000);
+        }, i * 200);
+      });
+    }
+
+    function startMaxChaos() {
+      // Random background color changes
+      setInterval(() => {
+        document.body.style.backgroundColor = `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
+      }, 500);
+
+      // Random element rotation
+      setInterval(() => {
+        const elements = document.querySelectorAll('section, div, button, h1, h2');
+        const randomEl = elements[Math.floor(Math.random() * elements.length)];
+        randomEl.style.transform = `rotate(${Math.random() * 360}deg)`;
+      }, 1000);
+
+      // Shake everything
+      document.body.classList.add('shake');
+    }
+
+    // Trigger chaos on video click
+    function triggerChaos() {
+      startMaxChaos();
+    }
+
+    // Konami code easter egg
+    let konamiCode = [];
+    const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+
+    document.addEventListener('keydown', (e) => {
+      konamiCode.push(e.key);
+      if (konamiCode.length > konamiSequence.length) {
+        konamiCode.shift();
+      }
+
+      if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
+        document.body.style.filter = 'hue-rotate(180deg)';
+        setTimeout(() => document.body.style.filter = '', 3000);
+        konamiCode = [];
+      }
+    });
+
+    // Random messages in console
+    setInterval(() => {
+      if (Math.random() > 0.95) {
+        const messages = [
+          'Your portfolio is down 99.9%',
+          'Bitcoin just went to $0',
+          'You forgot to save your seed phrase',
+          'The SEC wants to know your location',
+          'Vitalik just DMed you (it\'s a scam)'
+        ];
+        console.log('💀', messages[Math.floor(Math.random() * messages.length)]);
+      }
+    }, 10000);
+
+    // Fake console errors
+    console.error('CRITICAL ERROR: Everything is broken and we like it that way 🔥');
+    console.warn('WARNING: This website is intentionally terrible');
+    console.log('Welcome to CHAOS MODE 💀');
+
+    // Copy contract address (broken)
+    function copyContractAddress() {
+      const success = document.getElementById('copy-success');
+      success.classList.remove('hidden');
+      setTimeout(() => success.classList.add('hidden'), 3000);
+    }
+
+    // Lightbox functionality (CHAOTIC)
+    function openLightbox(videoSrc) {
+      const lightbox = document.getElementById('lightbox');
+      const video = document.getElementById('lightbox-video');
+      video.querySelector('source').src = videoSrc;
+      video.load();
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      const video = document.getElementById('lightbox-video');
+      video.pause();
+      lightbox.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close lightbox on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+
+    // Welcome message in console
+    console.log('%c🎪 Welcome to the CHAOS EDITION! 💀', 'font-size: 20px; color: #ff4e1b; font-weight: bold;');
+  </script>
+</body>
+</html>

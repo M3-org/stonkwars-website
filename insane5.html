@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>📊💼 STONK WARS: WALL STREET 2000 💼📊</title>
+  <style>
+    * {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><text y="24" font-size="24">💼</text></svg>'), auto !important;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #001a00;
+      font-family: 'Arial', 'Times New Roman', serif;
+      color: #00ff00;
+      overflow-x: hidden;
+    }
+
+    /* MATRIX BACKGROUND */
+    #matrix-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.15;
+    }
+
+    /* Y2K BANNER */
+    .y2k-banner {
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, purple);
+      color: white;
+      text-align: center;
+      padding: 5px;
+      font-weight: bold;
+      font-size: 14px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10000;
+      animation: rainbow-bg 2s linear infinite;
+    }
+
+    @keyframes rainbow-bg {
+      to { filter: hue-rotate(360deg); }
+    }
+
+    /* STOCK TICKER */
+    .stock-ticker {
+      background: #000;
+      color: #0f0;
+      padding: 10px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      font-weight: bold;
+      overflow: hidden;
+      border-bottom: 3px solid #0f0;
+      position: fixed;
+      top: 30px;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+    }
+
+    .ticker-content {
+      display: flex;
+      animation: ticker-scroll 30s linear infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes ticker-scroll {
+      from { transform: translateX(100%); }
+      to { transform: translateX(-100%); }
+    }
+
+    .ticker-item {
+      margin: 0 30px;
+    }
+
+    .up { color: #0f0; }
+    .down { color: #f00; }
+
+    /* CONTENT */
+    .content {
+      position: relative;
+      z-index: 10;
+      margin-top: 100px;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 20px;
+    }
+
+    /* ANIMATED GIF SIDEBARS */
+    .sidebar {
+      position: fixed;
+      width: 150px;
+      height: 100vh;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .sidebar.left { left: 0; top: 100px; }
+    .sidebar.right { right: 0; top: 100px; }
+
+    .sidebar img {
+      width: 100%;
+      border: 3px solid #0f0;
+      animation: sidebar-float 3s ease-in-out infinite;
+    }
+
+    .sidebar.right img {
+      animation-delay: -1.5s;
+    }
+
+    @keyframes sidebar-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* SECTIONS */
+    .section {
+      background: rgba(0,50,0,0.8);
+      border: 5px double #0f0;
+      padding: 30px;
+      margin: 30px 0;
+      box-shadow: 0 0 30px #0f0;
+    }
+
+    .section-header {
+      font-family: Impact, sans-serif;
+      font-size: 48px;
+      color: #0f0;
+      text-align: center;
+      text-shadow: 3px 3px 0 #000;
+      margin-bottom: 20px;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0.5; }
+    }
+
+    /* MEME TEXT */
+    .meme-text {
+      font-family: Impact, sans-serif;
+      font-size: 40px;
+      color: white;
+      text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+      text-align: center;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    /* BUSINESS GIF GRID */
+    .biz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .biz-gif {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border: 4px solid #0f0;
+      animation: gif-pulse 2s ease-in-out infinite;
+    }
+
+    .biz-gif:nth-child(odd) {
+      animation: gif-spin 4s linear infinite;
+    }
+
+    @keyframes gif-pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 10px #0f0; }
+      50% { transform: scale(1.05); box-shadow: 0 0 30px #0f0; }
+    }
+
+    @keyframes gif-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* WOJAK SECTION */
+    .wojak-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .wojak-card {
+      background: #000;
+      border: 3px solid #0f0;
+      padding: 20px;
+      text-align: center;
+      flex: 1;
+      min-width: 250px;
+      animation: wojak-float 3s ease-in-out infinite;
+    }
+
+    .wojak-card:nth-child(2) { animation-delay: -1s; }
+    .wojak-card:nth-child(3) { animation-delay: -2s; }
+
+    @keyframes wojak-float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(2deg); }
+    }
+
+    .wojak-title {
+      font-size: 24px;
+      color: #0f0;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .wojak-text {
+      font-size: 16px;
+      color: #fff;
+      margin: 10px 0;
+    }
+
+    /* BUTTONS */
+    .bull-button {
+      background: linear-gradient(45deg, #0f0, #0a0);
+      color: #000;
+      border: 4px solid #0f0;
+      padding: 20px 40px;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 10px;
+      cursor: pointer;
+      animation: button-glow 2s ease-in-out infinite;
+      font-family: Impact, sans-serif;
+      text-shadow: 0 0 10px #0f0;
+    }
+
+    .bear-button {
+      background: linear-gradient(45deg, #f00, #a00);
+      color: #fff;
+      border: 4px solid #f00;
+      padding: 20px 40px;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 10px;
+      cursor: pointer;
+      animation: button-glow-red 2s ease-in-out infinite;
+      font-family: Impact, sans-serif;
+      text-shadow: 0 0 10px #f00;
+    }
+
+    @keyframes button-glow {
+      0%, 100% { box-shadow: 0 0 20px #0f0; }
+      50% { box-shadow: 0 0 40px #0f0; }
+    }
+
+    @keyframes button-glow-red {
+      0%, 100% { box-shadow: 0 0 20px #f00; }
+      50% { box-shadow: 0 0 40px #f00; }
+    }
+
+    /* VIDEO */
+    .trading-floor {
+      position: relative;
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .trading-video {
+      max-width: 100%;
+      border: 5px solid #0f0;
+      box-shadow: 0 0 40px #0f0;
+      filter: saturate(1.5) contrast(1.2);
+    }
+
+    /* MARQUEE BANNERS */
+    .banner {
+      background: #000;
+      color: #0f0;
+      padding: 15px;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      border: 3px solid #0f0;
+      margin: 20px 0;
+      animation: banner-flash 0.5s infinite;
+    }
+
+    @keyframes banner-flash {
+      0%, 49% { background: #000; color: #0f0; }
+      50%, 100% { background: #0f0; color: #000; }
+    }
+
+    /* UNDER CONSTRUCTION */
+    .construction {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .construction-gif {
+      width: 80px;
+      animation: construction-spin 2s linear infinite;
+    }
+
+    @keyframes construction-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* FLOATING MEMES */
+    .floating-meme {
+      position: fixed;
+      font-size: 60px;
+      pointer-events: none;
+      z-index: 9998;
+      animation: meme-float 15s ease-in-out infinite;
+    }
+
+    @keyframes meme-float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(100px, -100px) rotate(90deg); }
+      50% { transform: translate(200px, 0) rotate(180deg); }
+      75% { transform: translate(100px, 100px) rotate(270deg); }
+    }
+
+    .floating-meme:nth-child(1) { top: 20%; left: 5%; animation-delay: 0s; }
+    .floating-meme:nth-child(2) { top: 40%; right: 5%; animation-delay: -5s; }
+    .floating-meme:nth-child(3) { bottom: 20%; left: 10%; animation-delay: -10s; }
+
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .content { margin-top: 100px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- MATRIX BACKGROUND -->
+  <canvas id="matrix-bg"></canvas>
+
+  <!-- Y2K BANNER -->
+  <div class="y2k-banner">
+    ⚠️ Y2K COMPLIANT • OPTIMIZED FOR IE6 • BEST VIEWED AT 800x600 ⚠️
+  </div>
+
+  <!-- STOCK TICKER -->
+  <div class="stock-ticker">
+    <div class="ticker-content">
+      <span class="ticker-item">📈 STONK <span class="up">+420.69%</span></span>
+      <span class="ticker-item">📉 BOBO <span class="down">-69.42%</span></span>
+      <span class="ticker-item">💎 DIAMOND HANDS <span class="up">+∞%</span></span>
+      <span class="ticker-item">🧻 PAPER HANDS <span class="down">-100%</span></span>
+      <span class="ticker-item">🚀 MOON COIN <span class="up">+9999%</span></span>
+      <span class="ticker-item">💀 DEAD CAT <span class="down">-99.99%</span></span>
+      <span class="ticker-item">🐂 BULL MARKET <span class="up">+1337%</span></span>
+      <span class="ticker-item">🐻 BEAR TRAP <span class="down">-420%</span></span>
+    </div>
+  </div>
+
+  <!-- FLOATING MEMES -->
+  <div class="floating-meme">📈</div>
+  <div class="floating-meme">💎</div>
+  <div class="floating-meme">🚀</div>
+
+  <!-- LEFT SIDEBAR GIFS -->
+  <div class="sidebar left">
+    <img src="https://blob.gifcities.org/gifcities/2CA7VIJPQHXHD6IPK7Q4IL2GKBMWZIWT.gif" alt="stock">
+    <img src="https://blob.gifcities.org/gifcities/2DVGNK52LRK4RTX2V6P2672RMJUSEK6T.gif" alt="chart">
+    <img src="https://blob.gifcities.org/gifcities/35GKF6TBUGV4RCYMAX2B4545KQI6GQ2Y.gif" alt="business">
+    <img src="https://blob.gifcities.org/gifcities/5BBNT5Z5SP7MDCTUOCN4A75B3CU2US4R.gif" alt="stock">
+    <img src="https://blob.gifcities.org/gifcities/6VVLU2JKFERW2FGHAHZM4NMTFTFU4Y2Y.gif" alt="chart">
+  </div>
+
+  <!-- RIGHT SIDEBAR GIFS -->
+  <div class="sidebar right">
+    <img src="https://blob.gifcities.org/gifcities/4X2ZZSCBNNAV464C73Z6NT3NAUKXLCU4.gif" alt="stock">
+    <img src="https://blob.gifcities.org/gifcities/6MV2FOMH2YVWKYGLN7WDLSESLVY73OLP.gif" alt="chart">
+    <img src="https://blob.gifcities.org/gifcities/4TE457SYUPKBMMH4ERUOEUKMA7AV4UZC.gif" alt="business">
+    <img src="https://blob.gifcities.org/gifcities/5IYER54L6Z4LAR7GR5GXUV3D6ZOHFFNJ.gif" alt="stock">
+    <img src="https://blob.gifcities.org/gifcities/A7Q4BXIRHH3WQKQ4NE6I6ESLCSFFTGDF.gif" alt="chart">
+  </div>
+
+  <div class="content">
+    <!-- HEADER -->
+    <div class="section">
+      <div class="construction">
+        <img src="https://blob.gifcities.org/gifcities/3M2JTFUX6GLEKIVWVVG5J6ZVQ354VE5W.gif" class="construction-gif" alt="construction">
+        <h1 class="meme-text" style="font-size: 60px; color: #0f0;">STONK WARS</h1>
+        <img src="https://blob.gifcities.org/gifcities/3M2JTFUX6GLEKIVWVVG5J6ZVQ354VE5W.gif" class="construction-gif" alt="construction">
+      </div>
+      <p class="meme-text" style="font-size: 32px; color: #ff0;">WALL STREET 2000</p>
+      <p style="text-align: center; color: #0f0; font-size: 18px; margin-top: 10px;">
+        EST. 2000 • SURVIVED Y2K • NASDAQ 5000 FOREVER
+      </p>
+    </div>
+
+    <!-- WOJAK SECTION -->
+    <div class="section">
+      <h2 class="section-header">MEET THE TRADERS</h2>
+      <div class="wojak-container">
+        <div class="wojak-card">
+          <div style="font-size: 80px;">🤑</div>
+          <div class="wojak-title">SMUG BULL</div>
+          <div class="wojak-text">"I told you to buy the dip"<br>Portfolio: +10000%</div>
+        </div>
+        <div class="wojak-card">
+          <div style="font-size: 80px;">😭</div>
+          <div class="wojak-title">PINK WOJAK</div>
+          <div class="wojak-text">"IT KEEPS DIPPING"<br>Portfolio: -99%</div>
+        </div>
+        <div class="wojak-card">
+          <div style="font-size: 80px;">🐻</div>
+          <div class="wojak-title">BOBO BEAR</div>
+          <div class="wojak-text">"MARKET CRASH IMMINENT"<br>Wrong Since: 2009</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BANNER -->
+    <div class="banner">
+      🚨 THIS IS FINANCIAL ADVICE (NOT REALLY) 🚨
+    </div>
+
+    <!-- TRADING FLOOR VIDEO -->
+    <div class="section">
+      <h2 class="section-header">LIVE FROM THE FLOOR</h2>
+      <div class="trading-floor">
+        <video src="media/stonks2.mp4" class="trading-video" autoplay loop muted playsinline width="800"></video>
+        <div class="meme-text" style="margin-top: 20px; font-size: 32px; color: #f00;">
+          THIS IS FINE 🔥
+        </div>
+      </div>
+    </div>
+
+    <!-- BUSINESS GIF GALLERY -->
+    <div class="section">
+      <h2 class="section-header">WALL STREET CHAOS</h2>
+      <div class="biz-grid">
+        <img src="https://blob.gifcities.org/gifcities/2WCIS2J6XUCVFROPJR2UKMMSLWEG6QHI.gif" class="biz-gif" alt="stock">
+        <img src="https://blob.gifcities.org/gifcities/2J2WXHNLSOCZS7AAUXSJ222SEWCX6BZH.gif" class="biz-gif" alt="chart">
+        <img src="https://blob.gifcities.org/gifcities/4CUL72HIJGWY5EKH47ODCSJGSQFDD7VH.gif" class="biz-gif" alt="business">
+        <img src="https://blob.gifcities.org/gifcities/3OD4GDHDGHHUY3APZC62QDZDWH5TWGP6.gif" class="biz-gif" alt="stock">
+        <img src="https://blob.gifcities.org/gifcities/4LVEGALMN3DVK74I5RLDP6GDWMY6NBHY.gif" class="biz-gif" alt="chart">
+        <img src="https://blob.gifcities.org/gifcities/4R4KFN73VPKQU4E3C7EQUR3IDP6GJ66K.gif" class="biz-gif" alt="business">
+        <img src="https://blob.gifcities.org/gifcities/5LWADJWURTN4N5EYAWQHBB62KHLSLYFI.gif" class="biz-gif" alt="stock">
+        <img src="https://blob.gifcities.org/gifcities/AJAISOZIROATBTD2VUQVKTVQUBWPDFXS.gif" class="biz-gif" alt="chart">
+        <img src="https://blob.gifcities.org/gifcities/5JST6ETQSYSBKYEJA3CYDI55ZNJX2VTM.gif" class="biz-gif" alt="business">
+        <img src="https://blob.gifcities.org/gifcities/6PUZKYZF3XHQVITLIRBLR4YC6DTG25HL.gif" class="biz-gif" alt="stock">
+        <img src="https://blob.gifcities.org/gifcities/CAWKZVOS662WBVORPRUYCXCJKBAPD64D.gif" class="biz-gif" alt="chart">
+        <img src="https://blob.gifcities.org/gifcities/6AQNY7KRKSIHKTD3OM4NJR6JSLTBQLYP.gif" class="biz-gif" alt="business">
+      </div>
+    </div>
+
+    <!-- TRADING SIMULATOR -->
+    <div class="section" style="text-align: center;">
+      <h2 class="section-header">MAKE YOUR MOVE</h2>
+      <div class="meme-text" style="font-size: 32px; margin: 20px 0;">
+        ARE YOU A BULL OR A BEAR?
+      </div>
+      <div>
+        <button class="bull-button" onclick="bullMode()">🐂 BULL MARKET 🚀</button>
+        <button class="bear-button" onclick="bearMode()">🐻 BEAR MARKET 📉</button>
+      </div>
+    </div>
+
+    <!-- PEPE WISDOM -->
+    <div class="section">
+      <h2 class="section-header">TRADING WISDOM</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0;">
+        <div style="background: #000; border: 3px solid #0f0; padding: 20px; text-align: center;">
+          <div style="font-size: 60px;">🐸</div>
+          <div class="meme-text" style="font-size: 24px; color: #0f0;">SMUG PEPE</div>
+          <div style="color: #fff; margin-top: 10px;">"Bought the bottom"</div>
+        </div>
+        <div style="background: #000; border: 3px solid #f00; padding: 20px; text-align: center;">
+          <div style="font-size: 60px;">😢</div>
+          <div class="meme-text" style="font-size: 24px; color: #f00;">SAD PEPE</div>
+          <div style="color: #fff; margin-top: 10px;">"Bought the top"</div>
+        </div>
+        <div style="background: #000; border: 3px solid #ff0; padding: 20px; text-align: center;">
+          <div style="font-size: 60px;">🌙</div>
+          <div class="meme-text" style="font-size: 24px; color: #ff0;">MOON PEPE</div>
+          <div style="color: #fff; margin-top: 10px;">"WEN LAMBO?"</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTRACT ADDRESS -->
+    <div class="section" style="text-align: center;">
+      <h2 class="section-header">CONTRACT ADDRESS</h2>
+      <div style="font-family: 'Courier New', monospace; font-size: 20px; color: #0f0; word-break: break-all; background: #000; padding: 20px; border: 3px solid #0f0;">
+        StoNKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      </div>
+      <button class="bull-button" onclick="copyCA()" style="margin-top: 20px;">COPY CA 💎</button>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div class="section" style="background: rgba(100,0,0,0.8); border-color: #f00;">
+      <h2 class="section-header" style="color: #f00;">⚠️ DISCLAIMER ⚠️</h2>
+      <div style="text-align: center; font-size: 20px; line-height: 1.6; color: #fff;">
+        THIS IS NOT FINANCIAL ADVICE<br>
+        WE ARE NOT RESPONSIBLE FOR YOUR LOSSES<br>
+        PAST PERFORMANCE ≠ FUTURE RESULTS<br>
+        PROBABLY NOTHING<br>
+        DYOR • NFA • NGMI • WAGMI<br>
+        <br>
+        <span style="color: #0f0;">📈 BUY HIGH SELL LOW 📉</span>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="banner" style="animation: none; background: #000; color: #0f0;">
+      © 2000 STONK WARS • POWERED BY DIAL-UP • WEBMASTER@STONKWARS.GEO
+    </div>
+  </div>
+
+  <script>
+    // MATRIX RAIN
+    const canvas = document.getElementById('matrix-bg');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = '01$₿📈📉💎🚀STONKWAGMINGMI';
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array.from({length: columns}).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#0F0';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 50);
+
+    // BULL MODE
+    function bullMode() {
+      document.body.style.background = '#001a00';
+      document.body.style.animation = 'none';
+
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          createFloatingEmoji('🚀');
+        }, i * 100);
+      }
+
+      showPopup('📈 BULL MARKET ACTIVATED 🐂', '#0f0');
+    }
+
+    // BEAR MODE
+    function bearMode() {
+      document.body.style.background = '#1a0000';
+
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          createFloatingEmoji('📉');
+        }, i * 100);
+      }
+
+      showPopup('📉 BEAR MARKET ACTIVATED 🐻', '#f00');
+    }
+
+    // CREATE FLOATING EMOJI
+    function createFloatingEmoji(emoji) {
+      const el = document.createElement('div');
+      el.style.position = 'fixed';
+      el.style.fontSize = '60px';
+      el.style.left = Math.random() * window.innerWidth + 'px';
+      el.style.top = '-100px';
+      el.style.zIndex = '9999';
+      el.textContent = emoji;
+      document.body.appendChild(el);
+
+      el.animate([
+        { top: '-100px', opacity: 1, transform: 'rotate(0deg)' },
+        { top: window.innerHeight + 100 + 'px', opacity: 0, transform: 'rotate(720deg)' }
+      ], {
+        duration: 3000,
+        easing: 'ease-in'
+      });
+
+      setTimeout(() => el.remove(), 3000);
+    }
+
+    // SHOW POPUP
+    function showPopup(text, color) {
+      const popup = document.createElement('div');
+      popup.style.position = 'fixed';
+      popup.style.top = '50%';
+      popup.style.left = '50%';
+      popup.style.transform = 'translate(-50%, -50%)';
+      popup.style.fontSize = '60px';
+      popup.style.color = color;
+      popup.style.textShadow = `0 0 30px ${color}`;
+      popup.style.zIndex = '99999';
+      popup.style.fontFamily = 'Impact, sans-serif';
+      popup.style.textAlign = 'center';
+      popup.style.padding = '30px';
+      popup.style.background = '#000';
+      popup.style.border = `5px solid ${color}`;
+      popup.textContent = text;
+      document.body.appendChild(popup);
+
+      setTimeout(() => popup.remove(), 2000);
+    }
+
+    // COPY CA
+    function copyCA() {
+      navigator.clipboard.writeText('StoNKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+      showPopup('✓ COPIED! 💎', '#0f0');
+    }
+
+    // TITLE ANIMATION
+    const titles = ['📊 STONK WARS', '💼 WALL STREET', '📈 TO THE MOON', '💎 DIAMOND HANDS', '🚀 WAGMI'];
+    let i = 0;
+    setInterval(() => {
+      document.title = titles[i];
+      i = (i + 1) % titles.length;
+    }, 1500);
+
+    // CONSOLE
+    console.log('%c💼 WALL STREET 2000 💼', 'font-size: 40px; color: #0f0; font-weight: bold; background: #000;');
+    console.log('%cBuy high, sell low, repeat.', 'font-size: 20px; color: #f00;');
+    console.log('%c*Not financial advice*', 'font-size: 12px; color: #888;');
+  </script>
+</body>
+</html>

@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🚨💀 STONK WARS: THE FINAL FORM 💀🚨</title>
+  <style>
+    * {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><text y="32" font-size="32">💀</text></svg>'), auto !important;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      font-family: 'Comic Sans MS', 'Papyrus', cursive;
+      overflow-x: hidden;
+      animation: body-chaos 5s infinite;
+    }
+
+    @keyframes body-chaos {
+      0% { background: linear-gradient(45deg, #ff0080, #8000ff); }
+      25% { background: linear-gradient(135deg, #00ff80, #0080ff); }
+      50% { background: linear-gradient(225deg, #ff8000, #ff0080); }
+      75% { background: linear-gradient(315deg, #80ff00, #00ff80); }
+      100% { background: linear-gradient(45deg, #ff0080, #8000ff); }
+    }
+
+    /* LAYERS OF CHAOS */
+    .chaos-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #layer1 { opacity: 0.1; animation: layer-spin 20s linear infinite; }
+    #layer2 { opacity: 0.15; animation: layer-spin 15s linear infinite reverse; }
+    #layer3 { opacity: 0.1; animation: layer-pulse 10s ease-in-out infinite; }
+
+    @keyframes layer-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes layer-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.1; }
+      50% { transform: scale(1.5); opacity: 0.2; }
+    }
+
+    /* ABSOLUTE CHAOS GRID */
+    .chaos-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      grid-template-rows: repeat(10, 1fr);
+      gap: 5px;
+      padding: 5px;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.3;
+    }
+
+    .chaos-cell {
+      background-size: cover;
+      animation: cell-chaos 3s ease-in-out infinite;
+    }
+
+    .chaos-cell:nth-child(odd) {
+      animation-direction: reverse;
+      animation-delay: -1s;
+    }
+
+    @keyframes cell-chaos {
+      0%, 100% { transform: rotate(0deg) scale(1); filter: hue-rotate(0deg); }
+      25% { transform: rotate(90deg) scale(1.2); filter: hue-rotate(90deg); }
+      50% { transform: rotate(180deg) scale(0.8); filter: hue-rotate(180deg); }
+      75% { transform: rotate(270deg) scale(1.2); filter: hue-rotate(270deg); }
+    }
+
+    /* SPINNING BORDER GIFS */
+    .border-gif {
+      position: fixed;
+      width: 120px;
+      height: 120px;
+      z-index: 9999;
+      animation: border-chaos 4s ease-in-out infinite;
+      filter: saturate(3);
+    }
+
+    @keyframes border-chaos {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(360deg) scale(1.5); }
+    }
+
+    .border-gif.tl { top: 10px; left: 10px; animation-delay: 0s; }
+    .border-gif.tr { top: 10px; right: 10px; animation-delay: -1s; animation-direction: reverse; }
+    .border-gif.bl { bottom: 10px; left: 10px; animation-delay: -2s; }
+    .border-gif.br { bottom: 10px; right: 10px; animation-delay: -3s; animation-direction: reverse; }
+
+    /* FLOATING TEXT MADNESS */
+    .float-text {
+      position: fixed;
+      font-size: 40px;
+      font-weight: bold;
+      z-index: 9998;
+      animation: text-madness 10s ease-in-out infinite;
+      text-shadow: 3px 3px 0 #000;
+      pointer-events: none;
+    }
+
+    @keyframes text-madness {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+      25% { transform: translate(200px, -200px) rotate(180deg); opacity: 0.5; }
+      50% { transform: translate(-200px, 200px) rotate(360deg); opacity: 1; }
+      75% { transform: translate(200px, 200px) rotate(540deg); opacity: 0.5; }
+    }
+
+    .float-text:nth-child(1) { top: 10%; left: 10%; color: #ff0080; animation-delay: 0s; }
+    .float-text:nth-child(2) { top: 30%; right: 10%; color: #80ff00; animation-delay: -2s; }
+    .float-text:nth-child(3) { bottom: 20%; left: 20%; color: #00ff80; animation-delay: -4s; }
+    .float-text:nth-child(4) { top: 50%; right: 20%; color: #ff8000; animation-delay: -6s; }
+    .float-text:nth-child(5) { bottom: 40%; left: 40%; color: #8000ff; animation-delay: -8s; }
+
+    /* CONTENT */
+    .content {
+      position: relative;
+      z-index: 100;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* MEGA HEADER */
+    .mega-header {
+      text-align: center;
+      padding: 50px 20px;
+      background: rgba(0,0,0,0.8);
+      border: 10px solid;
+      border-image: linear-gradient(45deg, red, orange, yellow, green, blue, purple) 1;
+      margin: 20px 0;
+      position: relative;
+      overflow: hidden;
+      animation: header-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes header-pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 50px rgba(255,0,0,0.5); }
+      50% { transform: scale(1.02); box-shadow: 0 0 100px rgba(0,255,0,0.8); }
+    }
+
+    .mega-title {
+      font-size: 100px;
+      font-weight: bold;
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, purple);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow-flow 3s linear infinite;
+      text-shadow: none;
+      filter: drop-shadow(0 0 30px rgba(255,255,255,0.8));
+    }
+
+    @keyframes rainbow-flow {
+      to { background-position: 200% center; }
+    }
+
+    /* MEME TEXT */
+    .impact-text {
+      font-family: Impact, sans-serif;
+      font-size: 60px;
+      color: white;
+      text-shadow: -4px -4px 0 #000, 4px -4px 0 #000, -4px 4px 0 #000, 4px 4px 0 #000;
+      text-align: center;
+      text-transform: uppercase;
+      animation: text-wiggle 0.3s ease-in-out infinite;
+    }
+
+    @keyframes text-wiggle {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+
+    /* INSANE GIF WALL */
+    .gif-wall {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .gif-item {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border: 5px solid;
+      border-image: linear-gradient(45deg, red, blue, green, yellow) 1;
+      animation: gif-insanity 2s ease-in-out infinite;
+    }
+
+    .gif-item:nth-child(3n) { animation: gif-spin 3s linear infinite; }
+    .gif-item:nth-child(3n+1) { animation: gif-shake 0.5s ease-in-out infinite; }
+    .gif-item:nth-child(3n+2) { animation: gif-pulse 1.5s ease-in-out infinite; }
+
+    @keyframes gif-insanity {
+      0%, 100% { transform: scale(1) rotate(0deg); filter: hue-rotate(0deg); }
+      50% { transform: scale(1.1) rotate(5deg); filter: hue-rotate(180deg); }
+    }
+
+    @keyframes gif-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes gif-shake {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(-5px, -5px); }
+      50% { transform: translate(5px, 5px); }
+      75% { transform: translate(-5px, 5px); }
+    }
+
+    @keyframes gif-pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255,0,255,0.8); }
+      50% { transform: scale(1.2); box-shadow: 0 0 40px rgba(0,255,255,0.8); }
+    }
+
+    /* SECTION */
+    .chaos-section {
+      background: rgba(0,0,0,0.9);
+      border: 8px double;
+      border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+      padding: 40px;
+      margin: 40px 0;
+      position: relative;
+      animation: section-float 5s ease-in-out infinite;
+    }
+
+    @keyframes section-float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(1deg); }
+    }
+
+    /* BUTTONS */
+    .chaos-btn {
+      display: inline-block;
+      padding: 25px 50px;
+      margin: 15px;
+      font-size: 40px;
+      font-weight: bold;
+      font-family: Impact, sans-serif;
+      background: linear-gradient(45deg, red, orange, yellow, green, blue, purple);
+      background-size: 400% 400%;
+      animation: gradient-chaos 2s ease infinite, btn-bounce 1s ease-in-out infinite;
+      border: 6px solid white;
+      color: white;
+      text-shadow: 4px 4px 0 #000;
+      cursor: pointer;
+      box-shadow: 0 0 40px rgba(255,255,255,0.6);
+    }
+
+    @keyframes gradient-chaos {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes btn-bounce {
+      0%, 100% { transform: scale(1) rotate(-2deg); }
+      50% { transform: scale(1.1) rotate(2deg); }
+    }
+
+    /* MARQUEE INSANITY */
+    .marquee-chaos {
+      overflow: hidden;
+      background: rgba(255,0,0,0.3);
+      padding: 20px 0;
+      margin: 30px 0;
+      border-top: 5px solid #ff00ff;
+      border-bottom: 5px solid #00ffff;
+    }
+
+    .marquee-inner {
+      display: flex;
+      animation: marquee-scroll 25s linear infinite;
+    }
+
+    @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .marquee-item {
+      flex-shrink: 0;
+      margin: 0 20px;
+      font-size: 50px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 3px 3px 0 #000;
+      animation: item-wiggle 0.5s ease-in-out infinite;
+    }
+
+    /* PSEUDOINTELLECTUAL SECTION */
+    .mystic-text {
+      font-family: 'Papyrus', fantasy;
+      font-size: 24px;
+      color: #ff00ff;
+      text-align: center;
+      line-height: 1.8;
+      text-shadow: 0 0 20px #ff00ff;
+      animation: mystic-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes mystic-glow {
+      0%, 100% { text-shadow: 0 0 20px #ff00ff; }
+      50% { text-shadow: 0 0 40px #ff00ff, 0 0 60px #00ffff; }
+    }
+
+    /* VIDEO CHAOS */
+    .video-chaos {
+      position: relative;
+      margin: 40px 0;
+      text-align: center;
+    }
+
+    .chaos-video {
+      max-width: 100%;
+      border: 10px solid;
+      border-image: linear-gradient(45deg, red, blue) 1;
+      animation: video-glitch 0.1s infinite;
+      filter: saturate(2) contrast(1.5);
+    }
+
+    @keyframes video-glitch {
+      0% { transform: translate(0, 0); filter: saturate(2); }
+      25% { transform: translate(-3px, 3px); filter: saturate(3); }
+      50% { transform: translate(3px, -3px); filter: saturate(1); }
+      75% { transform: translate(-3px, -3px); filter: saturate(4); }
+      100% { transform: translate(0, 0); filter: saturate(2); }
+    }
+
+    /* EXPLOSION OVERLAY */
+    .explosion {
+      position: fixed;
+      font-size: 120px;
+      pointer-events: none;
+      z-index: 99999;
+      animation: explode 1s ease-out forwards;
+    }
+
+    @keyframes explode {
+      from { transform: scale(0) rotate(0deg); opacity: 1; }
+      to { transform: scale(3) rotate(720deg); opacity: 0; }
+    }
+
+    @media (max-width: 768px) {
+      .mega-title { font-size: 50px; }
+      .impact-text { font-size: 30px; }
+      .float-text { font-size: 20px; }
+      .chaos-btn { font-size: 24px; padding: 15px 30px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- CHAOS LAYERS -->
+  <div class="chaos-layer" id="layer1"></div>
+  <div class="chaos-layer" id="layer2"></div>
+  <div class="chaos-layer" id="layer3"></div>
+
+  <!-- BACKGROUND CHAOS GRID -->
+  <div class="chaos-grid" id="chaos-grid"></div>
+
+  <!-- BORDER GIFS -->
+  <img src="https://blob.gifcities.org/gifcities/2DB5XFT7TG7Z4HOL57OTXLPOH572VXPK.gif" class="border-gif tl">
+  <img src="https://blob.gifcities.org/gifcities/273CSDZTFQ6MHBW7JL3S2WHUW3W6WKCS.gif" class="border-gif tr">
+  <img src="https://blob.gifcities.org/gifcities/2NKAVT5IMC53RADCDXLGQ3DWKDGHEPAA.gif" class="border-gif bl">
+  <img src="https://blob.gifcities.org/gifcities/32FMAPHPAT6BNANBKEAYVZDHBZBMYQPN.gif" class="border-gif br">
+
+  <!-- FLOATING TEXT CHAOS -->
+  <div class="float-text">WAGMI</div>
+  <div class="float-text">NGMI</div>
+  <div class="float-text">HODL</div>
+  <div class="float-text">MOON</div>
+  <div class="float-text">REKT</div>
+
+  <div class="content">
+    <!-- MEGA HEADER -->
+    <div class="mega-header">
+      <div class="mega-title">STONK WARS</div>
+      <div class="impact-text" style="font-size: 50px; color: #ff00ff; margin-top: 20px;">
+        THE FINAL FORM
+      </div>
+      <div style="margin-top: 20px; font-size: 30px; color: #00ffff; font-weight: bold; text-shadow: 0 0 20px #00ffff;">
+        🚨 MAXIMUM CHAOS ACHIEVED 🚨
+      </div>
+    </div>
+
+    <!-- MARQUEE MADNESS -->
+    <div class="marquee-chaos">
+      <div class="marquee-inner">
+        <span class="marquee-item">💎 DIAMOND HANDS 💎</span>
+        <span class="marquee-item">🚀 TO THE MOON 🚀</span>
+        <span class="marquee-item">📈 STONKS 📈</span>
+        <span class="marquee-item">🔥 THIS IS FINE 🔥</span>
+        <span class="marquee-item">💀 NGMI 💀</span>
+        <span class="marquee-item">🤑 WAGMI 🤑</span>
+        <span class="marquee-item">💎 DIAMOND HANDS 💎</span>
+        <span class="marquee-item">🚀 TO THE MOON 🚀</span>
+        <span class="marquee-item">📈 STONKS 📈</span>
+        <span class="marquee-item">🔥 THIS IS FINE 🔥</span>
+      </div>
+    </div>
+
+    <!-- PSEUDOINTELLECTUAL MYSTICISM -->
+    <div class="chaos-section">
+      <div class="mystic-text">
+        The Neptunian Opal resonates with the Tree of Life,<br>
+        channeling the cosmic energies of the Bull Market Cycle.<br>
+        Through the Fibonacci Retracement of the Soul,<br>
+        we ascend to the Diamond Hand Dimension.<br>
+        <br>
+        As foretold in the ancient texts of 4chan,<br>
+        "He who buys the dip, shall inherit the moon."<br>
+        <br>
+        This is the way. This has always been the way.<br>
+        The shitcoin of shitcoins reveals itself.
+      </div>
+    </div>
+
+    <!-- VIDEO CHAOS -->
+    <div class="video-chaos">
+      <div class="impact-text" style="margin-bottom: 20px;">LIVE FOOTAGE</div>
+      <video src="media/stonks2.mp4" class="chaos-video" autoplay loop muted playsinline width="900"></video>
+      <div class="impact-text" style="margin-top: 20px; color: #ff0000;">
+        YOUR PORTFOLIO RIGHT NOW
+      </div>
+    </div>
+
+    <!-- INSANE GIF WALL -->
+    <div class="chaos-section">
+      <div class="impact-text" style="margin-bottom: 30px;">THE CHAOS GALLERY</div>
+      <div class="gif-wall">
+        <img src="https://blob.gifcities.org/gifcities/3M2JTFUX6GLEKIVWVVG5J6ZVQ354VE5W.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/2CA7VIJPQHXHD6IPK7Q4IL2GKBMWZIWT.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/2DVGNK52LRK4RTX2V6P2672RMJUSEK6T.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/35GKF6TBUGV4RCYMAX2B4545KQI6GQ2Y.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/4CWIV7THQJ2HB6QH2URUMRIRYDYFM6RT.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/2WCIS2J6XUCVFROPJR2UKMMSLWEG6QHI.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/2J2WXHNLSOCZS7AAUXSJ222SEWCX6BZH.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/4CUL72HIJGWY5EKH47ODCSJGSQFDD7VH.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/2DB5XFT7TG7Z4HOL57OTXLPOH572VXPK.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/3OD4GDHDGHHUY3APZC62QDZDWH5TWGP6.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/4LVEGALMN3DVK74I5RLDP6GDWMY6NBHY.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/4R4KFN73VPKQU4E3C7EQUR3IDP6GJ66K.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/273CSDZTFQ6MHBW7JL3S2WHUW3W6WKCS.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/4X2ZZSCBNNAV464C73Z6NT3NAUKXLCU4.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/6MV2FOMH2YVWKYGLN7WDLSESLVY73OLP.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/4TE457SYUPKBMMH4ERUOEUKMA7AV4UZC.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/24YWHW3CNK27B65PDA6VLELSIOGQSISD.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/5BBNT5Z5SP7MDCTUOCN4A75B3CU2US4R.gif" class="gif-item">
+        <img src="media/1.jpg" class="gif-item">
+        <img src="media/2.jpg" class="gif-item">
+        <img src="media/3.jpg" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/6VVLU2JKFERW2FGHAHZM4NMTFTFU4Y2Y.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/4ZGVIDDOIYL4EJ2BIMWRN77LBJ7SCFRE.gif" class="gif-item">
+        <img src="https://blob.gifcities.org/gifcities/5IYER54L6Z4LAR7GR5GXUV3D6ZOHFFNJ.gif" class="gif-item">
+      </div>
+    </div>
+
+    <!-- CALL TO ACTION -->
+    <div class="chaos-section" style="text-align: center;">
+      <div class="impact-text" style="margin-bottom: 30px;">EMBRACE THE CHAOS</div>
+      <button class="chaos-btn" onclick="triggerApocalypse()">APOCALYPSE NOW</button>
+      <button class="chaos-btn" onclick="summonDemons()">SUMMON DEMONS</button>
+      <button class="chaos-btn" onclick="breakReality()">BREAK REALITY</button>
+    </div>
+
+    <!-- CONTRACT ADDRESS -->
+    <div class="chaos-section" style="text-align: center;">
+      <div class="impact-text" style="margin-bottom: 20px;">CONTRACT ADDRESS</div>
+      <div style="font-family: 'Courier New', monospace; font-size: 28px; color: #00ff00; word-break: break-all; background: #000; padding: 30px; border: 5px solid #00ff00; animation: text-glitch 0.3s infinite;">
+        StoNKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      </div>
+      <button class="chaos-btn" onclick="copyCA()" style="margin-top: 20px;">COPY OR DIE</button>
+    </div>
+
+    <!-- FINAL WARNING -->
+    <div class="chaos-section" style="background: rgba(100,0,0,0.9); text-align: center;">
+      <div class="impact-text" style="font-size: 80px; color: #ff0000;">⚠️ WARNING ⚠️</div>
+      <div style="font-size: 32px; color: white; margin-top: 20px; line-height: 1.6; text-shadow: 3px 3px 0 #000;">
+        YOU HAVE REACHED THE FINAL FORM<br>
+        THERE IS NO GOING BACK<br>
+        YOUR COMPUTER IS NOW POSSESSED<br>
+        THE MARKET GODS DEMAND SACRIFICE<br>
+        BUY HIGH SELL LOW FOREVER<br>
+        <br>
+        <span style="color: #0f0;">NFA • DYOR • NGMI • WAGMI • GM • GN</span><br>
+        <span style="color: #ff0;">WEN MOON • WEN LAMBO • PROBABLY NOTHING</span><br>
+        <br>
+        <span style="font-size: 50px; animation: text-wiggle 0.2s infinite;">
+          🚀💎🙏📈💰🔥💸🎰🎲💀👻🤡🌙⚡🔮
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // POPULATE CHAOS GRID
+    const grid = document.getElementById('chaos-grid');
+    const gifs = [
+      'https://blob.gifcities.org/gifcities/2X7FABEPOKFL4QO37TDM6JFQUISBPOBA.gif',
+      'https://blob.gifcities.org/gifcities/4UAKNQI2NKNCXKHJ7F7XB2SPE4FPGZ34.gif',
+      'https://blob.gifcities.org/gifcities/7NQT3JRGG5HX63IXU3KITRFVQCD5W5JO.gif',
+      'https://blob.gifcities.org/gifcities/3S7GDXZ6WAOBDEKCQZQKGVB3ILKU4WQH.gif'
+    ];
+
+    for (let i = 0; i < 100; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'chaos-cell';
+      cell.style.backgroundImage = `url(${gifs[i % gifs.length]})`;
+      grid.appendChild(cell);
+    }
+
+    // POPULATE CHAOS LAYERS
+    for (let i = 1; i <= 3; i++) {
+      const layer = document.getElementById(`layer${i}`);
+      const layerGrid = document.createElement('div');
+      layerGrid.style.display = 'grid';
+      layerGrid.style.gridTemplateColumns = 'repeat(5, 1fr)';
+      layerGrid.style.gap = '20px';
+      layerGrid.style.padding = '20px';
+
+      for (let j = 0; j < 25; j++) {
+        const img = document.createElement('img');
+        img.src = gifs[j % gifs.length];
+        img.style.width = '100%';
+        img.style.height = '100px';
+        img.style.objectFit = 'cover';
+        layerGrid.appendChild(img);
+      }
+      layer.appendChild(layerGrid);
+    }
+
+    // TRIGGER APOCALYPSE
+    function triggerApocalypse() {
+      for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+          createExplosion();
+        }, i * 50);
+      }
+
+      document.body.style.animation = 'body-chaos 0.1s infinite';
+      setTimeout(() => {
+        document.body.style.animation = 'body-chaos 5s infinite';
+      }, 5000);
+
+      showBigText('💀 APOCALYPSE 💀');
+    }
+
+    // SUMMON DEMONS
+    function summonDemons() {
+      const demons = ['👹', '👺', '💀', '👻', '🤡', '👾', '🎃'];
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          createFlyingEmoji(demons[Math.floor(Math.random() * demons.length)]);
+        }, i * 100);
+      }
+      showBigText('👹 DEMONS SUMMONED 👹');
+    }
+
+    // BREAK REALITY
+    function breakReality() {
+      document.querySelectorAll('*').forEach(el => {
+        el.style.animationDuration = (Math.random() * 0.5 + 0.1) + 's';
+      });
+
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          const glitch = document.createElement('div');
+          glitch.style.position = 'fixed';
+          glitch.style.left = Math.random() * window.innerWidth + 'px';
+          glitch.style.top = Math.random() * window.innerHeight + 'px';
+          glitch.style.width = Math.random() * 200 + 100 + 'px';
+          glitch.style.height = Math.random() * 200 + 100 + 'px';
+          glitch.style.background = `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
+          glitch.style.zIndex = '99999';
+          glitch.style.opacity = '0.5';
+          glitch.style.mixBlendMode = 'difference';
+          document.body.appendChild(glitch);
+          setTimeout(() => glitch.remove(), 2000);
+        }, i * 100);
+      }
+
+      showBigText('⚡ REALITY BROKEN ⚡');
+    }
+
+    // CREATE EXPLOSION
+    function createExplosion() {
+      const emojis = ['💥', '💣', '🔥', '⚡', '💫', '✨'];
+      const explosion = document.createElement('div');
+      explosion.className = 'explosion';
+      explosion.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      explosion.style.left = Math.random() * window.innerWidth + 'px';
+      explosion.style.top = Math.random() * window.innerHeight + 'px';
+      document.body.appendChild(explosion);
+      setTimeout(() => explosion.remove(), 1000);
+    }
+
+    // CREATE FLYING EMOJI
+    function createFlyingEmoji(emoji) {
+      const el = document.createElement('div');
+      el.style.position = 'fixed';
+      el.style.fontSize = '80px';
+      el.style.left = Math.random() * window.innerWidth + 'px';
+      el.style.top = '-100px';
+      el.style.zIndex = '99999';
+      el.textContent = emoji;
+      document.body.appendChild(el);
+
+      el.animate([
+        { top: '-100px', transform: 'rotate(0deg)' },
+        { top: window.innerHeight + 100 + 'px', transform: 'rotate(720deg)' }
+      ], {
+        duration: 3000,
+        easing: 'ease-in'
+      });
+
+      setTimeout(() => el.remove(), 3000);
+    }
+
+    // SHOW BIG TEXT
+    function showBigText(text) {
+      const popup = document.createElement('div');
+      popup.style.position = 'fixed';
+      popup.style.top = '50%';
+      popup.style.left = '50%';
+      popup.style.transform = 'translate(-50%, -50%)';
+      popup.style.fontSize = '120px';
+      popup.style.fontWeight = 'bold';
+      popup.style.color = '#fff';
+      popup.style.textShadow = '0 0 50px #ff0, 0 0 100px #f0f';
+      popup.style.zIndex = '999999';
+      popup.style.fontFamily = 'Impact, sans-serif';
+      popup.style.textAlign = 'center';
+      popup.style.animation = 'text-wiggle 0.1s infinite';
+      popup.textContent = text;
+      document.body.appendChild(popup);
+      setTimeout(() => popup.remove(), 3000);
+    }
+
+    // COPY CA
+    function copyCA() {
+      navigator.clipboard.writeText('StoNKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+      showBigText('✓ COPIED 💎');
+    }
+
+    // RANDOM EXPLOSIONS
+    setInterval(() => {
+      if (Math.random() > 0.8) {
+        createExplosion();
+      }
+    }, 3000);
+
+    // AUTO DEMONS
+    setInterval(() => {
+      if (Math.random() > 0.9) {
+        const demons = ['👹', '👺', '💀', '👻'];
+        createFlyingEmoji(demons[Math.floor(Math.random() * demons.length)]);
+      }
+    }, 5000);
+
+    // TITLE ANIMATION
+    const titles = ['💀 FINAL FORM', '🔥 CHAOS MODE', '💎 STONK WARS', '🚀 TO HELL', '⚡ MAXIMUM'];
+    let i = 0;
+    setInterval(() => {
+      document.title = titles[i] + ' 💀🔥💎🚀⚡';
+      i = (i + 1) % titles.length;
+    }, 800);
+
+    // CONSOLE
+    console.log('%c💀🔥 THE FINAL FORM 🔥💀', 'font-size: 60px; color: red; font-weight: bold; text-shadow: 0 0 20px red;');
+    console.log('%cYou have been warned.', 'font-size: 30px; color: orange;');
+    console.log('%cThere is no escape.', 'font-size: 20px; color: yellow;');
+    console.log('%cThis is the way.', 'font-size: 16px; color: lime;');
+  </script>
+</body>
+</html>

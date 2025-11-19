@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>💀 STONK WARS: SHAKE & BREAK 💀</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(180deg, #0f1115 0%, #1a1f2b 50%, #0f1115 100%);
+      color: #fff;
+      font-family: 'Impact', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 300vh;
+    }
+
+    /* PHYSICS ELEMENT */
+    .physics-element {
+      transition: none;
+      will-change: transform;
+    }
+
+    .physics-element.falling {
+      position: fixed !important;
+      z-index: 9999 !important;
+    }
+
+    /* CRACK OVERLAY */
+    .crack-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 10000;
+      background-image:
+        linear-gradient(45deg, transparent 48%, rgba(255,0,0,0.3) 49%, rgba(255,0,0,0.3) 51%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(255,0,0,0.3) 49%, rgba(255,0,0,0.3) 51%, transparent 52%);
+      background-size: 20px 20px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .crack-overlay.visible {
+      opacity: 1;
+    }
+
+    /* SHAKE METER */
+    .shake-meter {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.8);
+      border: 3px solid #ff0000;
+      padding: 15px;
+      border-radius: 10px;
+      z-index: 10001;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ff0000;
+      text-align: center;
+      min-width: 200px;
+    }
+
+    .shake-meter-bar {
+      width: 100%;
+      height: 20px;
+      background: #333;
+      border-radius: 10px;
+      margin-top: 10px;
+      overflow: hidden;
+      border: 2px solid #666;
+    }
+
+    .shake-meter-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00ff00, #ffff00, #ff0000);
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* WARNING TEXT */
+    .warning {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 80px;
+      color: #ff0000;
+      text-shadow: 0 0 20px #ff0000;
+      z-index: 10002;
+      animation: pulse-warning 1s ease-in-out infinite;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .warning.show {
+      opacity: 1;
+    }
+
+    @keyframes pulse-warning {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.2); }
+    }
+
+    /* CONTENT STYLES */
+    .content-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+    }
+
+    .header {
+      text-align: center;
+      padding: 100px 20px;
+      position: relative;
+    }
+
+    .logo-container {
+      display: inline-block;
+      position: relative;
+    }
+
+    .main-logo {
+      width: 200px;
+      height: 200px;
+      filter: drop-shadow(0 0 30px #ff4e1b);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .title {
+      font-size: 100px;
+      color: #ff4e1b;
+      text-shadow: 0 0 30px #ff4e1b;
+      margin: 20px 0;
+      letter-spacing: 10px;
+    }
+
+    .subtitle {
+      font-size: 40px;
+      color: #00ff00;
+      text-shadow: 0 0 20px #00ff00;
+      margin-top: 20px;
+    }
+
+    .section {
+      margin: 100px 0;
+      padding: 60px;
+      background: rgba(255,255,255,0.05);
+      border: 3px solid #ff4e1b;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      font-size: 60px;
+      color: #ff4e1b;
+      text-align: center;
+      margin-bottom: 40px;
+      text-shadow: 0 0 20px #ff4e1b;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .feature-card {
+      background: rgba(255,78,27,0.1);
+      border: 2px solid #ff4e1b;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: scale(1.05);
+    }
+
+    .feature-icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+    }
+
+    .feature-title {
+      font-size: 30px;
+      color: #ff4e1b;
+      margin-bottom: 15px;
+    }
+
+    .feature-desc {
+      font-size: 18px;
+      color: #ccc;
+    }
+
+    .video-container {
+      position: relative;
+      margin: 60px 0;
+      text-align: center;
+    }
+
+    .video-frame {
+      max-width: 800px;
+      width: 100%;
+      border: 5px solid #ff4e1b;
+      border-radius: 15px;
+      box-shadow: 0 0 50px rgba(255,78,27,0.5);
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 30px 60px;
+      font-size: 40px;
+      background: linear-gradient(45deg, #ff4e1b, #ff8c00);
+      color: #fff;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 30px rgba(255,78,27,0.5);
+      transition: transform 0.3s;
+      margin: 20px;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.1);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 60px 0;
+      flex-wrap: wrap;
+    }
+
+    .social-button {
+      padding: 20px 40px;
+      font-size: 28px;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid #00ff00;
+      color: #00ff00;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .social-button:hover {
+      background: rgba(0,255,0,0.2);
+      box-shadow: 0 0 30px #00ff00;
+    }
+
+    /* PARTICLE EFFECTS */
+    .particle {
+      position: fixed;
+      pointer-events: none;
+      font-size: 30px;
+      z-index: 9998;
+    }
+
+    /* INSTRUCTIONS */
+    .instructions {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.9);
+      padding: 20px 40px;
+      border: 3px solid #00ff00;
+      border-radius: 15px;
+      z-index: 10001;
+      text-align: center;
+      font-size: 20px;
+      color: #00ff00;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.05); }
+    }
+
+    /* WOBBLE EFFECTS */
+    @keyframes wobble-weak {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(1deg); }
+      75% { transform: rotate(-1deg); }
+    }
+
+    @keyframes wobble-medium {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(3deg); }
+      75% { transform: rotate(-3deg); }
+    }
+
+    @keyframes wobble-strong {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(6deg); }
+      75% { transform: rotate(-6deg); }
+    }
+
+    .weak { animation: wobble-weak 0.3s ease-in-out infinite; }
+    .weakening { animation: wobble-medium 0.2s ease-in-out infinite; }
+    .critical { animation: wobble-strong 0.1s ease-in-out infinite; }
+
+    /* CURSOR EFFECT */
+    .cursor-ripple {
+      position: fixed;
+      border: 2px solid rgba(255,78,27,0.6);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9997;
+      animation: ripple-expand 0.8s ease-out forwards;
+    }
+
+    @keyframes ripple-expand {
+      from {
+        width: 0;
+        height: 0;
+        opacity: 1;
+      }
+      to {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+      }
+    }
+
+    /* HOVER GLOW */
+    .hover-glow {
+      box-shadow: 0 0 30px rgba(255,78,27,0.8);
+      border-color: #ff4e1b !important;
+    }
+
+    .mobile-only {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-only { display: inline; }
+      .desktop-only { display: none; }
+      .title { font-size: 60px; }
+      .subtitle { font-size: 28px; }
+      .section-title { font-size: 40px; }
+    }
+
+    /* DESTRUCTION EFFECT */
+    @keyframes shatter {
+      0% { opacity: 1; }
+      100% { opacity: 0; transform: scale(0.5); }
+    }
+
+    .shattering {
+      animation: shatter 0.5s forwards;
+    }
+  </style>
+</head>
+<body>
+  <!-- SHAKE METER -->
+  <div class="shake-meter">
+    <div id="shake-text">SHAKE INTENSITY</div>
+    <div class="shake-meter-bar">
+      <div class="shake-meter-fill" id="shake-fill"></div>
+    </div>
+    <div style="margin-top: 10px; font-size: 14px;" id="shake-count">SHAKES: 0</div>
+  </div>
+
+  <!-- WARNING TEXT -->
+  <div class="warning" id="warning"></div>
+
+  <!-- CRACK OVERLAY -->
+  <div class="crack-overlay" id="crack-overlay"></div>
+
+  <!-- INSTRUCTIONS -->
+  <div class="instructions" id="instructions">
+    <div class="desktop-only">🖱️ HOVER TO WEAKEN | CLICK TO BREAK | DRAG TO THROW</div>
+    <div class="mobile-only">📱 SCROLL & SHAKE YOUR DEVICE</div>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- HEADER -->
+    <div class="header physics-element">
+      <div class="logo-container physics-element">
+        <img src="media/stonkwars2.png" alt="STONK WARS" class="main-logo physics-element">
+      </div>
+      <h1 class="title physics-element">STONK WARS</h1>
+      <p class="subtitle physics-element">SHAKE & BREAK EDITION</p>
+      <div style="margin-top: 30px; font-size: 24px; color: #ff0000;" class="physics-element">
+        ⚠️ FRAGILE: HANDLE WITH CARE ⚠️
+      </div>
+    </div>
+
+    <!-- VIDEO SECTION -->
+    <div class="video-container physics-element">
+      <h2 class="section-title physics-element">LIVE CHAOS</h2>
+      <video src="media/stonks2.mp4" class="video-frame physics-element" autoplay loop muted playsinline></video>
+    </div>
+
+    <!-- FEATURES SECTION -->
+    <div class="section physics-element">
+      <h2 class="section-title physics-element">FEATURES</h2>
+      <div class="feature-grid">
+        <div class="feature-card physics-element">
+          <div class="feature-icon physics-element">📈</div>
+          <h3 class="feature-title physics-element">Real Data</h3>
+          <p class="feature-desc physics-element">Live market chaos</p>
+        </div>
+        <div class="feature-card physics-element">
+          <div class="feature-icon physics-element">🤖</div>
+          <h3 class="feature-title physics-element">AI Agents</h3>
+          <p class="feature-desc physics-element">Sentient chaos</p>
+        </div>
+        <div class="feature-card physics-element">
+          <div class="feature-icon physics-element">💬</div>
+          <h3 class="feature-title physics-element">Live Chat</h3>
+          <p class="feature-desc physics-element">Community chaos</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA SECTION -->
+    <div class="section physics-element" style="text-align: center;">
+      <h2 class="section-title physics-element">JOIN THE CHAOS</h2>
+      <button class="cta-button physics-element" onclick="triggerMassDestruction()">
+        CLICK TO DESTROY
+      </button>
+      <button class="cta-button physics-element" onclick="resetPage()">
+        RESET (COWARD)
+      </button>
+    </div>
+
+    <!-- SOCIAL LINKS -->
+    <div class="section physics-element">
+      <h2 class="section-title physics-element">FOLLOW US</h2>
+      <div class="social-links">
+        <button class="social-button physics-element">🐦 TWITTER</button>
+        <button class="social-button physics-element">✈️ TELEGRAM</button>
+        <button class="social-button physics-element">💬 DISCORD</button>
+      </div>
+    </div>
+
+    <!-- CONTRACT ADDRESS -->
+    <div class="section physics-element" style="text-align: center;">
+      <h2 class="section-title physics-element">CONTRACT ADDRESS</h2>
+      <div style="font-family: monospace; font-size: 20px; color: #00ff00; word-break: break-all; margin: 20px 0;" class="physics-element">
+        StoNKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      </div>
+      <button class="cta-button physics-element" style="font-size: 28px;" onclick="copyCA()">
+        COPY CA
+      </button>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="section physics-element" style="text-align: center; margin-bottom: 200px;">
+      <div style="font-size: 30px; color: #666;" class="physics-element">
+        © 2024 STONK WARS<br>
+        <span class="physics-element">IF IT BREAKS, IT'S YOUR FAULT</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // PHYSICS ENGINE
+    class PhysicsObject {
+      constructor(element) {
+        this.element = element;
+        this.rect = element.getBoundingClientRect();
+        this.x = this.rect.left;
+        this.y = this.rect.top;
+        this.width = this.rect.width;
+        this.height = this.rect.height;
+        this.vx = (Math.random() - 0.5) * 10;
+        this.vy = 0;
+        this.rotation = 0;
+        this.rotationSpeed = (Math.random() - 0.5) * 10;
+        this.falling = false;
+        this.bounces = 0;
+        this.health = 100;
+        this.isHovered = false;
+        this.isDragging = false;
+      }
+
+      damage(amount) {
+        this.health -= amount;
+        this.updateVisualState();
+
+        if (this.health <= 0 && !this.falling) {
+          this.startFalling();
+        }
+      }
+
+      updateVisualState() {
+        if (this.falling) return;
+
+        this.element.classList.remove('weak', 'weakening', 'critical', 'hover-glow');
+
+        if (this.health < 30) {
+          this.element.classList.add('critical', 'hover-glow');
+        } else if (this.health < 60) {
+          this.element.classList.add('weakening');
+        } else if (this.health < 90) {
+          this.element.classList.add('weak');
+        }
+      }
+
+      applyForce(fx, fy) {
+        if (this.falling) {
+          this.vx += fx;
+          this.vy += fy;
+        }
+      }
+
+      startFalling() {
+        if (this.falling) return;
+        this.falling = true;
+        this.element.classList.add('falling');
+        this.element.style.position = 'fixed';
+        this.element.style.left = this.x + 'px';
+        this.element.style.top = this.y + 'px';
+        this.element.style.width = this.width + 'px';
+        this.element.style.zIndex = '9999';
+      }
+
+      update() {
+        if (!this.falling) return;
+
+        // Apply gravity
+        this.vy += 0.8;
+
+        // Apply velocity
+        this.x += this.vx;
+        this.y += this.vy;
+        this.rotation += this.rotationSpeed;
+
+        // Bounce off bottom
+        if (this.y + this.height > window.innerHeight) {
+          this.y = window.innerHeight - this.height;
+          this.vy *= -0.6; // Bounce with energy loss
+          this.vx *= 0.9; // Friction
+          this.rotationSpeed *= 0.9;
+          this.bounces++;
+
+          // Stop if bouncing too much
+          if (Math.abs(this.vy) < 2 && this.bounces > 3) {
+            this.vy = 0;
+            this.vx = 0;
+            this.rotationSpeed *= 0.5;
+          }
+        }
+
+        // Bounce off sides
+        if (this.x < 0) {
+          this.x = 0;
+          this.vx *= -0.8;
+        }
+        if (this.x + this.width > window.innerWidth) {
+          this.x = window.innerWidth - this.width;
+          this.vx *= -0.8;
+        }
+
+        // Update DOM
+        this.element.style.transform = `translate(${this.x - this.rect.left}px, ${this.y - this.rect.top}px) rotate(${this.rotation}deg)`;
+      }
+    }
+
+    // GLOBALS
+    let physicsObjects = [];
+    let shakeIntensity = 0;
+    let shakeCount = 0;
+    let destructionLevel = 0;
+    let lastScrollY = window.scrollY;
+    let mouseX = 0, mouseY = 0, lastMouseX = 0, lastMouseY = 0;
+    let lastShakeTime = 0;
+
+    // INITIALIZE
+    function init() {
+      // Get all physics elements
+      const elements = document.querySelectorAll('.physics-element');
+      elements.forEach(el => {
+        const obj = new PhysicsObject(el);
+        physicsObjects.push(obj);
+      });
+
+      // Start animation loop
+      animate();
+
+      // Event listeners
+      window.addEventListener('scroll', onScroll);
+      window.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('mousedown', onMouseDown);
+      window.addEventListener('mouseup', onMouseUp);
+
+      // Mobile shake detection
+      if (window.DeviceMotionEvent) {
+        window.addEventListener('devicemotion', onDeviceMotion);
+      }
+
+      // Hide instructions after 5 seconds
+      setTimeout(() => {
+        const instructions = document.getElementById('instructions');
+        instructions.style.opacity = '0';
+        setTimeout(() => instructions.style.display = 'none', 1000);
+      }, 5000);
+    }
+
+    // ANIMATION LOOP
+    function animate() {
+      physicsObjects.forEach(obj => obj.update());
+      requestAnimationFrame(animate);
+    }
+
+    // SCROLL HANDLER
+    let scrollDelta = 0;
+    function onScroll() {
+      const currentScrollY = window.scrollY;
+      scrollDelta = Math.abs(currentScrollY - lastScrollY);
+      lastScrollY = currentScrollY;
+
+      // Drop random elements on scroll
+      if (scrollDelta > 50) {
+        dropRandomElements(Math.floor(scrollDelta / 100) + 1);
+        updateShakeMeter(Math.min(scrollDelta / 10, 100));
+      }
+    }
+
+    // MOUSE MOVE HANDLER (desktop interactions)
+    let draggedObject = null;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+
+    function onMouseMove(e) {
+      const currentTime = Date.now();
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      // Handle dragging
+      if (draggedObject) {
+        draggedObject.x = mouseX - dragOffsetX;
+        draggedObject.y = mouseY - dragOffsetY;
+        const dx = mouseX - lastMouseX;
+        const dy = mouseY - lastMouseY;
+        draggedObject.vx = dx * 0.5;
+        draggedObject.vy = dy * 0.5;
+
+        lastMouseX = mouseX;
+        lastMouseY = mouseY;
+        return;
+      }
+
+      // Check proximity to elements and damage them
+      physicsObjects.forEach(obj => {
+        if (obj.falling) return;
+
+        const centerX = obj.rect.left + obj.width / 2;
+        const centerY = obj.rect.top + obj.height / 2;
+        const dx = mouseX - centerX;
+        const dy = mouseY - centerY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        // Hover damage zone
+        if (distance < 150) {
+          const damageAmount = (150 - distance) / 150 * 0.5; // Damage based on proximity
+          obj.damage(damageAmount);
+          obj.isHovered = true;
+
+          // Create cursor ripple occasionally
+          if (Math.random() > 0.95) {
+            createCursorRipple(mouseX, mouseY);
+          }
+        } else {
+          obj.isHovered = false;
+        }
+      });
+
+      // Mouse velocity for shake detection
+      const dx = mouseX - lastMouseX;
+      const dy = mouseY - lastMouseY;
+      const speed = Math.sqrt(dx * dx + dy * dy);
+
+      if (speed > 50 && currentTime - lastShakeTime > 100) {
+        onShake(speed / 10);
+        lastShakeTime = currentTime;
+      }
+
+      lastMouseX = mouseX;
+      lastMouseY = mouseY;
+    }
+
+    // MOUSE DOWN HANDLER
+    function onMouseDown(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      // Find element under cursor
+      physicsObjects.forEach(obj => {
+        if (obj.falling) {
+          // Check if clicking on falling object
+          const inBoundsX = mouseX >= obj.x && mouseX <= obj.x + obj.width;
+          const inBoundsY = mouseY >= obj.y && mouseY <= obj.y + obj.height;
+
+          if (inBoundsX && inBoundsY) {
+            draggedObject = obj;
+            draggedObject.isDragging = true;
+            dragOffsetX = mouseX - obj.x;
+            dragOffsetY = mouseY - obj.y;
+            createCursorRipple(mouseX, mouseY);
+          }
+        } else {
+          // Instant break on click
+          const centerX = obj.rect.left + obj.width / 2;
+          const centerY = obj.rect.top + obj.height / 2;
+          const dx = mouseX - centerX;
+          const dy = mouseY - centerY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < Math.max(obj.width, obj.height) / 2) {
+            obj.damage(50); // Heavy damage on click
+            createBreakEffect(centerX, centerY);
+            createCursorRipple(mouseX, mouseY);
+          }
+        }
+      });
+    }
+
+    // MOUSE UP HANDLER
+    function onMouseUp(e) {
+      if (draggedObject) {
+        draggedObject.isDragging = false;
+        // Apply throw velocity
+        const dx = mouseX - lastMouseX;
+        const dy = mouseY - lastMouseY;
+        draggedObject.vx = dx * 2;
+        draggedObject.vy = dy * 2;
+        draggedObject.rotationSpeed = (Math.random() - 0.5) * 30;
+        draggedObject = null;
+      }
+    }
+
+    // CREATE CURSOR RIPPLE
+    function createCursorRipple(x, y) {
+      const ripple = document.createElement('div');
+      ripple.className = 'cursor-ripple';
+      ripple.style.left = (x - 100) + 'px';
+      ripple.style.top = (y - 100) + 'px';
+      document.body.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 800);
+    }
+
+    // CREATE BREAK EFFECT
+    function createBreakEffect(x, y) {
+      const particles = ['💥', '⚡', '💫', '✨'];
+      for (let i = 0; i < 8; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.textContent = particles[Math.floor(Math.random() * particles.length)];
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        document.body.appendChild(particle);
+
+        const angle = (Math.PI * 2 * i) / 8;
+        const distance = 50 + Math.random() * 50;
+
+        particle.animate([
+          { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+          {
+            transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`,
+            opacity: 0
+          }
+        ], {
+          duration: 600,
+          easing: 'ease-out'
+        });
+
+        setTimeout(() => particle.remove(), 600);
+      }
+    }
+
+    // DEVICE MOTION HANDLER (mobile shake)
+    let lastAcceleration = { x: 0, y: 0, z: 0 };
+    function onDeviceMotion(event) {
+      const acc = event.accelerationIncludingGravity;
+      if (!acc) return;
+
+      const dx = Math.abs(acc.x - lastAcceleration.x);
+      const dy = Math.abs(acc.y - lastAcceleration.y);
+      const dz = Math.abs(acc.z - lastAcceleration.z);
+      const shake = dx + dy + dz;
+
+      if (shake > 20) {
+        onShake(shake);
+      }
+
+      lastAcceleration = { x: acc.x, y: acc.y, z: acc.z };
+    }
+
+    // SHAKE HANDLER
+    function onShake(intensity) {
+      shakeIntensity = Math.min(intensity, 100);
+      shakeCount++;
+
+      updateShakeMeter(shakeIntensity);
+
+      // Drop elements based on intensity
+      const numToDrop = Math.floor(intensity / 20) + 1;
+      dropRandomElements(numToDrop);
+
+      // Show warning for big shakes
+      if (intensity > 50) {
+        showWarning('EARTHQUAKE!');
+        shakePage();
+      }
+
+      // Increase destruction level
+      destructionLevel += intensity / 10;
+      updateCrackOverlay();
+
+      // Create particles
+      createShakeParticles(intensity);
+    }
+
+    // UPDATE SHAKE METER
+    function updateShakeMeter(intensity) {
+      const fill = document.getElementById('shake-fill');
+      fill.style.width = intensity + '%';
+
+      document.getElementById('shake-count').textContent = `SHAKES: ${shakeCount}`;
+
+      if (intensity > 80) {
+        document.getElementById('shake-text').textContent = '🔥 EXTREME 🔥';
+        document.getElementById('shake-text').style.color = '#ff0000';
+      } else if (intensity > 50) {
+        document.getElementById('shake-text').textContent = '⚠️ DANGER ⚠️';
+        document.getElementById('shake-text').style.color = '#ffff00';
+      } else {
+        document.getElementById('shake-text').textContent = 'SHAKE INTENSITY';
+        document.getElementById('shake-text').style.color = '#ff0000';
+      }
+
+      // Decay
+      setTimeout(() => {
+        const currentWidth = parseFloat(fill.style.width);
+        fill.style.width = Math.max(0, currentWidth - 5) + '%';
+      }, 500);
+    }
+
+    // DROP RANDOM ELEMENTS
+    function dropRandomElements(count) {
+      const notFalling = physicsObjects.filter(obj => !obj.falling);
+      if (notFalling.length === 0) return;
+
+      for (let i = 0; i < Math.min(count, notFalling.length); i++) {
+        const randomIndex = Math.floor(Math.random() * notFalling.length);
+        const obj = notFalling[randomIndex];
+        obj.startFalling();
+        notFalling.splice(randomIndex, 1);
+      }
+    }
+
+    // SHOW WARNING
+    function showWarning(text) {
+      const warning = document.getElementById('warning');
+      warning.textContent = text;
+      warning.classList.add('show');
+      setTimeout(() => {
+        warning.classList.remove('show');
+      }, 1500);
+    }
+
+    // SHAKE PAGE
+    function shakePage() {
+      document.body.style.animation = 'none';
+      setTimeout(() => {
+        document.body.style.animation = 'shake 0.5s';
+        setTimeout(() => {
+          document.body.style.animation = 'none';
+        }, 500);
+      }, 10);
+    }
+
+    const shakeKeyframes = `
+      @keyframes shake {
+        0%, 100% { transform: translate(0, 0); }
+        10% { transform: translate(-10px, -10px); }
+        20% { transform: translate(10px, 10px); }
+        30% { transform: translate(-10px, 10px); }
+        40% { transform: translate(10px, -10px); }
+        50% { transform: translate(-10px, -10px); }
+        60% { transform: translate(10px, 10px); }
+        70% { transform: translate(-10px, 10px); }
+        80% { transform: translate(10px, -10px); }
+        90% { transform: translate(-10px, -10px); }
+      }
+    `;
+    const style = document.createElement('style');
+    style.textContent = shakeKeyframes;
+    document.head.appendChild(style);
+
+    // UPDATE CRACK OVERLAY
+    function updateCrackOverlay() {
+      const overlay = document.getElementById('crack-overlay');
+      const opacity = Math.min(destructionLevel / 500, 0.8);
+      overlay.style.opacity = opacity;
+
+      if (opacity > 0.1) {
+        overlay.classList.add('visible');
+      }
+    }
+
+    // CREATE SHAKE PARTICLES
+    function createShakeParticles(intensity) {
+      const emojis = ['💥', '💫', '⚡', '🔥', '💀', '⚠️'];
+      const count = Math.floor(intensity / 20);
+
+      for (let i = 0; i < count; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        particle.style.left = Math.random() * window.innerWidth + 'px';
+        particle.style.top = Math.random() * window.innerHeight + 'px';
+        document.body.appendChild(particle);
+
+        // Animate
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 100 + Math.random() * 200;
+        const duration = 1000 + Math.random() * 1000;
+
+        particle.animate([
+          { transform: 'translate(0, 0) rotate(0deg)', opacity: 1 },
+          {
+            transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) rotate(${Math.random() * 720}deg)`,
+            opacity: 0
+          }
+        ], {
+          duration: duration,
+          easing: 'ease-out'
+        });
+
+        setTimeout(() => particle.remove(), duration);
+      }
+    }
+
+    // MASS DESTRUCTION
+    function triggerMassDestruction() {
+      showWarning('💀 TOTAL DESTRUCTION 💀');
+
+      // Drop all elements
+      physicsObjects.forEach(obj => {
+        if (!obj.falling) {
+          setTimeout(() => {
+            obj.startFalling();
+            obj.vy = Math.random() * 10 - 5;
+            obj.vx = (Math.random() - 0.5) * 30;
+            obj.rotationSpeed = (Math.random() - 0.5) * 20;
+          }, Math.random() * 1000);
+        }
+      });
+
+      // Max crack overlay
+      destructionLevel = 1000;
+      updateCrackOverlay();
+
+      // Shake page repeatedly
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => shakePage(), i * 600);
+      }
+
+      // Particle explosion
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => createShakeParticles(100), i * 50);
+      }
+    }
+
+    // RESET PAGE
+    function resetPage() {
+      location.reload();
+    }
+
+    // COPY CA
+    function copyCA() {
+      navigator.clipboard.writeText('StoNKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+      showWarning('✓ COPIED');
+    }
+
+    // START
+    init();
+
+    // Console art
+    console.log('%c💀 SHAKE & BREAK EDITION 💀', 'font-size: 40px; color: #ff0000; font-weight: bold;');
+    console.log('%cDesktop: Hover to weaken, click to break, drag to throw!', 'font-size: 18px; color: #00ff00;');
+    console.log('%cMobile: Shake your device or scroll fast!', 'font-size: 18px; color: #00ff00;');
+  </script>
+</body>
+</html>

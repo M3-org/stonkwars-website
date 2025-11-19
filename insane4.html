@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>💰💸 STONK WARS: GIF HELL 💸💰</title>
+  <style>
+    * {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><text y="24" font-size="24">💸</text></svg>'), auto !important;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow-x: hidden;
+      font-family: 'Comic Sans MS', 'Impact', cursive;
+      color: #fff;
+      animation: bg-cycle 10s infinite;
+    }
+
+    @keyframes bg-cycle {
+      0%, 100% { background: #000; }
+      25% { background: #1a0000; }
+      50% { background: #001a00; }
+      75% { background: #00001a; }
+    }
+
+    /* FLOATING GIF GRID */
+    .gif-wall {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.3;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 10px;
+      padding: 10px;
+    }
+
+    .bg-gif {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      animation: float-gif 5s ease-in-out infinite;
+    }
+
+    .bg-gif:nth-child(even) {
+      animation-direction: reverse;
+      animation-delay: -2s;
+    }
+
+    @keyframes float-gif {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    /* SPINNING CORNER GIFS */
+    .corner-gif {
+      position: fixed;
+      width: 200px;
+      height: 200px;
+      z-index: 9999;
+      animation: spin-wobble 3s ease-in-out infinite;
+      filter: saturate(2);
+    }
+
+    @keyframes spin-wobble {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.2); }
+    }
+
+    .corner-gif.tl { top: 80px; left: 10px; }
+    .corner-gif.tr { top: 80px; right: 10px; animation-direction: reverse; }
+    .corner-gif.bl { bottom: 10px; left: 10px; animation-delay: -1s; }
+    .corner-gif.br { bottom: 10px; right: 10px; animation-direction: reverse; animation-delay: -1s; }
+
+    /* SCROLLING GIF MARQUEE */
+    .gif-marquee {
+      width: 100%;
+      overflow: hidden;
+      background: rgba(255,0,0,0.2);
+      padding: 10px 0;
+      border-top: 5px solid #ff0000;
+      border-bottom: 5px solid #ff0000;
+    }
+
+    .gif-marquee-content {
+      display: flex;
+      animation: scroll-gifs 30s linear infinite;
+      gap: 20px;
+    }
+
+    @keyframes scroll-gifs {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .marquee-gif {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border: 5px solid #ff00ff;
+      flex-shrink: 0;
+      animation: shake-gif 0.5s infinite;
+    }
+
+    @keyframes shake-gif {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(-3px, 3px); }
+      50% { transform: translate(3px, -3px); }
+      75% { transform: translate(-3px, -3px); }
+    }
+
+    /* CONTENT */
+    .content {
+      position: relative;
+      z-index: 10;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* RAINBOW TEXT */
+    @keyframes rainbow {
+      0% { color: red; text-shadow: 0 0 20px red; }
+      16% { color: orange; text-shadow: 0 0 20px orange; }
+      33% { color: yellow; text-shadow: 0 0 20px yellow; }
+      50% { color: lime; text-shadow: 0 0 20px lime; }
+      66% { color: cyan; text-shadow: 0 0 20px cyan; }
+      83% { color: magenta; text-shadow: 0 0 20px magenta; }
+      100% { color: red; text-shadow: 0 0 20px red; }
+    }
+
+    .rainbow { animation: rainbow 2s linear infinite; }
+
+    /* MEME TEXT */
+    .meme-text {
+      font-family: Impact, sans-serif;
+      font-size: 60px;
+      color: white;
+      text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000;
+      text-align: center;
+      font-weight: bold;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    /* SECTIONS */
+    .section {
+      margin: 50px 0;
+      padding: 40px;
+      background: rgba(0,0,0,0.7);
+      border: 5px solid;
+      border-image: linear-gradient(45deg, red, orange, yellow, green, blue, purple) 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* GIF GRID */
+    .gif-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .grid-gif {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border: 5px solid #ff00ff;
+      animation: pulse-rotate 2s ease-in-out infinite;
+    }
+
+    .grid-gif:nth-child(odd) {
+      animation: spin 5s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse-rotate {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(10deg); }
+    }
+
+    /* BUTTONS */
+    .chaos-button {
+      display: inline-block;
+      padding: 25px 50px;
+      font-size: 36px;
+      background: linear-gradient(45deg, red, orange, yellow, green, blue, purple);
+      background-size: 200% 200%;
+      animation: gradient-move 2s ease infinite, pulse 1s ease-in-out infinite;
+      border: 5px solid white;
+      color: white;
+      text-shadow: 3px 3px 0 #000;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 10px;
+      font-family: Impact, sans-serif;
+    }
+
+    @keyframes gradient-move {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* FLOATING GIFS */
+    .float-gif {
+      position: fixed;
+      width: 150px;
+      pointer-events: none;
+      z-index: 9998;
+      animation: float-around 10s ease-in-out infinite;
+    }
+
+    @keyframes float-around {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(100px, -100px) rotate(90deg); }
+      50% { transform: translate(200px, 0) rotate(180deg); }
+      75% { transform: translate(100px, 100px) rotate(270deg); }
+    }
+
+    .float-gif:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+    .float-gif:nth-child(2) { top: 40%; right: 10%; animation-delay: -2s; }
+    .float-gif:nth-child(3) { bottom: 20%; left: 15%; animation-delay: -4s; }
+    .float-gif:nth-child(4) { bottom: 30%; right: 15%; animation-delay: -6s; }
+
+    /* VIDEO */
+    .video-wrapper {
+      position: relative;
+      text-align: center;
+      margin: 50px 0;
+    }
+
+    .chaos-video {
+      max-width: 100%;
+      border: 10px solid;
+      border-image: linear-gradient(45deg, red, blue, green, yellow) 1;
+      filter: saturate(2) contrast(1.2);
+      animation: glitch 0.3s infinite;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(2px, -2px); }
+      60% { transform: translate(-2px, -2px); }
+      80% { transform: translate(2px, 2px); }
+      100% { transform: translate(0); }
+    }
+
+    /* EXPLODING TEXT */
+    .explode {
+      animation: explode-text 1s ease-in-out infinite;
+    }
+
+    @keyframes explode-text {
+      0%, 100% { transform: scale(1); letter-spacing: 0; }
+      50% { transform: scale(1.2); letter-spacing: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- GIF WALL BACKGROUND -->
+  <div class="gif-wall">
+    <img src="https://blob.gifcities.org/gifcities/2CA7VIJPQHXHD6IPK7Q4IL2GKBMWZIWT.gif" class="bg-gif" alt="stock">
+    <img src="https://blob.gifcities.org/gifcities/2DVGNK52LRK4RTX2V6P2672RMJUSEK6T.gif" class="bg-gif" alt="chart">
+    <img src="https://blob.gifcities.org/gifcities/35GKF6TBUGV4RCYMAX2B4545KQI6GQ2Y.gif" class="bg-gif" alt="business">
+    <img src="https://blob.gifcities.org/gifcities/3M2JTFUX6GLEKIVWVVG5J6ZVQ354VE5W.gif" class="bg-gif" alt="money">
+    <img src="https://blob.gifcities.org/gifcities/2WCIS2J6XUCVFROPJR2UKMMSLWEG6QHI.gif" class="bg-gif" alt="stock">
+    <img src="https://blob.gifcities.org/gifcities/2J2WXHNLSOCZS7AAUXSJ222SEWCX6BZH.gif" class="bg-gif" alt="chart">
+    <img src="https://blob.gifcities.org/gifcities/4CUL72HIJGWY5EKH47ODCSJGSQFDD7VH.gif" class="bg-gif" alt="business">
+    <img src="https://blob.gifcities.org/gifcities/2DB5XFT7TG7Z4HOL57OTXLPOH572VXPK.gif" class="bg-gif" alt="fire">
+    <img src="https://blob.gifcities.org/gifcities/3OD4GDHDGHHUY3APZC62QDZDWH5TWGP6.gif" class="bg-gif" alt="stock">
+    <img src="https://blob.gifcities.org/gifcities/4LVEGALMN3DVK74I5RLDP6GDWMY6NBHY.gif" class="bg-gif" alt="chart">
+    <img src="https://blob.gifcities.org/gifcities/4R4KFN73VPKQU4E3C7EQUR3IDP6GJ66K.gif" class="bg-gif" alt="business">
+    <img src="https://blob.gifcities.org/gifcities/273CSDZTFQ6MHBW7JL3S2WHUW3W6WKCS.gif" class="bg-gif" alt="explosion">
+    <img src="https://blob.gifcities.org/gifcities/4X2ZZSCBNNAV464C73Z6NT3NAUKXLCU4.gif" class="bg-gif" alt="stock">
+    <img src="https://blob.gifcities.org/gifcities/6MV2FOMH2YVWKYGLN7WDLSESLVY73OLP.gif" class="bg-gif" alt="chart">
+    <img src="https://blob.gifcities.org/gifcities/4TE457SYUPKBMMH4ERUOEUKMA7AV4UZC.gif" class="bg-gif" alt="business">
+    <img src="https://blob.gifcities.org/gifcities/24YWHW3CNK27B65PDA6VLELSIOGQSISD.gif" class="bg-gif" alt="spinning">
+  </div>
+
+  <!-- CORNER SPINNING GIFS -->
+  <img src="https://blob.gifcities.org/gifcities/5BBNT5Z5SP7MDCTUOCN4A75B3CU2US4R.gif" class="corner-gif tl" alt="stock">
+  <img src="https://blob.gifcities.org/gifcities/6VVLU2JKFERW2FGHAHZM4NMTFTFU4Y2Y.gif" class="corner-gif tr" alt="chart">
+  <img src="https://blob.gifcities.org/gifcities/4ZGVIDDOIYL4EJ2BIMWRN77LBJ7SCFRE.gif" class="corner-gif bl" alt="business">
+  <img src="https://blob.gifcities.org/gifcities/32FMAPHPAT6BNANBKEAYVZDHBZBMYQPN.gif" class="corner-gif br" alt="explosion">
+
+  <!-- FLOATING GIFS -->
+  <img src="https://blob.gifcities.org/gifcities/5IYER54L6Z4LAR7GR5GXUV3D6ZOHFFNJ.gif" class="float-gif" alt="stock">
+  <img src="https://blob.gifcities.org/gifcities/A7Q4BXIRHH3WQKQ4NE6I6ESLCSFFTGDF.gif" class="float-gif" alt="chart">
+  <img src="https://blob.gifcities.org/gifcities/5FXEYKLRYASAIZ7JIVL4JPFZFQXHY4IM.gif" class="float-gif" alt="business">
+  <img src="https://blob.gifcities.org/gifcities/7NQT3JRGG5HX63IXU3KITRFVQCD5W5JO.gif" class="float-gif" alt="money">
+
+  <div class="content">
+    <!-- HEADER -->
+    <div class="section" style="text-align: center; margin-top: 100px;">
+      <div style="display: flex; align-items: center; justify-center: gap: 30px; flex-wrap: wrap;">
+        <img src="https://blob.gifcities.org/gifcities/AD4YO7MW4EHY5LQ7ZAHPFEYZYJJZIT54.gif" width="200" height="200" style="animation: spin 2s linear infinite;" alt="">
+        <div>
+          <h1 class="meme-text rainbow explode" style="font-size: 80px;">
+            STONK WARS
+          </h1>
+          <p class="meme-text" style="font-size: 40px; color: #00ff00;">WALL STREET 2000 EDITION</p>
+          <p class="meme-text" style="font-size: 24px; color: #ffff00;">EST. Y2K • POWERED BY DIAL-UP</p>
+        </div>
+        <img src="https://blob.gifcities.org/gifcities/AOG6PKL6EYMK6SY3LZVFXA7IQHOUBMT3.gif" width="200" height="200" style="animation: spin 2s linear infinite reverse;" alt="">
+      </div>
+    </div>
+
+    <!-- SCROLLING GIF MARQUEE 1 - BUSINESS EDITION -->
+    <div class="gif-marquee">
+      <div class="gif-marquee-content">
+        <img src="https://blob.gifcities.org/gifcities/5LWADJWURTN4N5EYAWQHBB62KHLSLYFI.gif" class="marquee-gif" alt="stock">
+        <img src="https://blob.gifcities.org/gifcities/AJAISOZIROATBTD2VUQVKTVQUBWPDFXS.gif" class="marquee-gif" alt="chart">
+        <img src="https://blob.gifcities.org/gifcities/5JST6ETQSYSBKYEJA3CYDI55ZNJX2VTM.gif" class="marquee-gif" alt="business">
+        <img src="https://blob.gifcities.org/gifcities/6PUZKYZF3XHQVITLIRBLR4YC6DTG25HL.gif" class="marquee-gif" alt="stock">
+        <img src="https://blob.gifcities.org/gifcities/CAWKZVOS662WBVORPRUYCXCJKBAPD64D.gif" class="marquee-gif" alt="chart">
+        <img src="https://blob.gifcities.org/gifcities/6AQNY7KRKSIHKTD3OM4NJR6JSLTBQLYP.gif" class="marquee-gif" alt="business">
+        <img src="https://blob.gifcities.org/gifcities/6UZACBPWVKBKP4D6MRWUQLIIPMBSVUCT.gif" class="marquee-gif" alt="stock">
+        <img src="https://blob.gifcities.org/gifcities/CFAGPXFHDVLUELZNXVKMAEF5WTCDOTY6.gif" class="marquee-gif" alt="chart">
+        <!-- Duplicate for seamless loop -->
+        <img src="https://blob.gifcities.org/gifcities/5LWADJWURTN4N5EYAWQHBB62KHLSLYFI.gif" class="marquee-gif" alt="stock">
+        <img src="https://blob.gifcities.org/gifcities/AJAISOZIROATBTD2VUQVKTVQUBWPDFXS.gif" class="marquee-gif" alt="chart">
+        <img src="https://blob.gifcities.org/gifcities/5JST6ETQSYSBKYEJA3CYDI55ZNJX2VTM.gif" class="marquee-gif" alt="business">
+        <img src="https://blob.gifcities.org/gifcities/6PUZKYZF3XHQVITLIRBLR4YC6DTG25HL.gif" class="marquee-gif" alt="stock">
+        <img src="https://blob.gifcities.org/gifcities/CAWKZVOS662WBVORPRUYCXCJKBAPD64D.gif" class="marquee-gif" alt="chart">
+        <img src="https://blob.gifcities.org/gifcities/6AQNY7KRKSIHKTD3OM4NJR6JSLTBQLYP.gif" class="marquee-gif" alt="business">
+        <img src="https://blob.gifcities.org/gifcities/6UZACBPWVKBKP4D6MRWUQLIIPMBSVUCT.gif" class="marquee-gif" alt="stock">
+        <img src="https://blob.gifcities.org/gifcities/CFAGPXFHDVLUELZNXVKMAEF5WTCDOTY6.gif" class="marquee-gif" alt="chart">
+      </div>
+    </div>
+
+    <!-- VIDEO SECTION -->
+    <div class="section">
+      <div class="meme-text" style="margin-bottom: 30px;">
+        LIVE FROM THE TRADING FLOOR
+      </div>
+      <div class="video-wrapper">
+        <video src="media/stonks2.mp4" class="chaos-video" autoplay loop muted playsinline width="800"></video>
+        <div class="meme-text" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); font-size: 40px;">
+          THIS IS FINE 🔥
+        </div>
+      </div>
+    </div>
+
+    <!-- GIF GALLERY -->
+    <div class="section">
+      <div class="meme-text rainbow" style="margin-bottom: 30px;">
+        GALLERY OF CHAOS
+      </div>
+      <div class="gif-grid">
+        <img src="https://blob.gifcities.org/gifcities/3MFUTAUX4JCDS4QFWWD2E7DTLUBBYW4Q.gif" class="grid-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/2QT3PQDITQ7DKMSHWBHPI7NSUI4Q6567.gif" class="grid-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/5I2AH454DYLEGXKCIQF5J4SLWUD4JQI2.gif" class="grid-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/4GQEI3EOE65Y45ZM4OGDB6UEPLDY5X3A.gif" class="grid-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/3Z2QJUSCXYMA55NFL4NXAWKILUEUIGDA.gif" class="grid-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/52MFGIDUO2SR2BYTJ7R5BNTK2TF3SS3A.gif" class="grid-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/6AKWB3PDTTOIGBT5SFUE3OHCJAY4UXCG.gif" class="grid-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/76XFHLQCN27WGXK5XB2B2GQCGHGSR5EC.gif" class="grid-gif" alt="">
+        <img src="media/1.jpg" class="grid-gif" alt="">
+        <img src="media/2.jpg" class="grid-gif" alt="">
+        <img src="media/3.jpg" class="grid-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/6PXJY4KKLGLXTOJEDTBTFDOM47J3BCZS.gif" class="grid-gif" alt="">
+      </div>
+    </div>
+
+    <!-- CALL TO ACTION -->
+    <div class="section" style="text-align: center;">
+      <div class="meme-text explode" style="margin-bottom: 40px; font-size: 80px;">
+        CHOOSE YOUR FATE
+      </div>
+      <div>
+        <button class="chaos-button" onclick="maxChaos()">MAX CHAOS</button>
+        <button class="chaos-button" onclick="gifBomb()">GIF BOMB 💣</button>
+        <button class="chaos-button" onclick="stopMotion()">STOP (COWARD)</button>
+      </div>
+    </div>
+
+    <!-- CONTRACT ADDRESS -->
+    <div class="section" style="text-align: center;">
+      <div class="meme-text rainbow" style="margin-bottom: 20px;">
+        CONTRACT ADDRESS
+      </div>
+      <div style="font-family: monospace; font-size: 24px; color: #00ff00; word-break: break-all; margin: 20px 0; animation: glitch 0.3s infinite;">
+        StoNKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      </div>
+      <button class="chaos-button" onclick="copyCA()">COPY IT 💎</button>
+    </div>
+
+    <!-- SCROLLING GIF MARQUEE 2 -->
+    <div class="gif-marquee" style="border-color: #00ff00;">
+      <div class="gif-marquee-content" style="animation-direction: reverse;">
+        <img src="https://blob.gifcities.org/gifcities/2X7FABEPOKFL4QO37TDM6JFQUISBPOBA.gif" class="marquee-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/4UAKNQI2NKNCXKHJ7F7XB2SPE4FPGZ34.gif" class="marquee-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/32FMAPHPAT6BNANBKEAYVZDHBZBMYQPN.gif" class="marquee-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/4OEO2GROEIHM6VBBIHQWZSSOWLDHZI37.gif" class="marquee-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/7FAYQTPRSOTUZEGZAMJRT7QYAJHWIT7W.gif" class="marquee-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/2X7FABEPOKFL4QO37TDM6JFQUISBPOBA.gif" class="marquee-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/4UAKNQI2NKNCXKHJ7F7XB2SPE4FPGZ34.gif" class="marquee-gif" alt="">
+        <img src="https://blob.gifcities.org/gifcities/32FMAPHPAT6BNANBKEAYVZDHBZBMYQPN.gif" class="marquee-gif" alt="">
+      </div>
+    </div>
+
+    <!-- SOCIAL -->
+    <div class="section" style="text-align: center;">
+      <div class="meme-text rainbow explode" style="margin-bottom: 40px;">
+        JOIN THE MADNESS
+      </div>
+      <div>
+        <button class="chaos-button">🐦 TWITTER</button>
+        <button class="chaos-button">✈️ TELEGRAM</button>
+        <button class="chaos-button">💬 DISCORD</button>
+      </div>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div class="section" style="background: rgba(255,0,0,0.3); text-align: center;">
+      <div class="meme-text" style="font-size: 50px; color: yellow; margin-bottom: 20px;">
+        ⚠️ WARNING ⚠️
+      </div>
+      <div style="font-size: 28px; line-height: 1.5; color: white; text-shadow: 2px 2px 0 #000;">
+        THIS IS NOT FINANCIAL ADVICE<br>
+        WE ARE NOT RESPONSIBLE FOR ANYTHING<br>
+        YOUR COMPUTER MIGHT EXPLODE<br>
+        EPILEPSY WARNING PROBABLY<br>
+        NGMI WAGMI LFG GM GN<br>
+        🚀💎🙏📈💰🔥💸
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // MAX CHAOS
+    function maxChaos() {
+      document.body.style.animation = 'none';
+      document.body.style.animation = 'spin 0.5s linear infinite, bg-cycle 0.5s infinite';
+
+      // Spawn flying GIFs
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+          spawnFlyingGif();
+        }, i * 100);
+      }
+
+      setTimeout(() => {
+        document.body.style.animation = 'bg-cycle 10s infinite';
+      }, 5000);
+    }
+
+    // GIF BOMB
+    function gifBomb() {
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const explosion = document.createElement('div');
+          explosion.style.position = 'fixed';
+          explosion.style.left = Math.random() * window.innerWidth + 'px';
+          explosion.style.top = Math.random() * window.innerHeight + 'px';
+          explosion.style.fontSize = '80px';
+          explosion.style.zIndex = '99999';
+          explosion.textContent = ['💥', '💣', '🔥', '⚡'][Math.floor(Math.random() * 4)];
+          explosion.style.animation = 'explode-text 0.5s forwards';
+          document.body.appendChild(explosion);
+          setTimeout(() => explosion.remove(), 500);
+        }, i * 50);
+      }
+    }
+
+    // SPAWN FLYING GIF
+    function spawnFlyingGif() {
+      const gifs = [
+        'https://blob.gifcities.org/gifcities/AD4YO7MW4EHY5LQ7ZAHPFEYZYJJZIT54.gif',
+        'https://blob.gifcities.org/gifcities/AOG6PKL6EYMK6SY3LZVFXA7IQHOUBMT3.gif',
+        'https://blob.gifcities.org/gifcities/7NQT3JRGG5HX63IXU3KITRFVQCD5W5JO.gif'
+      ];
+
+      const img = document.createElement('img');
+      img.src = gifs[Math.floor(Math.random() * gifs.length)];
+      img.style.position = 'fixed';
+      img.style.width = '150px';
+      img.style.left = '-200px';
+      img.style.top = Math.random() * window.innerHeight + 'px';
+      img.style.zIndex = '99999';
+      img.style.animation = 'fly-across 3s linear';
+      document.body.appendChild(img);
+
+      img.style.animationName = 'fly-across-anim-' + Date.now();
+      const keyframes = `
+        @keyframes fly-across-anim-${Date.now()} {
+          to { left: ${window.innerWidth + 200}px; transform: rotate(720deg); }
+        }
+      `;
+      const style = document.createElement('style');
+      style.textContent = keyframes;
+      document.head.appendChild(style);
+
+      setTimeout(() => {
+        img.remove();
+        style.remove();
+      }, 3000);
+    }
+
+    // STOP ANIMATIONS
+    let stopped = false;
+    function stopMotion() {
+      stopped = !stopped;
+      if (stopped) {
+        document.querySelectorAll('*').forEach(el => {
+          el.style.animationPlayState = 'paused';
+        });
+      } else {
+        document.querySelectorAll('*').forEach(el => {
+          el.style.animationPlayState = 'running';
+        });
+      }
+    }
+
+    // COPY CA
+    function copyCA() {
+      navigator.clipboard.writeText('StoNKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+      const temp = document.createElement('div');
+      temp.style.position = 'fixed';
+      temp.style.top = '50%';
+      temp.style.left = '50%';
+      temp.style.transform = 'translate(-50%, -50%)';
+      temp.style.fontSize = '80px';
+      temp.style.color = '#00ff00';
+      temp.style.textShadow = '0 0 30px #00ff00';
+      temp.style.zIndex = '999999';
+      temp.textContent = '✓ COPIED! 💎';
+      temp.className = 'meme-text';
+      document.body.appendChild(temp);
+      setTimeout(() => temp.remove(), 2000);
+    }
+
+    // AUTO SPAWN FLYING GIFS
+    setInterval(() => {
+      if (Math.random() > 0.7) {
+        spawnFlyingGif();
+      }
+    }, 5000);
+
+    // TITLE ANIMATION
+    const titles = ['💰 STONK WARS', '💸 GIF HELL', '🔥 CHAOS MODE', '💎 TO THE MOON', '🚀 NGMI'];
+    let i = 0;
+    setInterval(() => {
+      document.title = titles[i];
+      i = (i + 1) % titles.length;
+    }, 1000);
+
+    // CONSOLE
+    console.log('%c💰💸 GIF HELL EDITION 💸💰', 'font-size: 40px; color: lime; font-weight: bold;');
+    console.log('%cYour computer is now mining crypto for us', 'font-size: 20px; color: red;');
+    console.log('%cJust kidding... or are we? 👀', 'font-size: 16px; color: yellow;');
+  </script>
+</body>
+</html>
