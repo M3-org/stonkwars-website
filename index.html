@@ -94,6 +94,172 @@
     .lightbox-close:hover {
       color: #ff4e1b;
     }
+
+    /* Iframe Preview - Enhanced Golden Style */
+    .iframe-preview {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .iframe-preview-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .iframe-preview-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+      z-index: 1;
+    }
+
+    .iframe-preview-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+
+    .play-button {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f0bf39 0%, #d89d28 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow:
+        0 4px 12px rgba(240, 191, 57, 0.4),
+        0 8px 24px rgba(240, 191, 57, 0.3),
+        0 16px 48px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .play-button:hover {
+      transform: scale(1.1);
+      box-shadow:
+        0 6px 16px rgba(240, 191, 57, 0.5),
+        0 12px 32px rgba(240, 191, 57, 0.4),
+        0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .play-triangle {
+      width: 0;
+      height: 0;
+      border-left: 30px solid #000;
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+      margin-left: 8px;
+    }
+
+    .iframe-preview-title {
+      color: #f0bf39;
+      font-size: 24px;
+      font-weight: 700;
+      text-shadow:
+        0 0 20px rgba(240, 191, 57, 0.6),
+        0 2px 8px rgba(0, 0, 0, 0.8);
+      margin-bottom: 12px;
+      transition: all 0.4s ease;
+    }
+
+    .iframe-preview-subtitle {
+      color: #60a5fa;
+      font-size: 16px;
+      text-shadow:
+        0 0 12px rgba(96, 165, 250, 0.5),
+        0 2px 6px rgba(0, 0, 0, 0.8);
+      transition: all 0.4s ease;
+    }
+
+    @media (min-width: 768px) {
+      .iframe-preview {
+        height: 700px;
+      }
+
+      .play-button {
+        width: 140px;
+        height: 140px;
+      }
+
+      .play-triangle {
+        border-left: 35px solid #000;
+        border-top: 21px solid transparent;
+        border-bottom: 21px solid transparent;
+      }
+
+      .iframe-preview-title {
+        font-size: 32px;
+      }
+
+      .iframe-preview-subtitle {
+        font-size: 18px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .iframe-preview {
+        height: 800px;
+      }
+
+      .play-button {
+        width: 160px;
+        height: 160px;
+      }
+
+      .play-triangle {
+        border-left: 40px solid #000;
+        border-top: 24px solid transparent;
+        border-bottom: 24px solid transparent;
+      }
+
+      .iframe-preview-title {
+        font-size: 36px;
+      }
+
+      .iframe-preview-subtitle {
+        font-size: 20px;
+      }
+    }
+
+    .iframe-container {
+      display: none;
+      width: 100%;
+      height: 600px;
+      border: none;
+      overflow: hidden;
+    }
+
+    .iframe-container.loaded {
+      display: block;
+    }
+
+    @media (min-width: 768px) {
+      .iframe-container {
+        height: 700px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .iframe-container {
+        height: 800px;
+      }
+    }
   </style>
 </head>
 <body class="bg-steel text-ink antialiased">
@@ -257,6 +423,22 @@
       </div>
     </section>
 
+    <!-- Hyperfy World Section -->
+    <section id="hyperfy-world" class="w-full my-8 sm:my-12 md:my-16">
+      <div id="hyperfy-preview" class="iframe-preview" onclick="loadHyperfyIframe()">
+        <video class="iframe-preview-video" src="iframe/media/stonkshyperfy.mp4" autoplay loop muted playsinline></video>
+        <div class="iframe-preview-gradient"></div>
+        <div class="iframe-preview-content">
+          <div class="play-button">
+            <div class="play-triangle"></div>
+          </div>
+          <div class="iframe-preview-title">Visit the STONK EXCHANGE in HYPERFY</div>
+          <div class="iframe-preview-subtitle">Click to explore the virtual world</div>
+        </div>
+      </div>
+      <iframe id="hyperfy-iframe" class="iframe-container" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen scrolling="no"></iframe>
+    </section>
+
     <!-- Waitlist Area - Thinner, social buttons on same row -->
     <section id="waitlist" class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <div class="max-w-2xl mx-auto text-center">
@@ -347,6 +529,32 @@
         closeLightbox();
       }
     });
+
+    // Load Hyperfy iframe on click with animation
+    function loadHyperfyIframe() {
+      const preview = document.getElementById('hyperfy-preview');
+      const iframe = document.getElementById('hyperfy-iframe');
+      const content = preview.querySelector('.iframe-preview-content');
+      const playButton = preview.querySelector('.play-button');
+      const title = preview.querySelector('.iframe-preview-title');
+      const subtitle = preview.querySelector('.iframe-preview-subtitle');
+
+      // Animate the elements
+      playButton.style.transform = 'scale(0.8)';
+      playButton.style.opacity = '0';
+
+      title.textContent = "Let's go!";
+      title.style.fontSize = '48px';
+
+      subtitle.style.opacity = '0';
+
+      // Wait for animations to complete, then load iframe
+      setTimeout(() => {
+        preview.style.display = 'none';
+        iframe.classList.add('loaded');
+        iframe.src = 'https://hyperfy.io/stonkwip';
+      }, 400);
+    }
   </script>
 </body>
 </html>
